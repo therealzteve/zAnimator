@@ -9,6 +9,7 @@ import {
 import inject from 'gulp-inject';
 
 var Server = require('karma').Server;
+var rjs = require('gulp-requirejs');
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
@@ -206,4 +207,21 @@ gulp.task('tdd', function(done) {
   new Server({
     configFile: __dirname + '/karma.conf.js'
   }, done).start();
+});
+
+/**
+ * Watch for file changes and re-run tests on each change
+ */
+gulp.task('buildlib', function(done) {
+  rjs({
+    baseUrl: 'app/scripts',
+    name: '../../node_modules/almond/almond',
+    include: ['main'],
+    out: 'main-built.js',
+    wrap: {
+      startFile: 'app/scripts/wrap.start',
+      endFile: 'app/scripts/wrap.end'
+    }
+  })
+  .pipe(gulp.dest('./dist/'));
 });

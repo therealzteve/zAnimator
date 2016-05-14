@@ -4,7 +4,7 @@
  * The main module that defines the public interface for principium,
  * a made-up library to demonstrate how to construct a source from components.
  */
-define(function (require) {
+define(function () {
     'use strict';
     //convert = require('principium/convert');
 
