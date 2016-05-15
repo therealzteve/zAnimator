@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="ISO-8859-1">
+<title>Js Breakout</title>
+<link rel="stylesheet" type="text/css" href="/JsBreakout/style/style.css" />
+
+<link rel="stylesheet" type="text/css" href="/JsBreakout/lib/jquery-ui-1.11.4.custom/jquery-ui.min.css" />
+
+
+</head>
+<body >
+	<div id="game">
+			<div id="ingame"><canvas  id="myCanvas"  ></canvas></div>
+			<button id="myButton" >Stop </button>
+	</div>
+<script type="text/javascript" src="/JsBreakout/lib/TweenJS-0.6.1/lib/tweenjs-0.6.1.combined.js"></script>
+<script type="text/javascript" src="/JsBreakout/lib/EaselJS-0.8.1/lib/easeljs-0.8.1.combined.js"></script>
+<script type="text/javascript" src="/JsBreakout/lib/jquery-ui-1.11.4.custom/external/jquery/jquery.js"></script>
+<script type="text/javascript" src="/JsBreakout/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js" ></script>
+<script>
+	
+	
+	var stage = new createjs.Stage("myCanvas");
+	var rotationSpeed = 0.1;
+	stage.canvas.width = 800;
+	stage.canvas.height = 300;
+	createjs.Ticker.setFPS(60);
+	createjs.Ticker.addEventListener("tick", stage);
+	
+
+	
+	var chasm = function(){
+		var myPolygon = new createjs.Container();
+		
+		
+		myPolygon.addEventListener("tick",function(){
+			myPolygon.rotation = myPolygon.rotation + rotationSpeed; 
+		});
+		return { getPolygon : function(){return myPolygon;}};
+	} 
+	
+	
+	stage.addEventListener("tick",function(){
+		
+		var chas1 = chasm();
+		stage.addChild(chas1.getPolygon());
+
+	}); 
+	
+	document.getElementById("myButton").onclick = function(){
+		console.log("stop");
+		stage.removeAllEventListeners("tick");
+	};
+	
+	
+</script>
+</body>
+
+</html>

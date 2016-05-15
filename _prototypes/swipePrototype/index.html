@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="ISO-8859-1">
+<title>Js Breakout</title>
+<link rel="stylesheet" type="text/css" href="/JsBreakout/style/style.css" />
+
+<link rel="stylesheet" type="text/css" href="/JsBreakout/lib/jquery-ui-1.11.4.custom/jquery-ui.min.css" />
+
+
+</head>
+<body >
+	<div id="game">
+			<div id="ingame"><canvas  id="myCanvas"  ></canvas></div>
+			<button id="myButton" >Stop </button>
+	</div>
+<script type="text/javascript" src="/JsBreakout/lib/TweenJS-0.6.1/lib/tweenjs-0.6.1.combined.js"></script>
+<script type="text/javascript" src="/JsBreakout/lib/EaselJS-0.8.1/lib/easeljs-0.8.1.combined.js"></script>
+<script type="text/javascript" src="/JsBreakout/lib/SoundJS-0.6.2/lib/soundjs-0.6.2.combined.js"></script>
+<script type="text/javascript" src="/JsBreakout/lib/jquery-ui-1.11.4.custom/external/jquery/jquery.js"></script>
+<script type="text/javascript" src="/JsBreakout/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js" ></script>
+<script>
+	
+	var stage = new createjs.Stage("myCanvas");
+	stage.canvas.width = 800;
+	stage.canvas.height = 800;
+	createjs.Ticker.setFPS(60);
+	createjs.Ticker.timingMode = createjs.Ticker.RAF;
+	createjs.Ticker.addEventListener("tick", stage);
+	
+	var swiper = function(x,y,radius){
+		var distance = 0;
+		
+		
+		var myShape = new createjs.Shape();
+		
+		myShape
+			.graphics
+			.beginLinearGradientFill(["#000","#FFF"], [0, 1], 0, 0, 0, 15)
+			.drawRect(0,0, 2, 15);
+		
+		myShape.regX = 1;
+		myShape.regY = 15;
+		
+	
+		
+		var move = function(event){
+			distance += 100* (event.delta/1000);
+			
+			var circleLength = distance/radius;
+			
+			if(circleLength > 2*Math.PI){
+				distance = distance - 2*Math.PI*radius;
+			}
+			
+			myShape.x = x + Math.cos(circleLength)*radius;
+			myShape.y = y + Math.sin(circleLength)*radius;
+			myShape.rotation = circleLength*(180/Math.PI);
+		}
+		
+		myShape.addEventListener("tick", move);
+		
+		var getShape = function(){
+			return myShape;
+		}
+		
+		return {
+			getShape : getShape,
+			move : move
+		};
+	}
+	
+	
+	var mySwiper = swiper(100,100,200);
+	var mySwiper2 = swiper(200,100,200);
+	var mySwiper3 = swiper(300,100,50);
+	var mySwiper4 = swiper(400,100,200);
+	var mySwiper5 = swiper(500,100,200);
+	stage.addChild(mySwiper.getShape());
+	stage.addChild(mySwiper2.getShape());
+	stage.addChild(mySwiper3.getShape());
+	stage.addChild(mySwiper4.getShape());
+	stage.addChild(mySwiper5.getShape());
+	
+	/* stage.addEventListener("tick",function(event){
+		
+		mySwiper.move();
+		mySwiper2.move();
+		mySwiper3.move();
+		mySwiper4.move();
+		mySwiper5.move();
+	}); */
+
+	
+/* 	createjs.Sound.addEventListener("fileload", handleLoadComplete);
+	createjs.Sound.registerSound({src:"Intro.mp3", id:"sound"});
+	function handleLoadComplete(event) {
+	    createjs.Sound.play("sound");
+	    window.setTimeout(function(){
+			
+		}, 6440)
+	} */
+	
+</script>
+</body>
+
+</html>

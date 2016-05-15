@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Js Breakout</title>
+<link rel="stylesheet" type="text/css" href="/JsBreakout/style/style.css" />
+
+<link rel="stylesheet" type="text/css" href="/JsBreakout/lib/jquery-ui-1.11.4.custom/jquery-ui.min.css" />
+
+
+</head>
+<body >
+	<div id="game">
+			<div id="ingame"><canvas  id="myCanvas"  ></canvas></div>
+			<button id="myButton" >Stop </button>
+	</div>
+<script type="text/javascript" src="/JsBreakout/lib/TweenJS-0.6.1/lib/tweenjs-0.6.1.combined.js"></script>
+<script type="text/javascript" src="/JsBreakout/lib/EaselJS-0.8.1/lib/easeljs-0.8.1.combined.js"></script>
+<script type="text/javascript" src="/JsBreakout/lib/SoundJS-0.6.2/lib/soundjs-0.6.2.combined.js"></script>
+<script type="text/javascript" src="/JsBreakout/lib/jquery-ui-1.11.4.custom/external/jquery/jquery.js"></script>
+<script type="text/javascript" src="/JsBreakout/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js" ></script>
+<script>
+
+	var stage = new createjs.Stage("myCanvas");
+	stage.canvas.width = 800;
+	stage.canvas.height = 800;
+	createjs.Ticker.setFPS(60);
+	createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCED;
+	createjs.Ticker.addEventListener("tick", stage);
+
+	var Graph = function(point, edges){
+
+		var graph = {};
+		graph.point = point;
+		graph.edges = edges;
+
+		graph.getRandomEdge = function(){
+			var random =  Math.floor(Math.random() * (graph.edges.length));
+			if(graph.edges[random]){
+				return graph.edges[random];
+			}
+		}
+
+		graph.addEdge = function(edge){
+			this.edges.push(edge);
+		}
+		return graph;
+	}
+
+	var graphs = [];
+	var graph1 = new Graph({x:100, y:100}, []);
+	var graph2 =  new Graph({x:200, y:200}, [graph1]);
+	var graph3 =  new Graph({x:200, y:100}, [graph2]);
+	var graph4 =  new Graph({x:100, y:200}, [graph3]);
+	var graph5 =  new Graph({x:300, y:150}, [graph4]);
+	var graph6 =  new Graph({x:230, y:156}, [graph5]);
+	var graph7 =  new Graph({x:189, y:200}, [graph6]);
+	graph1.addEdge(graph7);
+	//graph1.addEdge(graph6);
+	//graph1.addEdge(graph5);
+
+	graphs.push(graph1,graph2,graph3,graph4,graph5);
+	var render = function(){
+		for(var graph of graphs){
+			var shape = new createjs.Shape();
+			shape.graphics.beginFill("#FFF").setStrokeStyle(1).drawCircle(0,0,2);
+			shape.x = graph.point.x;
+			shape.y = graph.point.y;
+			for(var edge of graph.edges){
+				shape.graphics
+					.beginStroke("#FFF")
+					.moveTo(0,0)
+					.lineTo(edge.point.x- graph.point.x, edge.point.y - graph.point.y)
+			}
+			stage.addChild(shape);
+		}
+	}
+	//render();
+
+	var GraphTraveller = function(graph, animator){
+		var graphTraveller = {};
+		graphTraveller.currentEdge = graph;
+		graphTraveller.moveToRandomPoint = function(){
+			graphTraveller.currentEdge = graphTraveller.currentEdge.getRandomEdge();
+			animator.handlePoint(graphTraveller.currentEdge.point, graphTraveller.moveToRandomPoint);
+		}
+
+		graphTraveller.handle = function(){
+			graphTraveller.moveToRandomPoint();
+		}
+
+		return graphTraveller;
+	}
+
+	var Mover = function(shape, speed){
+		var mover = {};
+
+		mover.handlePoint = function(point, onFinished){
+			var speedX = (point.x - shape.x)/ ( Math.abs(point.x - shape.x) +  Math.abs(point.y - shape.y) );
+			var speedY = (point.y - shape.y)/ ( Math.abs(point.x - shape.x) +  Math.abs(point.y - shape.y) );
+			var startX = shape.x;
+			var startY = shape.y;
+			var distanceX = Math.abs(point.x - shape.x);
+			var distanceY = Math.abs(point.y - shape.y);
+
+			shape.addEventListener("tick", (event) =>{
+				if(Math.abs(startX - shape.x) > distanceX || Math.abs(startY - shape.y) > distanceY) {
+					shape.removeAllEventListeners("tick");
+					shape.x = point.x;
+					shape.y = point.y;
+					onFinished();
+				}else{
+					shape.x += (speed * speedX) * event.delta/1000;
+					shape.y += (speed * speedY) * event.delta/1000;
+				}
+			});
+		}
+
+
+
+		return mover;
+	}
+
+	var travellers = [];
+	for (var i = 0; i < 500; i++) {
+		var shape = new createjs.Shape();
+		shape.graphics
+			//.beginStroke("#FFF")
+			.beginFill(getRandomColor())
+			.drawCircle(0,0,100)
+			//.endFill()
+			//.drawRect(-10,-10,20,20);
+		shape.x = Math.floor(Math.random() * 4) *i;
+		shape.y = Math.floor(Math.random() * 4) *i;
+		shape.alpha = 0.3;
+		shape.rotation = Math.floor(Math.random()*360);
+		stage.addChild(shape);
+		var mover = new Mover(shape, 110);
+		var traveller = GraphTraveller(graph1, mover);
+		traveller.handle();
+		travellers.push(traveller);
+	}
+
+	function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+</script>
+
+
+</body>
+
+</html>

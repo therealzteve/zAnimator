@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="ISO-8859-1">
+<title>Js Breakout</title>
+<link rel="stylesheet" type="text/css" href="/JsBreakout/style/style.css" />
+
+<link rel="stylesheet" type="text/css" href="/JsBreakout/lib/jquery-ui-1.11.4.custom/jquery-ui.min.css" />
+
+
+</head>
+<body >
+	<div id="game">
+			<div id="ingame"><canvas  id="myCanvas"  ></canvas></div>
+			<button id="myButton" >Stop </button>
+	</div>
+<script type="text/javascript" src="/JsBreakout/lib/TweenJS-0.6.1/lib/tweenjs-0.6.1.combined.js"></script>
+<script type="text/javascript" src="/JsBreakout/lib/EaselJS-0.8.1/lib/easeljs-0.8.1.combined.js"></script>
+<script type="text/javascript" src="/JsBreakout/lib/jquery-ui-1.11.4.custom/external/jquery/jquery.js"></script>
+<script type="text/javascript" src="/JsBreakout/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js" ></script>
+<script>
+	
+	
+	var stage = new createjs.Stage("myCanvas");
+	stage.canvas.width = 800;
+	stage.canvas.height = 300;
+	createjs.Ticker.setFPS(60);
+	createjs.Ticker.addEventListener("tick", stage);
+	
+
+	
+	var chasm = function(){
+		var myPolygon = new createjs.Shape();
+		var points =  [];
+		var alpha = 1;
+		points.push({x: 0, y: 0});
+		
+		var current_X = 0 ;
+		//Generate Points:
+		for(var i = 0; i < 4; i++){
+			current_X = current_X + Math.random()* (300-current_X);
+			points.push({x : current_X, y : Math.random()*60})
+		}	
+			
+		points.push({x: 300, y: 0 });	
+		
+		
+		myPolygon.graphics.moveTo(10,10);
+		myPolygon.graphics.beginLinearGradientStroke(["#000","#0F0"], [0, 1], 10, 10, 10, 20);
+		myPolygon.graphics.beginLinearGradientFill(["rgba(0,0,0,0)","#0F0"], [0, 1], 10, 10, 10, 60);
+		//myPolygon.graphics.beginStroke("#FFF");
+		for(var i = 0; i < points.length; i++){
+			myPolygon.graphics.lineTo(points[i].x,points[i].y );
+		}
+		
+		myPolygon.x = Math.random()*800;
+		myPolygon.y = Math.random()*300;
+		myPolygon.rotation = Math.random()*360;
+		
+		myPolygon.addEventListener("tick", function(){
+			myPolygon.alpha = alpha;
+			alpha = alpha - 0.1;
+			
+			if(alpha <= 0){
+				myPolygon.removeAllEventListeners("tick");
+				stage.removeChild(myPolygon);
+			}
+		});
+		
+		return { getPolygon : function(){return myPolygon;}};
+	} 
+	
+	
+	stage.addEventListener("tick",function(){
+		
+		var chas1 = chasm();
+		stage.addChild(chas1.getPolygon());
+
+	}); 
+	
+	document.getElementById("myButton").onclick = function(){
+		console.log("stop");
+		stage.removeAllEventListeners("tick");
+	};
+	
+	
+</script>
+</body>
+
+</html>

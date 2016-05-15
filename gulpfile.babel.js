@@ -65,7 +65,8 @@ function lint(files, options) {
 }
 const testLintOptions = {
   env: {
-    jasmine: true
+    jasmine: true,
+    amd: true
   }
 };
 
@@ -179,7 +180,7 @@ gulp.task('wiredep', () => {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras'], () => {
+gulp.task('build', ['lint', 'buildlib', 'html', 'images', 'fonts', 'extras'], () => {
   return gulp.src('dist/**/*').pipe($.size({
     title: 'build',
     gzip: true
@@ -217,11 +218,16 @@ gulp.task('buildlib', function(done) {
     baseUrl: 'app/scripts',
     name: '../../node_modules/almond/almond',
     include: ['main'],
-    out: 'main-built.js',
+    out: 'zAnimator.js',
     wrap: {
       startFile: 'app/scripts/wrap.start',
       endFile: 'app/scripts/wrap.end'
+    },
+    map: {
+      '*': {
+        'adapter': 'adapters/createjs/adapter'
+      }
     }
   })
-  .pipe(gulp.dest('./dist/'));
+  .pipe(gulp.dest('.tmp/lib'));
 });
