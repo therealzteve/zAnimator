@@ -1,9 +1,11 @@
 /* global $: true, Mustache: true */
 'use strict';
 function createExampleRunner(){
-  var template = $('#example-template').html();
-  Mustache.parse(template);
-
+  var template;
+  $.get('/examples/button.mustache.html', function(scriptContent){
+    template = scriptContent;
+    Mustache.parse(template);
+  });
   var list = [];
   var addIndexes = function(){
     for(var i in list){
@@ -20,6 +22,9 @@ function createExampleRunner(){
       addIndexes();
       var rendered = Mustache.render(template, {examples: list });
       $('#examples-container').html(rendered);
+    },
+    run: (id) => {
+      list[id].code();
     }
   };
   return runner;

@@ -27,7 +27,7 @@ gulp.task('styles', () => {
     }));
 });
 
-gulp.task('scripts', () => {
+gulp.task('scripts', ['buildlib'], () => {
 
   return gulp.src('app/scripts/**/*.js')
     .pipe($.plumber())
@@ -38,6 +38,43 @@ gulp.task('scripts', () => {
     .pipe(reload({
       stream: true
     }));
+});
+
+
+/**
+ * Watch for file changes and re-run tests on each change
+ */
+gulp.task('buildlib', () => {
+
+  rjs({
+    baseUrl: 'app/scripts',
+    name: '../../node_modules/almond/almond',
+    include: ['main'],
+    out: 'zAnimator.js',
+    wrap: {
+      startFile: 'app/scripts/wrap.start',
+      endFile: 'app/scripts/wrap.end'
+    },
+    // map: {
+    //   '*': {
+    //     'adapter': 'adapters/createjs/adapter'
+    //   }
+    // },
+    // paths: {
+    //    adapter: 'adapters/createjs/adapter'
+    // },
+    packages : [
+    {
+        name: 'adapter',
+        location : 'adapters/createjs',
+        main : 'adapter'
+    }
+  ]
+  })
+  .pipe(gulp.dest('.tmp/lib'))
+  .pipe(reload({
+    stream: true
+  }));
 });
 
 gulp.task('addScriptsToHtml', () => {
@@ -78,7 +115,7 @@ gulp.task('html', ['styles', 'scripts'], () => {
     .pipe($.useref({
       searchPath: ['.tmp', 'app', '.']
     }))
-    .pipe($.if('*.js', $.uglify()))
+    //.pipe($.if('*.js', $.uglify()))
     .pipe($.if('*.css', $.cssnano()))
     .pipe($.if('*.html', $.htmlmin({
       collapseWhitespace: true
@@ -116,9 +153,10 @@ gulp.task('extras', () => {
   }).pipe(gulp.dest('dist'));
 });
 
+
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('serve', ['styles', 'scripts', 'fonts'], () => {
+gulp.task('serve', ['styles', 'fonts', 'scripts'], () => {
   browserSync({
     notify: false,
     port: 9000,
@@ -137,7 +175,7 @@ gulp.task('serve', ['styles', 'scripts', 'fonts'], () => {
   ]).on('change', reload);
 
   gulp.watch('app/styles/**/*.css', ['styles']);
-  gulp.watch('app/scripts/**/*.js', ['scripts']);
+  gulp.watch('app/scripts/**/*.js', ['buildlib']);
   gulp.watch('app/fonts/**/*', ['fonts']);
   gulp.watch('bower.json', ['wiredep', 'fonts']);
 });
@@ -147,7 +185,11 @@ gulp.task('serve:dist', () => {
     notify: false,
     port: 9000,
     server: {
-      baseDir: ['dist']
+      baseDir: ['dist'],
+      routes: {
+        '/examples': 'app/examples',
+        '/bower_components': 'bower_components'
+      }
     }
   });
 });
@@ -208,26 +250,4 @@ gulp.task('tdd', function(done) {
   new Server({
     configFile: __dirname + '/karma.conf.js'
   }, done).start();
-});
-
-/**
- * Watch for file changes and re-run tests on each change
- */
-gulp.task('buildlib', function(done) {
-  rjs({
-    baseUrl: 'app/scripts',
-    name: '../../node_modules/almond/almond',
-    include: ['main'],
-    out: 'zAnimator.js',
-    wrap: {
-      startFile: 'app/scripts/wrap.start',
-      endFile: 'app/scripts/wrap.end'
-    },
-    map: {
-      '*': {
-        'adapter': 'adapters/createjs/adapter'
-      }
-    }
-  })
-  .pipe(gulp.dest('.tmp/lib'));
 });
