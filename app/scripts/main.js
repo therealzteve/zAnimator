@@ -1,15 +1,25 @@
 /*global define */
-define(function (require) {
-    'use strict';
-    var adapter = require('adapter');
+define(function(require) {
+  'use strict';
 
-    var flasher = require('opacity/flasher');
-    //Return the module value.
+  var factory = require('factory');
+  var flasher = require('opacity/flasher');
+  var loop = require('./loop');
+
+
+
+  //Return the module value.
+  return function(canvasId) {
+    var mainContainer = factory.mainContainer(canvasId);
+    loop.addAnimation(mainContainer);
+
     return {
-        version: '0.0.1',
-        adapter: adapter,
-        opacity: {
-          flasher: flasher
-        }
+      version: '0.0.1',
+      mainContainer: mainContainer,
+      factory: factory,
+      opacity: {
+        flasher: flasher
+      }
     };
+  };
 });

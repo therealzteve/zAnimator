@@ -55,19 +55,11 @@ gulp.task('buildlib', () => {
       startFile: 'app/scripts/wrap.start',
       endFile: 'app/scripts/wrap.end'
     },
-    // map: {
-    //   '*': {
-    //     'adapter': 'adapters/createjs/adapter'
-    //   }
-    // },
-    // paths: {
-    //    adapter: 'adapters/createjs/adapter'
-    // },
     packages : [
     {
-        name: 'adapter',
-        location : 'adapters/createjs',
-        main : 'adapter'
+        name: 'factory',
+        location : 'factories/createjs',
+        main : 'factory'
     }
   ]
   })

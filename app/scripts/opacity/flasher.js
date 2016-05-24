@@ -1,26 +1,26 @@
-/* global zAnimator: true */
 'use strict';
-define(['adapter'], function(adapter){
-  var handle = '';
+define(['factory', '../loop'], function(factory, loop){
 
-  function start(){
-    zAnimator.addAnimation(handle);
+  function Flasher(child){
+    var flasher = {};
+
+    function start(){
+      flasher.view.addChild(child.view);
+      loop.addAnimation(flasher.handle);
+    }
+
+    function stop(){
+      loop.removeAnimation(flasher.handle);
+    }
+
+    flasher.view = factory.container();
+    flasher.start = start;
+    flasher.stop = stop;
+    flasher.handle = function(){
+        flasher.view.visible = ( Math.random() > 0.5);
+    };
+    return flasher;
   }
 
-  function stop(){
-    zAnimator.removeAnimation(handle);
-  }
-
-  var flasher = function(){
-  };
-
-  flasher.view = adapter.container();
-  flasher.start = start;
-  flasher.stop = stop;
-  flasher.handle = function(animator){
-      flasher.view.addChild(animator.view);
-      flasher.view.visible = ( Math.random() > 0.5);
-  };
-
-  return (flasher);
+  return (Flasher);
 });
