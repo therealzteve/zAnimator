@@ -24,7 +24,10 @@ function createExampleRunner(){
       $('#examples-container').html(rendered);
     },
     run: (id) => {
-      list[id].code();
+      for(var listEntry of list){
+        listEntry.stop();
+      }
+      list[id].start();
     }
   };
   return runner;

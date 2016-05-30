@@ -17,7 +17,7 @@ define(['factory', '../loop'], function(factory, loop){
     flasher.start = start;
     flasher.stop = stop;
     flasher.handle = function(){
-        flasher.view.visible = ( Math.random() > 0.5);
+      flasher.view.visible = ( Math.random() > 0.5);
     };
     return flasher;
   }

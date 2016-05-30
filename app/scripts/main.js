@@ -4,6 +4,7 @@ define(function(require) {
 
   var factory = require('factory');
   var flasher = require('opacity/flasher');
+  var fader = require('opacity/fader');
   var loop = require('./loop');
 
 
@@ -18,7 +19,8 @@ define(function(require) {
       mainContainer: mainContainer,
       factory: factory,
       opacity: {
-        flasher: flasher
+        flasher: flasher,
+        fader: fader
       }
     };
   };
