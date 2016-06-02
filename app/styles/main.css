@@ -32,3 +32,14 @@ body {
 #example-canvas{
   border: 1px solid #000;
 }
+
+
+.example-canvas{
+  position: absolute;
+  border: 1px solid;
+}
+
+
+#examples-container {
+    float: right;
+}

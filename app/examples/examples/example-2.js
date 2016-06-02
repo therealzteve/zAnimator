@@ -3,7 +3,7 @@
 'use strict';
 
 window.addEventListener('load', function(){
-  var myAnimator = zAnimator('example-canvas');
+  var myAnimator = zAnimator('example-canvas2');
   var square = myAnimator.factory.square(10, '#F00');
   var fader = myAnimator.opacity.fader(square);
   exampleRunner.addExample({

@@ -34,17 +34,17 @@ define(['factory', '../loop'], function(factory, loop){
 
     /* Private functions */
     var handleIncrease = function(event){
-      fader.view.opacity = fader.view.opacity + speed * (event.delta / 1000);
-      if(fader.view.opacity >= 1){
-        fader.view.opacity = 1;
+      fader.view.alpha = fader.view.alpha + fader.speed * (event.delta / 1000);
+      if(fader.view.alpha >= 1){
+        fader.view.alpha = 1;
         fader.increase = false;
       }
     };
 
     var handleDecrease = function(event){
-      fader.view.opacity = fader.view.opacity - speed * (event.delta / 1000);
-      if(fader.view.opacity <= 0){
-        fader.view.opacity = 0;
+      fader.view.alpha = fader.view.alpha - fader.speed * (event.delta / 1000);
+      if(fader.view.alpha <= 0){
+        fader.view.alpha = 0;
         fader.increase = true;
       }
     };
