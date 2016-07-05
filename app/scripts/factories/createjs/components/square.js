@@ -1,7 +1,4 @@
-define(function () {
-    'use strict';
-
-    function Square(sideLength, color){
+export default function(sideLength, color){
 
       var square = {};
       square.sideLength = sideLength;
@@ -14,7 +11,4 @@ define(function () {
 
       square.draw();
       return square;
-    }
-
-    return (Square);
-});
+}

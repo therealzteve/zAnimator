@@ -1,11 +1,11 @@
-/*global exampleRunner: true, zAnimator: true*/
+/*global exampleRunner: true*/
 
 'use strict';
 
 window.addEventListener('load', function(){
-  var myAnimator = zAnimator('example-canvas1');
+  var myAnimator = exampleRunner.getAnimator();
   var square = myAnimator.factory.square(10, '#000');
-  var flasher = myAnimator.opacity.flasher(square);
+  var flasher = myAnimator.filters.opacity.flasher(square);
   exampleRunner.addExample({
     name: 'My first example',
     start: function(){

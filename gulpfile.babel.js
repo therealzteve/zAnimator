@@ -1,53 +1,114 @@
 // generated on 2016-05-03 using generator-webapp 2.0.0
 import gulp from 'gulp';
-import gulpLoadPlugins from 'gulp-load-plugins';
+import gulpLoadPlugins from 'gulp-load-plugins'; // Loads any plugin from package.json
 import browserSync from 'browser-sync';
 import del from 'del';
-import {
-  stream as wiredep
-} from 'wiredep';
+import { stream as wiredep } from 'wiredep';
 import inject from 'gulp-inject';
+import browserify from 'browserify';
+import babelify from 'babelify';
 
+var source = require('vinyl-source-stream');
 var Server = require('karma').Server;
-var rjs = require('gulp-requirejs');
+var collapse = require('bundle-collapser/plugin');
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
-gulp.task('styles', () => {
-  return gulp.src('app/styles/*.css')
-    .pipe($.sourcemaps.init())
-    .pipe($.autoprefixer({
-      browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']
-    }))
-    .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp/styles'))
-    .pipe(reload({
-      stream: true
-    }));
+// ##################
+// TASKS
+// ##################
+
+gulp.task('default', ['clean'], () => {
+  gulp.start('build');
 });
 
-gulp.task('scripts', ['buildlib'], () => {
-
-  return gulp.src('app/scripts/**/*.js')
-    .pipe($.plumber())
-    .pipe($.sourcemaps.init())
-    .pipe($.babel())
-    .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('.tmp/scripts'))
-    .pipe(reload({
-      stream: true
-    }));
-});
+/**
+  Cleans the temporary projects folders
+*/
+gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 
 /**
- * Watch for file changes and re-run tests on each change
- */
-gulp.task('buildlib', () => {
+  Main build task
+*/
+gulp.task('build', ['lint', 'buildlib'], () => {
+  return gulp.src('dist/**/*').pipe($.size({
+    title: 'build',
+    gzip: true
+  }));
+});
 
-  rjs({
-    baseUrl: 'app/scripts',
+
+//gulp.task('lint', lint('app/scripts/**/*.js'));
+gulp.task('lint', () => {
+  return gulp.src('app/scripts/**/*.js')
+    .pipe(reload({
+      stream: true,
+      once: true
+    }))
+    .pipe($.eslint())
+    .pipe($.eslint.format())
+    .pipe($.if(!browserSync.active, $.eslint.failAfterError()));
+});
+
+/**
+ * Builds the library for using in the browser
+ */
+gulp.task('buildlib', ['scripts'], () => {
+  console.log('test');
+  var b = browserify({
+      debug: true,
+      standalone: 'zAnimator'
+    })
+    .transform(babelify)
+    .require('app/scripts/main.js',
+      {
+        entry: true,
+        fullPaths: false
+        })
+    .plugin(collapse);
+
+    return b.bundle()
+     .on('error', function (err) { console.log('Error: ' + err.message); })
+     .pipe(source('zAnimator.js'))
+     .pipe(gulp.dest('.tmp/lib/'));
+     //.pipe(fs.mkdir('.tmp/lib'))
+     //.pipe(fs.createWriteStream('.tmp/lib/zAnimator.js'));
+    /*.pipe(gulp.src('app.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+        // Add transformation tasks to the pipeline here.
+        .pipe(uglify())
+        .on('error', gutil.log)
+    .pipe(sourcemaps.write('./'))*/
+
+
+  /*  return gulp.src('app/scripts/main.js')
+		.pipe($.requirejsOptimize({
+      baseUrl: '.tmp/scripts',
+      findNestedDependencies: true,
+      name: '../../node_modules/almond/almond',
+      include: ['main'],
+      out: 'zAnimator.js',
+      wrap: {
+        startFile: 'app/scripts/wrap.start',
+        endFile: 'app/scripts/wrap.end'
+      },
+      packages: [
+      {
+          name: 'factory',
+          location: 'factories/createjs',
+          main: 'factory'
+      }
+    ],
+    optimize: 'none'
+		}))
+    .pipe(gulp.dest('.tmp/lib')); */
+
+  /*rjs({
+    baseUrl: '.tmp/scripts',
+    findNestedDependencies: true,
     name: '../../node_modules/almond/almond',
     include: ['main'],
     out: 'zAnimator.js',
@@ -66,7 +127,16 @@ gulp.task('buildlib', () => {
   .pipe(gulp.dest('.tmp/lib'))
   .pipe(reload({
     stream: true
-  }));
+  }));*/
+});
+
+gulp.task('scripts', () => {
+  return gulp.src('app/scripts/**/*.js')
+    .pipe($.plumber())
+    .pipe($.sourcemaps.init())
+    .pipe($.babel())
+    .pipe($.sourcemaps.write('.'))
+    .pipe(gulp.dest('.tmp/scripts'));
 });
 
 gulp.task('addScriptsToHtml', () => {
@@ -76,79 +146,15 @@ gulp.task('addScriptsToHtml', () => {
     read: false
   });
 
-  return target.pipe(inject(sources))
-    .pipe(gulp.dest('.tmp'));
+  return target
+    .pipe(inject(sources))
+    .pipe(gulp.dest('.tmp'))
+    .pipe(reload({
+      stream: true
+    }));
 });
 
-function lint(files, options) {
-  return () => {
-    return gulp.src(files)
-      .pipe(reload({
-        stream: true,
-        once: true
-      }))
-      .pipe($.eslint(options))
-      .pipe($.eslint.format())
-      .pipe($.if(!browserSync.active, $.eslint.failAfterError()));
-  };
-}
-const testLintOptions = {
-  env: {
-    jasmine: true,
-    amd: true
-  }
-};
-
-gulp.task('lint', lint('app/scripts/**/*.js'));
-gulp.task('lint:test', lint('test/spec/**/*.js', testLintOptions));
-
-gulp.task('html', ['styles', 'scripts'], () => {
-  return gulp.src('app/*.html')
-    .pipe($.useref({
-      searchPath: ['.tmp', 'app', '.']
-    }))
-    //.pipe($.if('*.js', $.uglify()))
-    .pipe($.if('*.css', $.cssnano()))
-    .pipe($.if('*.html', $.htmlmin({
-      collapseWhitespace: true
-    })))
-    .pipe(gulp.dest('dist'));
-});
-
-gulp.task('images', () => {
-  return gulp.src('app/images/**/*')
-    .pipe($.cache($.imagemin({
-      progressive: true,
-      interlaced: true,
-      // don't remove IDs from SVGs, they are often used
-      // as hooks for embedding and styling
-      svgoPlugins: [{
-        cleanupIDs: false
-      }]
-    })))
-    .pipe(gulp.dest('dist/images'));
-});
-
-gulp.task('fonts', () => {
-  return gulp.src(require('main-bower-files')('**/*.{eot,svg,ttf,woff,woff2}', function(err) {})
-      .concat('app/fonts/**/*'))
-    .pipe(gulp.dest('.tmp/fonts'))
-    .pipe(gulp.dest('dist/fonts'));
-});
-
-gulp.task('extras', () => {
-  return gulp.src([
-    'app/*.*',
-    '!app/*.html'
-  ], {
-    dot: true
-  }).pipe(gulp.dest('dist'));
-});
-
-
-gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
-
-gulp.task('serve', ['styles', 'fonts', 'scripts'], () => {
+gulp.task('serve', ['buildlib', 'addScriptsToHtml'], () => {
   browserSync({
     notify: false,
     port: 9000,
@@ -160,15 +166,8 @@ gulp.task('serve', ['styles', 'fonts', 'scripts'], () => {
     }
   });
 
-  gulp.watch([
-    'app/*.html',
-    'app/images/**/*',
-    '.tmp/fonts/**/*'
-  ]).on('change', reload);
-
-  gulp.watch('app/styles/**/*.css', ['styles']);
+  gulp.watch('app/examples/**/*.*', ['addScriptsToHtml']);
   gulp.watch('app/scripts/**/*.js', ['buildlib']);
-  gulp.watch('app/fonts/**/*', ['fonts']);
   gulp.watch('bower.json', ['wiredep', 'fonts']);
 });
 
@@ -212,17 +211,6 @@ gulp.task('wiredep', () => {
       ignorePath: /^(\.\.\/)*\.\./
     }))
     .pipe(gulp.dest('app'));
-});
-
-gulp.task('build', ['lint', 'buildlib', 'html', 'images', 'fonts', 'extras'], () => {
-  return gulp.src('dist/**/*').pipe($.size({
-    title: 'build',
-    gzip: true
-  }));
-});
-
-gulp.task('default', ['clean'], () => {
-  gulp.start('build');
 });
 
 /**

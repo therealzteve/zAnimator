@@ -1,6 +1,3 @@
-define(function () {
-    'use strict';
-    return function() {
-      return new createjs.Container();
-    };
-});
+export default function() {
+    return new createjs.Container();
+}

@@ -1,7 +1,7 @@
-'use strict';
-define(['factory', '../loop'], function(factory, loop){
+import loop from '~/loop';
+import factory from '~/factories/createjs/factory';
 
-  function Flasher(child){
+export default function(child){
     var flasher = {};
 
     function start(){
@@ -21,6 +21,3 @@ define(['factory', '../loop'], function(factory, loop){
     };
     return flasher;
   }
-
-  return (Flasher);
-});

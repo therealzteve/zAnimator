@@ -1,4 +1,4 @@
-/* global $: true, Mustache: true */
+/* global $: true, Mustache: true, zAnimator: true */
 'use strict';
 function createExampleRunner(){
   var template;
@@ -12,8 +12,12 @@ function createExampleRunner(){
       list[i].index = i;
     }
   };
+  var animator = zAnimator.create('example-canvas');
 
   var runner = {
+    getAnimator: () => {
+      return animator;
+    },
     addExample: (example) => {
       list.push(example);
       runner.render();

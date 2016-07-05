@@ -1,7 +1,7 @@
-'use strict';
-define(['factory', '../loop'], function(factory, loop){
+import loop from '~/loop';
+import factory from '~/factories/createjs/factory';
 
-  function Fader(child, speed, increase){
+export default function(child, speed, increase){
     var fader = {};
 
     /* Params and defaults */
@@ -50,7 +50,4 @@ define(['factory', '../loop'], function(factory, loop){
     };
 
     return fader;
-  }
-
-  return (Fader);
-});
+}

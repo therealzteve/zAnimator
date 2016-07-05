@@ -38,7 +38,7 @@ zAnimator.flasher = function(animator){
 
   var flasher = {
     view: zAnimator.createContainer(),
-    start: start;
+    start: start,
     stop:stop;
   }
 

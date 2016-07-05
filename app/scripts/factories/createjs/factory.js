@@ -1,9 +1,10 @@
-define(['./components/container', './components/square', './components/main_container'], function (container, square, mainContainer) {
-    'use strict';
+import Container from './components/container';
+import Square from './components/square';
+import MainContainer from './components/main_container';
 
-    return {
-      container: container,
-      square: square,
-      mainContainer: mainContainer
-    };
-});
+export default
+{
+    container: Container,
+    square: Square,
+    mainContainer: MainContainer
+};

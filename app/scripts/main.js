@@ -1,16 +1,11 @@
-/*global define */
-define(function(require) {
-  'use strict';
+import factory from './factories/createjs/factory';
+import flasher from './filters/opacity/flasher';
+import fader from './filters/opacity/fader';
+import linear from './filters/mover/point2point/linear';
+import loop from './loop';
 
-  var factory = require('factory');
-  var flasher = require('opacity/flasher');
-  var fader = require('opacity/fader');
-  var loop = require('./loop');
-
-
-
-  //Return the module value.
-  return function(canvasId) {
+export function create(canvasId) {
+    console.log(factory);
     var mainContainer = factory.mainContainer(canvasId);
     loop.addAnimation(mainContainer);
 
@@ -18,10 +13,16 @@ define(function(require) {
       version: '0.0.1',
       mainContainer: mainContainer,
       factory: factory,
-      opacity: {
-        flasher: flasher,
-        fader: fader
+      filters: {
+        opacity: {
+          flasher: flasher,
+          fader: fader
+        },
+        mover: {
+          point2point: {
+            linear: linear
+          }
+        }
       }
     };
-  };
-});
+  }
