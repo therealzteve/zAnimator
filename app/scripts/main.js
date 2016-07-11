@@ -2,6 +2,7 @@ import factory from './factories/createjs/factory';
 import flasher from './filters/opacity/flasher';
 import fader from './filters/opacity/fader';
 import linear from './filters/mover/point2point/linear';
+import linearShake from './filters/mover/point2point/linear_shake';
 import loop from './loop';
 
 export function create(canvasId) {
@@ -20,7 +21,8 @@ export function create(canvasId) {
         },
         mover: {
           point2point: {
-            linear: linear
+            linear: linear,
+            linearShake: linearShake
           }
         }
       }

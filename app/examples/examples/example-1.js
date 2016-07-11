@@ -7,7 +7,7 @@ window.addEventListener('load', function(){
   var square = myAnimator.factory.square(10, '#000');
   var flasher = myAnimator.filters.opacity.flasher(square);
   exampleRunner.addExample({
-    name: 'My first example',
+    name: 'Shaker example',
     start: function(){
       console.log('Starting example 1');
       flasher.view.x = 300;

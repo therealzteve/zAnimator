@@ -6,13 +6,16 @@ window.addEventListener('load', function(){
   var myAnimator = exampleRunner.getAnimator();
   var square = myAnimator.factory.square(10, '#F00');
   var fader = myAnimator.filters.opacity.fader(square);
+  var mover = myAnimator.filters.mover.point2point.linearShake(fader, 30, 2);
   exampleRunner.addExample({
-    name: 'Fader Example',
+    name: 'Shake Mover Example',
     start: function(){
-      fader.view.x = 600;
-      fader.view.y = 600;
+      fader.view.x = 300;
+      fader.view.y = 300;
       fader.start();
-      myAnimator.mainContainer.addChild(fader.view);
+      mover.start();
+      myAnimator.mainContainer.addChild(mover.view);
+      mover.moveTo({'x': 300, 'y': 0 }, () => { fader.stop(); });
     },
     stop: function (){
       fader.stop();
