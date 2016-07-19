@@ -3,6 +3,7 @@ import flasher from './filters/opacity/flasher';
 import fader from './filters/opacity/fader';
 import linear from './filters/mover/point2point/linear';
 import linearShake from './filters/mover/point2point/linear_shake';
+import rectangleGroup from './filters/group/rectangle_group';
 import loop from './loop';
 
 export function create(canvasId) {
@@ -24,6 +25,9 @@ export function create(canvasId) {
             linear: linear,
             linearShake: linearShake
           }
+        },
+        group: {
+          rectangleGroup: rectangleGroup
         }
       }
     };

@@ -43,3 +43,11 @@ body {
 #examples-container {
     float: right;
 }
+
+.example-button{
+  padding: 2px;
+  margin: 2px;
+  border: 1px solid #AAA;
+  background-color: #BBB;
+  cursor: pointer;
+}
