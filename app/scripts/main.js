@@ -6,6 +6,7 @@ import linearShake from './filters/mover/point2point/linear_shake';
 import rectangleGroup from './filters/group/rectangle_group';
 import circleGroup from './filters/group/circle_group';
 import spiralCircleGroup from './filters/group/spiral_circle_group';
+import randomCircleGroup from './filters/group/random_circle_group';
 import loop from './loop';
 
 export function create(canvasId) {
@@ -31,7 +32,8 @@ export function create(canvasId) {
         group: {
           rectangleGroup: rectangleGroup,
           circleGroup: circleGroup,
-          spiralCircleGroup: spiralCircleGroup
+          spiralCircleGroup: spiralCircleGroup,
+          randomCircleGroup: randomCircleGroup
         }
       }
     };
