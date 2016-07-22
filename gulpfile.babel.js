@@ -56,7 +56,6 @@ gulp.task('lint', () => {
  * Builds the library for using in the browser
  */
 gulp.task('buildlib', ['scripts'], () => {
-  console.log('test');
   var b = browserify({
       debug: true,
       standalone: 'zAnimator'
@@ -142,12 +141,12 @@ gulp.task('scripts', () => {
 gulp.task('addScriptsToHtml', () => {
   var target = gulp.src('app/index.html');
   // It's not necessary to read the files (will speed up things), we're only after their paths:
-  var sources = gulp.src(['app/scripts/zAnimator/**/*.js'], {
+  var sources = gulp.src(['app/examples/examples/*.js'], {
     read: false
   });
 
   return target
-    .pipe(inject(sources))
+    .pipe(inject(sources, {name: 'examples', relative: 'true'}))
     .pipe(gulp.dest('.tmp'))
     .pipe(reload({
       stream: true
