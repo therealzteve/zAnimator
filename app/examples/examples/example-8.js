@@ -19,7 +19,7 @@ window.addEventListener('load', function(){
     squares.push(fader);
   }
 
-  var circleGroup = myAnimator.filters.group.randomCircleGroup(squares, 80, 75);
+  var circleGroup = myAnimator.filters.group.randomCircleGroup(squares, 80, 0);
   circleGroup.view.x = 300;
   circleGroup.view.y = 300;
   exampleRunner.addExample({

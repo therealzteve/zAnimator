@@ -4,9 +4,11 @@ import fader from './filters/opacity/fader';
 import linear from './filters/mover/point2point/linear';
 import linearShake from './filters/mover/point2point/linear_shake';
 import rectangleGroup from './filters/group/rectangle_group';
+import randomRectangleGroup from './filters/group/random_rectangle_group';
 import circleGroup from './filters/group/circle_group';
 import spiralCircleGroup from './filters/group/spiral_circle_group';
 import randomCircleGroup from './filters/group/random_circle_group';
+import linearRotator from './filters/rotator/linear_rotator';
 import loop from './loop';
 
 export function create(canvasId) {
@@ -31,9 +33,13 @@ export function create(canvasId) {
         },
         group: {
           rectangleGroup: rectangleGroup,
+          randomRectangleGroup: randomRectangleGroup,
           circleGroup: circleGroup,
           spiralCircleGroup: spiralCircleGroup,
           randomCircleGroup: randomCircleGroup
+        },
+        rotator: {
+          linearRotator: linearRotator
         }
       }
     };
