@@ -1,13 +1,12 @@
 import factory from '~/factories/createjs/factory';
+import abstractGroup from 'abstract_group';
 
 export default function(children, radius, randomRange){
-    var circleGroup = {};
+    var circleGroup = abstractGroup(children);
 
     /* Params and defaults */
     circleGroup.radius = radius ? radius : 10;
     circleGroup.randomRange = randomRange ? randomRange : 10;
-    circleGroup.view = factory.container();
-    circleGroup.children = children ? children : [];
 
     var angle = 360 / circleGroup.children.length;
     for(var i = 0; i < circleGroup.children.length; i++){

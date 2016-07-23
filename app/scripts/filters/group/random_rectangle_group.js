@@ -1,13 +1,12 @@
 import factory from '~/factories/createjs/factory';
+import abstractGroup from 'abstract_group';
 
 export default function(children, width, height){
-    var rectangleGroup = {};
+    var rectangleGroup = abstractGroup(children);
 
     /* Params and defaults */
     rectangleGroup.width = width ? width : 10;
     rectangleGroup.height = height ? height : 10;
-    rectangleGroup.view = factory.container();
-    rectangleGroup.children = children ? children : [];
 
     for(var i = 0; i < rectangleGroup.children.length; i++){
       var container = factory.container();

@@ -15,7 +15,7 @@ window.addEventListener('load', function(){
       fader.start();
       mover.start();
       myAnimator.mainContainer.addChild(mover.view);
-      mover.moveTo({'x': 100, 'y': 0 }, () => { fader.stop()});
+      mover.moveTo({'x': 100, 'y': 0 }, () => { fader.stop(); });
     },
     stop: function (){
       fader.stop();

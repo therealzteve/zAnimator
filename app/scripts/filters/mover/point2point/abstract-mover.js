@@ -1,15 +1,15 @@
-import loop from '~/loop';
-import factory from '~/factories/createjs/factory';
+import abstractFilter from '~/filters/abstract_filter';
+
 import normalize from '~/geometry/normalize';
 
 export default function(child){
-    var p2PMover = {};
+    var p2PMover = abstractFilter();
+    p2PMover.view.addChild(child.view);
 
     /* Params and defaults */
     p2PMover.goalPoint = {x: 0, y: 0};
     p2PMover.finished = true;
     p2PMover.perspective = {x: 0, y: 0};
-    p2PMover.view = factory.container();
 
     /*
         Sets informations in the perspective object
@@ -31,15 +31,6 @@ export default function(child){
     }
 
     /* Public functions */
-    function start(){
-      p2PMover.view.addChild(child.view);
-      loop.addAnimation(p2PMover.handle);
-    }
-
-    function stop(){
-      loop.removeAnimation(p2PMover.handle);
-    }
-
     function handle(delta){
       if(!p2PMover.finished){
         p2PMover.handleMove(delta);
@@ -85,8 +76,6 @@ export default function(child){
       return true;
     }
 
-    p2PMover.start = start;
-    p2PMover.stop = stop;
     p2PMover.handle = handle;
     p2PMover.moveTo = moveTo;
     p2PMover.move = move;

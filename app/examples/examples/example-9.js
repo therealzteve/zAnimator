@@ -24,7 +24,6 @@ window.addEventListener('load', function(){
       rotator.view.y = 300;
       rotator.start();
       myAnimator.mainContainer.addChild(rotator.view);
-
     },
     stop: function (){
       rotator.stop();

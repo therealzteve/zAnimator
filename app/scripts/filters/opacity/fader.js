@@ -1,23 +1,12 @@
-import loop from '~/loop';
-import factory from '~/factories/createjs/factory';
+import abstractFilter from '~/filters/abstract_filter';
 
 export default function(child, speed, increase){
-    var fader = {};
+    var fader = abstractFilter();
 
     /* Params and defaults */
     fader.speed = speed ? speed : 1;
     fader.increase = increase ? increase : true;
-    fader.view = factory.container();
-
-    /* Public functions */
-    function start(){
-      fader.view.addChild(child.view);
-      loop.addAnimation(fader.handle);
-    }
-
-    function stop(){
-      loop.removeAnimation(fader.handle);
-    }
+    fader.view.addChild(child.view);
 
     function handle(event){
       if(fader.increase){
@@ -27,8 +16,6 @@ export default function(child, speed, increase){
       }
     }
 
-    fader.start = start;
-    fader.stop = stop;
     fader.handle = handle;
 
 
