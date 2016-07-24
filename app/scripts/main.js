@@ -2,6 +2,8 @@ import factory from './factories/createjs/factory';
 import flasher from './filters/opacity/flasher';
 import fader from './filters/opacity/fader';
 import linear from './filters/mover/point2point/linear';
+import inOutQuad from './filters/mover/point2point/in_out_quad';
+import inOutBack from './filters/mover/point2point/in_out_back';
 import linearShake from './filters/mover/point2point/linear_shake';
 import rectangleGroup from './filters/group/rectangle_group';
 import randomRectangleGroup from './filters/group/random_rectangle_group';
@@ -28,7 +30,9 @@ export function create(canvasId) {
         mover: {
           point2point: {
             linear: linear,
-            linearShake: linearShake
+            linearShake: linearShake,
+            inOutQuad: inOutQuad,
+            inOutBack: inOutBack
           }
         },
         group: {

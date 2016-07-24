@@ -67,5 +67,7 @@
       ]
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "easing-utils": "0.0.5"
+  }
 }

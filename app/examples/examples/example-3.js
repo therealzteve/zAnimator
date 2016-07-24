@@ -6,7 +6,7 @@ window.addEventListener('load', function(){
   var myAnimator = exampleRunner.getAnimator();
   var square = myAnimator.factory.square(10, '#F00');
   var fader = myAnimator.filters.opacity.fader(square);
-  var mover = myAnimator.filters.mover.point2point.linear(fader, 20);
+  var mover = myAnimator.filters.mover.point2point.linear(fader, 300);
   exampleRunner.addExample({
     name: 'Linear Mover Example',
     start: function(){

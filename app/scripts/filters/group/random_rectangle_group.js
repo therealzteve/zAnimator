@@ -1,5 +1,5 @@
 import factory from '~/factories/createjs/factory';
-import abstractGroup from 'abstract_group';
+import abstractGroup from './abstract_group';
 
 export default function(children, width, height){
     var rectangleGroup = abstractGroup(children);

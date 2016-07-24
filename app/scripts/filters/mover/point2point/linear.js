@@ -1,16 +1,12 @@
-import P2PMover from './abstract-mover';
+import p2pMover from './abstract-mover';
 
 
 export default function(child, speed){
-    var p2pMover = P2PMover;
-    var linearP2PMover = p2pMover(child);
+    var linearP2PMover = p2pMover(child, speed);
 
-
-    linearP2PMover.speed = speed ? speed : 300;
-
-    linearP2PMover.handleMove = function(event){
-      linearP2PMover.view.x += linearP2PMover.direction[0] * event.delta * speed / 1000;
-      linearP2PMover.view.y += linearP2PMover.direction[1] * event.delta * speed / 1000;
+    linearP2PMover.handleMove = function(){
+      linearP2PMover.view.x = linearP2PMover.startPoint.x + linearP2PMover.distance * linearP2PMover.direction[0] * linearP2PMover.progress;
+      linearP2PMover.view.y = linearP2PMover.startPoint.y + linearP2PMover.distance * linearP2PMover.direction[1] * linearP2PMover.progress;
     };
 
     return linearP2PMover;

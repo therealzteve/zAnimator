@@ -1,4 +1,4 @@
-import abstractGroup from 'abstract_group';
+import abstractGroup from './abstract_group';
 import factory from '~/factories/createjs/factory';
 
 export default function(children, spacing, columns){
