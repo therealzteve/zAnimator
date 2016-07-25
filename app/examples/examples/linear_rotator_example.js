@@ -1,17 +1,19 @@
 /*global exampleRunner: true*/
 
-'use strict';
 
 window.addEventListener('load', function(){
   var myAnimator = exampleRunner.getAnimator();
-  var squares = [];
+  var circles = [];
   for(var i = 0; i < 49; i++){
-    squares.push(myAnimator.factory.square(10, '#000'));
+    circles.push(myAnimator.factory.circle(25, myAnimator.utils.randomColor(
+      {
+        hue: 'random'
+      })));
   }
 
-  var group = myAnimator.filters.group.rectangleGroup(squares, 50, 7);
-  group.view.x = -155;
-  group.view.y = -155;
+  var group = myAnimator.filters.group.rectangleGroup(circles, 50, 7);
+  group.view.x = -150;
+  group.view.y = -150;
   var mover = myAnimator.filters.mover.point2point.linear(group, 120);
   var fader = myAnimator.filters.opacity.fader(mover);
   var rotator = myAnimator.filters.rotator.linearRotator(fader, 120);

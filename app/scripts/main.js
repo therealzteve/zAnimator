@@ -11,6 +11,9 @@ import circleGroup from './filters/group/circle_group';
 import spiralCircleGroup from './filters/group/spiral_circle_group';
 import randomCircleGroup from './filters/group/random_circle_group';
 import linearRotator from './filters/rotator/linear_rotator';
+import randomColorChanger from './modificators/color/random_color_changer';
+import linearPulsar from './modificators/scale/linear_pulsar';
+import randomColor from 'randomColor';
 import loop from './loop';
 
 export function create(canvasId) {
@@ -22,6 +25,9 @@ export function create(canvasId) {
       version: '0.0.1',
       mainContainer: mainContainer,
       factory: factory,
+      utils: {
+        randomColor: randomColor
+      },
       filters: {
         opacity: {
           flasher: flasher,
@@ -44,6 +50,14 @@ export function create(canvasId) {
         },
         rotator: {
           linearRotator: linearRotator
+        }
+      },
+      modificators: {
+        color: {
+          randomColorChanger: randomColorChanger
+        },
+        scale: {
+          linearPulsar: linearPulsar
         }
       }
     };

@@ -68,6 +68,7 @@
     }
   },
   "dependencies": {
-    "easing-utils": "0.0.5"
+    "easing-utils": "0.0.5",
+    "randomcolor": "^0.4.4"
   }
 }

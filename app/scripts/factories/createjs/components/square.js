@@ -1,12 +1,14 @@
+import abstractComponent from './abstract_component';
+
 export default function(sideLength, color){
 
-      var square = {};
+      var square = abstractComponent();
       square.sideLength = sideLength;
       square.color = color;
-      square.view = new createjs.Shape();
 
       square.draw = function(){
-          square.view.graphics.beginFill(square.color).drawRect(0, 0, square.sideLength, square.sideLength);
+          square.view.graphics.clear();
+          square.view.graphics.beginFill(square.color).drawRect(0, 0, square.sideLength * square.scale, square.sideLength * square.scale);
       };
 
       square.draw();
