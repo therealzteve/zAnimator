@@ -12,6 +12,7 @@ import spiralCircleGroup from './filters/group/spiral_circle_group';
 import randomCircleGroup from './filters/group/random_circle_group';
 import linearRotator from './filters/rotator/linear_rotator';
 import randomColorChanger from './modificators/color/random_color_changer';
+import colorFader from './modificators/color/color_fader';
 import linearPulsar from './modificators/scale/linear_pulsar';
 import exponentialPulsar from './modificators/scale/exponential_pulsar';
 import randomColor from 'randomColor';
@@ -55,7 +56,8 @@ export function create(canvasId) {
       },
       modificators: {
         color: {
-          randomColorChanger: randomColorChanger
+          randomColorChanger: randomColorChanger,
+          colorFader: colorFader
         },
         scale: {
           linearPulsar: linearPulsar,
