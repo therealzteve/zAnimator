@@ -1,62 +1,36 @@
-import loop from '~/loop';
 import color from 'color';
+import pulsar from '~/transitions/pulsar_transition';
 
 export default function(subject, speed, color1, color2){
-  var linearPulsar = {};
-  linearPulsar.subject = subject;
-  linearPulsar.speed = speed;
-  linearPulsar.color1 = color(color1);
-  linearPulsar.color2 = color(color2);
-  linearPulsar.currentColor = color(color1);
-  linearPulsar.current = 0;
+  var colorFader = {};
+  colorFader.subject = subject;
+  colorFader.speed = speed;
+  colorFader.color1 = color(color1);
+  colorFader.color2 = color(color2);
+  colorFader.currentColor = color(color1);
+  colorFader.pulsar = pulsar(colorFader.speed, 1);
 
-
-  linearPulsar.increment = true;
-  linearPulsar.min = 0;
-  linearPulsar.max = 1;
-
-  linearPulsar.colorRange = {
-    r: linearPulsar.color2.red() - linearPulsar.color1.red(),
-    g: linearPulsar.color2.green() - linearPulsar.color1.green(),
-    b: linearPulsar.color2.blue() - linearPulsar.color1.blue()
+  colorFader.colorRange = {
+    r: colorFader.color2.red() - colorFader.color1.red(),
+    g: colorFader.color2.green() - colorFader.color1.green(),
+    b: colorFader.color2.blue() - colorFader.color1.blue()
   };
 
-  linearPulsar.start = function(){
-    loop.addAnimation(linearPulsar.handle);
+  colorFader.start = function(){
+    colorFader.pulsar.start(colorFader.handle);
   };
 
-  linearPulsar.stop = function(){
-    loop.removeAnimation(linearPulsar.handle);
+  colorFader.stop = function(){
+    colorFader.pulsar.stop();
   };
 
-  linearPulsar.handle = function(event){
-    if(linearPulsar.increment){
-      handleIncrement(event);
-    }else{
-      handleDecrement(event);
-    }
-    linearPulsar.currentColor.red(linearPulsar.color1.red() + linearPulsar.current * linearPulsar.colorRange.r);
-    linearPulsar.currentColor.green(linearPulsar.color1.green() + linearPulsar.current * linearPulsar.colorRange.g);
-    linearPulsar.currentColor.blue(linearPulsar.color1.blue() + linearPulsar.current * linearPulsar.colorRange.b);
-    linearPulsar.subject.color = linearPulsar.currentColor.rgbString();
-    linearPulsar.subject.draw();
+  colorFader.handle = function(current){
+    colorFader.currentColor.red(colorFader.color1.red() + current * colorFader.colorRange.r);
+    colorFader.currentColor.green(colorFader.color1.green() + current * colorFader.colorRange.g);
+    colorFader.currentColor.blue(colorFader.color1.blue() + current * colorFader.colorRange.b);
+    colorFader.subject.color = colorFader.currentColor.rgbString();
+    colorFader.subject.draw();
   };
 
-  function handleIncrement(event){
-    linearPulsar.current = linearPulsar.current + event.delta / 1000 * speed;
-    if(linearPulsar.current >= linearPulsar.max){
-      linearPulsar.current = linearPulsar.max;
-      linearPulsar.increment = false;
-    }
-  }
-
-  function handleDecrement(event){
-    linearPulsar.current = linearPulsar.current + event.delta / 1000 * speed * (-1);
-    if(linearPulsar.current <= linearPulsar.min){
-      linearPulsar.current = linearPulsar.min;
-      linearPulsar.increment = true;
-    }
-  }
-
-  return linearPulsar;
+  return colorFader;
 }

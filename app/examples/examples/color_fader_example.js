@@ -5,7 +5,7 @@
 window.addEventListener('load', function(){
   var myAnimator = exampleRunner.getAnimator();
   var square = myAnimator.factory.square(100, '#000');
-  var colorChanger = myAnimator.modificators.color.colorFader(square, 1, '#00F', '#F00');
+  var colorChanger = myAnimator.modificators.color.colorFader(square, 500, '#000', '#00F');
   exampleRunner.addExample({
     name: 'color fader',
     start: function(){

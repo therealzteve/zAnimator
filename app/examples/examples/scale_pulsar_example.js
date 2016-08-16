@@ -7,7 +7,7 @@ window.addEventListener('load', function(){
   var circle = myAnimator.factory.square(10, '#000');
   circle.view.x = 300;
   circle.view.y = 300;
-  var scalePulsar = myAnimator.modificators.scale.linearPulsar(circle, 10, 10);
+  var scalePulsar = myAnimator.modificators.scale.linearPulsar(circle, 2000, 10);
 
   var square = myAnimator.factory.square(10, '#000');
   square.view.x = 400;

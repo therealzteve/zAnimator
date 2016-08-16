@@ -1,39 +1,24 @@
 import abstractFilter from '~/filters/abstract_filter';
+import pulsar from '~/transitions/pulsar_transition';
 
 export default function(child, speed, increase){
     var fader = abstractFilter();
 
     /* Params and defaults */
-    fader.speed = speed ? speed : 1;
-    fader.increase = increase ? increase : true;
+    fader.speed = speed ? speed : 1000;
     fader.view.addChild(child.view);
+    fader.pulsar = pulsar(fader.speed, 0.5);
 
-    function handle(event){
-      if(fader.increase){
-        handleIncrease(event);
-      }else{
-        handleDecrease(event);
-      }
+    function handle(current){
+      fader.view.alpha = current;
     }
 
-    fader.handle = handle;
-
-
-    /* Private functions */
-    var handleIncrease = function(event){
-      fader.view.alpha = fader.view.alpha + fader.speed * (event.delta / 1000);
-      if(fader.view.alpha >= 1){
-        fader.view.alpha = 1;
-        fader.increase = false;
-      }
+    fader.start = function(){
+      fader.pulsar.start(handle);
     };
 
-    var handleDecrease = function(event){
-      fader.view.alpha = fader.view.alpha - fader.speed * (event.delta / 1000);
-      if(fader.view.alpha <= 0){
-        fader.view.alpha = 0;
-        fader.increase = true;
-      }
+    fader.stop = function(){
+      fader.pulsar.stop();
     };
 
     return fader;
