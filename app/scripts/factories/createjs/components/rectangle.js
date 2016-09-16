@@ -1,10 +1,10 @@
 import abstractComponent from './abstract_component';
 
-export default function(width, height, color){
+export default function(rectangle, color){
 
       var rect = abstractComponent();
-      rect.width = width;
-      rect.height = height;
+      rect.width = rectangle.width;
+      rect.height = rectangle.height;
       rect.color = color;
 
       rect.draw = function(){

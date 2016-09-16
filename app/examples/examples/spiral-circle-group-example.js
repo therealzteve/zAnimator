@@ -12,7 +12,7 @@ window.addEventListener('load', function(){
   }*/
 
   for(var j = 0; j < 200; j++){
-    var square2 = myAnimator.factory.square(5, '#F00');
+    var square2 = myAnimator.factory.square(myAnimator.geometry.shapes.square(5), '#F00');
     var flasher = myAnimator.filters.opacity.flasher(square2);
     flasher.start();
     var fader = myAnimator.filters.opacity.fader(flasher, 1);
@@ -23,7 +23,7 @@ window.addEventListener('load', function(){
   circleGroup.view.x = 300;
   circleGroup.view.y = 300;
   exampleRunner.addExample({
-    name: 'Circle group Example',
+    name: 'Spiral circle group Example',
     start: function(){
       for(var f of squares){
         f.start();

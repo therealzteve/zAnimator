@@ -6,7 +6,7 @@ window.addEventListener('load', function(){
   var myAnimator = exampleRunner.getAnimator();
   var squares = [];
   for(var i = 0; i < 10; i++){
-    var square = myAnimator.factory.square(10, '#F00');
+    var square = myAnimator.factory.square(myAnimator.geometry.shapes.square(10), '#F00');
     var fader = myAnimator.filters.opacity.fader(square);
     squares.push(fader);
   }

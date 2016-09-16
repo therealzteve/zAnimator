@@ -1,7 +1,7 @@
 import loop from '~/loop';
 
 
-export default function(time, steepness, current){
+function transitionLoop(time, steepness, current){
   var pulsar = {};
   pulsar.time = time;
   pulsar.steepness = (typeof steepness !== 'undefined') ? steepness : 0.5;
@@ -23,7 +23,7 @@ export default function(time, steepness, current){
   pulsar.handle = function(event){
     pulsar.currentMseconds = pulsar.currentMseconds + event.delta;
 
-    var limitTimeFactor = Math.floor(pulsar.currentMseconds  / pulsar.time);
+    var limitTimeFactor = Math.floor(pulsar.currentMseconds / pulsar.time);
 
     pulsar.currentMseconds = pulsar.currentMseconds - pulsar.time * limitTimeFactor;
 
@@ -41,3 +41,13 @@ export default function(time, steepness, current){
 
   return pulsar;
 }
+
+export function risingTransition(time, current){
+  return transitionLoop(time, 1, current);
+}
+
+export function pulsarTransition(time, current){
+  return transitionLoop(time, 0, current);
+}
+
+export default transitionLoop;

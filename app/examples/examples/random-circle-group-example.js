@@ -12,7 +12,7 @@ window.addEventListener('load', function(){
   }*/
 
   for(var j = 0; j < 200; j++){
-    var square2 = myAnimator.factory.square(5, '#F00');
+    var square2 = myAnimator.factory.square(myAnimator.geometry.shapes.square(5), '#F00');
     var flasher = myAnimator.filters.opacity.flasher(square2);
     flasher.start();
     var fader = myAnimator.filters.opacity.fader(flasher, 1);

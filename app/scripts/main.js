@@ -17,18 +17,23 @@ import linearPulsar from './modificators/scale/linear_pulsar';
 import exponentialPulsar from './modificators/scale/exponential_pulsar';
 import randomColor from 'randomColor';
 import loop from './loop';
+import shapes from './geometry/shapes/shapes';
+import pathMover from './filters/mover/path/path-mover';
 
 export function create(canvasId) {
     console.log(factory);
     var mainContainer = factory.mainContainer(canvasId);
     loop.addAnimation(mainContainer);
-
+    createjs.Ticker.setFPS(60);
     return {
       version: '0.0.1',
       mainContainer: mainContainer,
       factory: factory,
       utils: {
         randomColor: randomColor
+      },
+      geometry: {
+        shapes: shapes
       },
       filters: {
         opacity: {
@@ -41,6 +46,9 @@ export function create(canvasId) {
             linearShake: linearShake,
             inOutQuad: inOutQuad,
             inOutBack: inOutBack
+          },
+          path: {
+            pathMover: pathMover
           }
         },
         group: {

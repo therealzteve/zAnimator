@@ -32,7 +32,7 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 /**
   Main build task
 */
-gulp.task('build', ['lint', 'buildlib'], () => {
+gulp.task('build', ['bower','lint', 'buildlib'], () => {
   return gulp.src('dist/**/*').pipe($.size({
     title: 'build',
     gzip: true
@@ -230,3 +230,7 @@ gulp.task('tdd', function(done) {
     configFile: __dirname + '/karma.conf.js'
   }, done).start();
 });
+
+gulp.task('bower', function(){
+  return $.bower();
+})

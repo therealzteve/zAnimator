@@ -4,19 +4,17 @@
 
 window.addEventListener('load', function(){
   var myAnimator = exampleRunner.getAnimator();
-  var square = myAnimator.factory.square(10, '#000');
+  var square = myAnimator.factory.square(myAnimator.geometry.shapes.square(10), '#000');
   var flasher = myAnimator.filters.opacity.flasher(square);
   exampleRunner.addExample({
     name: 'Shaker example',
     start: function(){
-      console.log('Starting example 1');
       flasher.view.x = 300;
       flasher.view.y = 300;
       flasher.start();
       myAnimator.mainContainer.addChild(flasher.view);
     },
     stop: function (){
-      console.log('stopping example 1');
       flasher.stop();
       myAnimator.mainContainer.removeChild(flasher.view);
     }

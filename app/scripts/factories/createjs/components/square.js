@@ -1,9 +1,9 @@
 import abstractComponent from './abstract_component';
 
-export default function(sideLength, color){
+export default function(squareGeometry, color){
 
       var square = abstractComponent();
-      square.sideLength = sideLength;
+      square.sideLength = squareGeometry.sidelength;
       square.color = color;
 
       square.draw = function(){

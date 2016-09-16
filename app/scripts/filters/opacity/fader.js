@@ -1,5 +1,5 @@
 import abstractFilter from '~/filters/abstract_filter';
-import pulsar from '~/transitions/pulsar_transition';
+import pulsar from '~/transitions/transition_loop';
 
 export default function(child, speed, increase){
     var fader = abstractFilter();

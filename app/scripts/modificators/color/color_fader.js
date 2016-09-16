@@ -1,5 +1,5 @@
 import color from 'color';
-import pulsar from '~/transitions/pulsar_transition';
+import pulsar from '~/transitions/transition_loop';
 
 export default function(subject, speed, color1, color2){
   var colorFader = {};
@@ -8,7 +8,7 @@ export default function(subject, speed, color1, color2){
   colorFader.color1 = color(color1);
   colorFader.color2 = color(color2);
   colorFader.currentColor = color(color1);
-  colorFader.pulsar = pulsar(colorFader.speed, 1);
+  colorFader.pulsar = pulsar(colorFader.speed, 0.5);
 
   colorFader.colorRange = {
     r: colorFader.color2.red() - colorFader.color1.red(),
