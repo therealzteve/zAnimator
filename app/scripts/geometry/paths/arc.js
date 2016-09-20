@@ -6,6 +6,7 @@ export default function(start, degrees, radius){
   arc.start = start ? start : {x: 0, y: 0};
   arc.degrees = degrees;
   arc.radius = radius;
+  arc.type = 'arc';
 
   arc.getEdgePoint = function(){
     return arc.getPoint(1);

@@ -5,6 +5,7 @@ export default function(start, end){
   var line = {};
   line.start = start ? start : {x: 0, y: 0};
   line.end = end;
+  line.type = 'line';
 
   line.getEdgePoint = function(){
     return line.end;
