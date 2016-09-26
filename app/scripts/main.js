@@ -18,6 +18,7 @@ import exponentialPulsar from './modificators/scale/exponential_pulsar';
 import randomColor from 'randomColor';
 import loop from './loop';
 import shapes from './geometry/shapes/shapes';
+import paths from './geometry/paths/paths';
 import pathMover from './filters/mover/path/path-mover';
 
 export function create(canvasId) {
@@ -33,7 +34,8 @@ export function create(canvasId) {
         randomColor: randomColor
       },
       geometry: {
-        shapes: shapes
+        shapes: shapes,
+        paths: paths
       },
       filters: {
         opacity: {
