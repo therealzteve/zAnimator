@@ -1,15 +1,18 @@
 import abstractComponent from './abstract_component';
 
-export default function(x, y, thickness, color){
+export default function(linePath, thickness, color){
 
       var line = abstractComponent();
-      line.x = x;
-      line.y = y;
+      line.path = linePath;
       line.color = color;
       line.thickness = thickness;
 
       line.draw = function(){
-          line.view.graphics.beginStroke(line.color).setStrokeStyle(line.thickness * line.scale).moveTo(0, 0).lineTo(line.x * line.scale, line.y * line.scale);
+          line.view.graphics
+            .beginStroke(line.color)
+            .setStrokeStyle(line.thickness * line.scale)
+            .moveTo(line.path.start.x * line.scale, line.path.start.y * line.scale)
+            .lineTo(line.path.end.x * line.scale, line.path.end.y * line.scale);
       };
 
       line.draw();

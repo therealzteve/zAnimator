@@ -69,6 +69,7 @@
     }
   },
   "dependencies": {
+    "bezier-js": "^2.2.1",
     "color": "^0.11.3",
     "easing-utils": "0.0.5",
     "randomcolor": "^0.4.4"

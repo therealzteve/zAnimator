@@ -5,6 +5,7 @@ import Rectangle from './components/rectangle';
 import MainContainer from './components/main_container';
 import Line from './components/line';
 import CustomObject from './components/custom_object';
+import Path from './components/path';
 
 export default
 {
@@ -14,5 +15,6 @@ export default
     rectangle: Rectangle,
     line: Line,
     customObject: CustomObject,
-    mainContainer: MainContainer
+    mainContainer: MainContainer,
+    path: Path
 };
