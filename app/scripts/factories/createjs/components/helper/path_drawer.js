@@ -21,7 +21,11 @@ pathDrawer.sine_wave = function(graphics, path, current){
 
 pathDrawer.bezier_curve = function(graphics, path, current){
   graphics.moveTo(current.x + path.start.x, current.y + path.start.y);
-  graphics.bezierCurveTo(path.cpoint1.x, path.cpoint1.y, path.cpoint2.x, path.cpoint2.y, path.end.x, path.end.y);
+  if(path.cpoint2){
+    graphics.bezierCurveTo(path.cpoint1.x, path.cpoint1.y, path.cpoint2.x, path.cpoint2.y, path.end.x, path.end.y);
+  }else{
+    graphics.quadraticCurveTo(path.cpoint1.x, path.cpoint1.y, path.end.x, path.end.y);
+  }
 };
 
 export default pathDrawer;

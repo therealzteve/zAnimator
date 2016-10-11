@@ -1,6 +1,6 @@
 import addUpPoints from '~/geometry/add_up_points';
 
-export default function(){
+export default function pathConstructor(){
 
   var path = {};
 
@@ -45,6 +45,29 @@ export default function(){
     }
     return length;
   };
+
+  path.getPartPath = function(progress){
+    var newSubPaths = [];
+    var lengthPoint = progress * path.getLength();
+    var subPathsRetrieved = false;
+    var currentPath = 0;
+
+    while(!subPathsRetrieved){
+      if(lengthPoint > path.subPaths[currentPath].getLength()){
+        lengthPoint -= path.subPaths[currentPath].getLength();
+        newSubPaths.push(path.subPaths[currentPath].getPartPath(1));
+        currentPath = currentPath + 1;
+      }else{
+        newSubPaths.push(path.subPaths[currentPath].getPartPath((lengthPoint / path.subPaths[currentPath].getLength())));
+        subPathsRetrieved = true;
+      }
+    }
+
+    var partPath = pathConstructor();
+    partPath.subPaths = newSubPaths;
+    return partPath;
+
+  }
 
   return path;
 

@@ -1,6 +1,6 @@
 import angleToRadians from '~/geometry/helper/angle_to_radians';
 
-export default function(start, degrees, radius){
+export default function arcConstructor(start, degrees, radius){
   var arc = {};
 
   arc.start = start ? start : {x: 0, y: 0};
@@ -24,6 +24,11 @@ export default function(start, degrees, radius){
       y: origin.y + arc.radius * -Math.cos(angleToRadians(partOfDegrees))
     };
 
+  };
+
+  arc.getPartPath = function(progress){
+    var partOfDegrees = arc.degrees * progress;
+    return arcConstructor(start, partOfDegrees, radius);
   };
 
   return arc;
