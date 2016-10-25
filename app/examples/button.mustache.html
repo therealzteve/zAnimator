@@ -1,4 +1,8 @@
-<div></div>
+{{#subFolders}}
+  ***
+  {{name}}
+  {{> subFolder}}
+{{/subFolders}}
 {{#examples}}
 <div class="example-button" onclick="exampleRunner.run({{index}})" >
   {{name}}
