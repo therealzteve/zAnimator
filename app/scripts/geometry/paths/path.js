@@ -67,7 +67,7 @@ export default function pathConstructor(){
     partPath.subPaths = newSubPaths;
     return partPath;
 
-  }
+  };
 
   return path;
 

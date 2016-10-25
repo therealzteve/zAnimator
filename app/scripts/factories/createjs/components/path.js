@@ -2,15 +2,18 @@ import abstractComponent from './abstract_component';
 import pathDrawer from './helper/path_drawer';
 import addUpPoints from '~/geometry/add_up_points';
 
-export default function(completePath, color){
-
+export default function(completePath, options){
+      if(!options){
+        options = {};
+      }
       var custom = abstractComponent();
       custom.completePath = completePath;
-      custom.color = color;
+      custom.color = options.color ? options.color : '#000';
+      custom.width = options.width ? options.width : 1;
 
       custom.draw = function(){
           custom.view.graphics.clear();
-          custom.view.graphics.beginStroke('#00F').moveTo(0, 0);
+          custom.view.graphics.beginStroke(custom.color).setStrokeStyle(custom.width).moveTo(0, 0);
           var current = {x: 0, y: 0};
           var i = 1;
           for(var path of custom.completePath.subPaths){

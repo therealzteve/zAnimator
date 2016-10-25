@@ -13,7 +13,7 @@ window.addEventListener('load', function(){
   circleShape2.path.subPaths[0].start.y = -100;
   circleShape.path.subPaths = circleShape.path.subPaths.concat(squareShape.path.subPaths);
   circleShape.path.subPaths = circleShape.path.subPaths.concat(circleShape2.path.subPaths);
-  var customObject = myAnimator.factory.path(circleShape.path, "#F00");
+  var customObject = myAnimator.factory.path(circleShape.path, '#F00');
 
   exampleRunner.addExample({
     name: 'path draw example',

@@ -6,8 +6,14 @@ export default function(start, end, cpoint1, cpoint2){
   bezierCurve.end = end;
   bezierCurve.cpoint1 = cpoint1;
   bezierCurve.cpoint2 = cpoint2;
-  bezierCurve.internalBezier = new Bezier(bezierCurve.start, bezierCurve.cpoint1, bezierCurve.cpoint2, bezierCurve.end);
   bezierCurve.type = 'bezier_curve';
+  if(bezierCurve.cpoint2){
+    bezierCurve.internalBezier = new Bezier(bezierCurve.start, bezierCurve.cpoint1, bezierCurve.cpoint2, bezierCurve.end);
+  }else{
+    bezierCurve.internalBezier = new Bezier(bezierCurve.start, bezierCurve.cpoint1, bezierCurve.end);
+  }
+
+
 
   bezierCurve.subPaths = [bezierCurve];
 

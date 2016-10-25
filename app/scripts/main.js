@@ -5,11 +5,7 @@ import linear from './filters/mover/point2point/linear';
 import inOutQuad from './filters/mover/point2point/in_out_quad';
 import inOutBack from './filters/mover/point2point/in_out_back';
 import linearShake from './filters/mover/point2point/linear_shake';
-import rectangleGroup from './filters/group/rectangle_group';
-import randomRectangleGroup from './filters/group/random_rectangle_group';
-import circleGroup from './filters/group/circle_group';
-import spiralCircleGroup from './filters/group/spiral_circle_group';
-import randomCircleGroup from './filters/group/random_circle_group';
+import group from './filters/group/group';
 import linearRotator from './filters/rotator/linear_rotator';
 import randomColorChanger from './modificators/color/random_color_changer';
 import colorFader from './modificators/color/color_fader';
@@ -20,9 +16,9 @@ import loop from './loop';
 import shapes from './geometry/shapes/shapes';
 import paths from './geometry/paths/paths';
 import pathMover from './filters/mover/path/path-mover';
+import compositions from './compositions/compositions';
 
 export function create(canvasId) {
-    console.log(factory);
     var mainContainer = factory.mainContainer(canvasId);
     loop.addAnimation(mainContainer);
     createjs.Ticker.setFPS(60);
@@ -30,6 +26,7 @@ export function create(canvasId) {
       version: '0.0.1',
       mainContainer: mainContainer,
       factory: factory,
+      loop: loop,
       utils: {
         randomColor: randomColor
       },
@@ -53,13 +50,7 @@ export function create(canvasId) {
             pathMover: pathMover
           }
         },
-        group: {
-          rectangleGroup: rectangleGroup,
-          randomRectangleGroup: randomRectangleGroup,
-          circleGroup: circleGroup,
-          spiralCircleGroup: spiralCircleGroup,
-          randomCircleGroup: randomCircleGroup
-        },
+        group: group,
         rotator: {
           linearRotator: linearRotator
         }
@@ -73,6 +64,7 @@ export function create(canvasId) {
           linearPulsar: linearPulsar,
           exponentialPulsar: exponentialPulsar
         }
-      }
+      },
+      compositions: compositions
     };
   }

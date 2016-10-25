@@ -49,6 +49,7 @@
     "wiredep": "^2.2.2"
   },
   "eslintConfig": {
+    "fix": true,
     "env": {
       "es6": true,
       "node": true,
@@ -65,7 +66,15 @@
       "quotes": [
         2,
         "single"
-      ]
+      ],
+      "semi": [2, "always"],
+      "comma-spacing": 2,
+      "no-multi-spaces": "error",
+      "space-infix-ops": "error",
+      "no-trailing-spaces": "error"
+    },
+    "parserOptions": {
+        "sourceType": "module"
     }
   },
   "dependencies": {
