@@ -1,17 +1,19 @@
 /* global $: true, Mustache: true, zAnimator: true */
 'use strict';
 function createExampleRunner(){
+  var TEMPLATE_PATH = '/examples/button.mustache.html';
+  var EXAMPLES_CANVAS = 'example-canvas';
+  var EXAMPLES_LIST_CONTAINER = '#examples-container';
+  var EXAMPLES_SEARCH_FIELD = '#examples-search';
   var template;
-  $.get('/examples/button.mustache.html', function(scriptContent){
+
+  $.get(TEMPLATE_PATH, function(scriptContent){
     template = scriptContent;
     Mustache.parse(template);
   });
+
   var list = [];
-  var addIndexes = function(){
-    for(var i in list){
-      list[i].index = i;
-    }
-  };
+
 
   var convertToView = function(folder){
     var view = {};
@@ -31,8 +33,10 @@ function createExampleRunner(){
     return view;
   };
 
-  var animator = zAnimator.create('example-canvas');
+  var animator = zAnimator.create(EXAMPLES_CANVAS);
   var main = {name: 'main', examples: [], subFolders: {}}
+  var tree;
+
   var runner = {
     getAnimator: () => {
       return animator;
@@ -40,7 +44,6 @@ function createExampleRunner(){
     addExample: (example) => {
       var folder = main;
       if(example.path){
-        console.log(example.path);
         for(var pathPart  of example.path){
           if(!folder.subFolders[pathPart]){
             folder.subFolders[pathPart] = {name: pathPart, examples: [], subFolders: {}};
@@ -48,21 +51,51 @@ function createExampleRunner(){
           folder = folder.subFolders[pathPart];
         }
         folder.examples.push(example);
+        if(list[example.name]){
+          throw 'Duplicate example name!';
+        }else{
+          list[example.name] = example;
+        }
         runner.render();
       }
     },
     render: () => {
-      addIndexes();
       var view = convertToView(main);
-      console.log(view);
       var rendered = Mustache.render(template, view, {subFolder: template} );
-      $('#examples-container').html(rendered);
-    },
-    run: (id) => {
-      for(var listEntry of list){
-        listEntry.stop();
+
+      if(tree){
+        tree.jstree(true).destroy(true);
       }
-      list[id].start();
+      $(EXAMPLES_LIST_CONTAINER).children().first().html(rendered);
+      tree = $(EXAMPLES_LIST_CONTAINER).jstree({
+                "plugins" : [ "search" ],
+                "search": {
+                  "show_only_matches": true,
+                  "show_only_matches_children": true
+                }
+      })
+      .on('ready.jstree', function() {
+          $(EXAMPLES_LIST_CONTAINER).jstree("open_all");
+      });
+
+      var to = false;
+      $(EXAMPLES_SEARCH_FIELD).keyup(function () {
+          if(to) { clearTimeout(to); }
+          to = setTimeout(function () {
+              var v = $(EXAMPLES_SEARCH_FIELD).val();
+              $(EXAMPLES_LIST_CONTAINER).jstree(true).search(v);
+          }, 250);
+      });
+
+    },
+    run: (name) => {
+      var keys = [];
+      for (var listEntry in list) {
+        if (list.hasOwnProperty(listEntry)) {
+          list[listEntry].stop();
+        }
+      }
+      list[name].start();
     }
   };
   return runner;

@@ -10,28 +10,33 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <!-- Place favicon.ico in the root directory -->
 
-  <!-- build:css styles/main.css -->
-  <link rel="stylesheet" href="styles/main.css">
-  <!-- endbuild -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+  <link rel="stylesheet" href="styles/main.css" />
+
   <script type="x-tmpl-mustache" id="example-template" src="examples/button.mustache.html"></script>
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
   <script type="text/javascript" src="bower_components/mustache.js/mustache.min.js"></script>
   <script type="text/javascript" src="bower_components/EaselJS/lib/easeljs-0.8.2.combined.js"></script>
 </head>
 
 <body>
-
   <div id="canvas-container">
     <canvas id="example-canvas" class="example-canvas" width="1024"  height="768"></canvas>
   </div>
-  <div id="examples-container"></div>
+  <div class="side_menu">
+    <input type="text" id="examples-search" placeholder="search for example...">
+    <div id="examples-container">
+      <ul>
+      </ul>
+    </div>
+  </div>
   <!--[if lt IE 10]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-  <!-- build:js lib/zAnimator.js -->
   <script src="lib/zAnimator.js"></script>
-  <!-- endbuild -->
+  <script src="examples/init.js"></script>
   <script type="text/javascript" src="examples/example-runner.js" ></script>
   <!-- examples:js -->
   <!-- endinject -->

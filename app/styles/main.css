@@ -1,3 +1,10 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  bottom: 0;
+}
+
 body {
   background: #fafafa;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -31,6 +38,8 @@ body {
 
 #example-canvas{
   border: 1px solid #000;
+  z-index: -1;
+  position: fixed;
 }
 
 
@@ -40,8 +49,12 @@ body {
 }
 
 
-#examples-container {
+.side_menu {
     float: right;
+    border-left: 1px solid #ddd;
+    min-height: 100%;
+    position: relative;
+    background-color: #DDD;
 }
 
 .example-button{
@@ -50,4 +63,8 @@ body {
   border: 1px solid #AAA;
   background-color: #BBB;
   cursor: pointer;
+}
+
+.jstree-default .jstree-anchor {
+  height: auto;
 }

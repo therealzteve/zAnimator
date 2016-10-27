@@ -8,7 +8,7 @@ window.addEventListener('load', function(){
   var fader = myAnimator.filters.opacity.fader(square);
   var mover = myAnimator.filters.mover.point2point.inOutQuad(fader, 300);
   exampleRunner.addExample({
-    path: ['test','path','bla'],
+    path: ['filters','mover'],
     name: 'Quadratic curve mover Example',
     start: function(){
       fader.view.x = 300;

@@ -37,6 +37,7 @@ window.addEventListener('load', function(){
     }
   };
   exampleRunner.addExample({
+    path: ['filters', 'group'],
     name: 'Center group Example 2',
     start: function(){
       myAnimator.mainContainer.addChild(centerGroup.view);

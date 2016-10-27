@@ -8,6 +8,7 @@ window.addEventListener('load', function(){
   var customObject = myAnimator.factory.path(bezierCurve, "#F00");
 
   exampleRunner.addExample({
+    path: ['shapes','paths'],
     name: 'bezier curve example',
     start: function(){
       customObject.view.x = 300;
