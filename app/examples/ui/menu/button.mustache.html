@@ -1,0 +1,13 @@
+<li>
+  {{name}}
+  <ul>
+  {{#subFolders}}
+    {{> subFolder}}
+  {{/subFolders}}
+  </ul>
+{{#examples}}
+<div class="example-button" onclick="exampleRunner.menu.select('{{name}}')" >
+  {{name}}
+</div>
+{{/examples}}
+</li>

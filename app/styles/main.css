@@ -39,15 +39,20 @@ body {
 #example-canvas{
   border: 1px solid #000;
   z-index: -1;
-  position: fixed;
 }
 
 
 .example-canvas{
-  position: absolute;
   border: 1px solid;
 }
 
+#canvas-container{
+  float:left;
+}
+
+#example-runner-editor {
+    clear: left;
+}
 
 .side_menu {
     float: right;
