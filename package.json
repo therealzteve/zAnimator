@@ -1,7 +1,6 @@
 {
   "name": "zAnimator",
-  "version:": "0.0.1",
-  "private": true,
+  "version": "0.0.1",
   "engines": {
     "node": ">=0.12.0"
   },
