@@ -22,7 +22,7 @@ gulp.task('default', ['clean'], () => {
 /**
   Cleans the temporary projects folders
 */
-gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
+gulp.task('clean', del.bind(null, ['.tmp']));
 
 /**
   Main build task
