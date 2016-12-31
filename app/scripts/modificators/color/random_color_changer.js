@@ -1,9 +1,13 @@
 import loop from '~/loop';
 import randomColor from 'randomColor';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(subject){
+export default function(options){
+
+  checkParameter(options, 'subject', true);
+
   var randomColorChanger = {};
-  randomColorChanger.subject = subject;
+  randomColorChanger.subject = options.subject;
 
   randomColorChanger.start = function(){
     loop.addAnimation(randomColorChanger.handle);

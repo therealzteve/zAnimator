@@ -1,13 +1,18 @@
 import abstractFilter from '~/filters/abstract_filter';
 import pulsar from '~/transitions/transition_loop';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(child, speed, increase){
+
+export default function(options){
+
+    checkParameter(options, 'child', true);
+    checkParameter(options, 'speed', false, 1000);
+
     var fader = abstractFilter();
-
-    /* Params and defaults */
-    fader.speed = speed ? speed : 1000;
-    fader.view.addChild(child.view);
+    fader.speed = options.speed;
     fader.pulsar = pulsar(fader.speed, 0.5);
+
+    fader.view.addChild(options.child.view);
 
     function handle(current){
       fader.view.alpha = current;

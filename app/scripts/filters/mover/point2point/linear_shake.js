@@ -1,8 +1,15 @@
 import p2PMover from './abstract-mover';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(child, speed, shakeFactor){
-  var linearP2PMover = p2PMover(child, speed);
-  linearP2PMover.shakeFactor = shakeFactor ? shakeFactor : 1;
+
+export default function(options){
+
+  checkParameter(options, 'child', true);
+  checkParameter(options, 'shakeFactor', false, 1);
+  checkParameter(options, 'speed', false, 1);
+
+  var linearP2PMover = p2PMover(options.child, options.speed);
+  linearP2PMover.shakeFactor = options.shakeFactor;
 
   linearP2PMover.handleMove = function(){
     var randomFactor = Math.random() * linearP2PMover.shakeFactor - linearP2PMover.shakeFactor / 2;

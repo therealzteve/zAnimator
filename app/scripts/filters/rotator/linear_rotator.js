@@ -1,10 +1,13 @@
 import abstractFilter from '~/filters/abstract_filter';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(child, speed){
+export default function(options){
+
+  checkParameter(options, 'child', true);
+  checkParameter(options, 'speed', false, 1);
   var linearRotator = abstractFilter();
-
-  linearRotator.speed = speed ? speed : 1;
-  linearRotator.view.addChild(child.view);
+  linearRotator.speed = options.speed;
+  linearRotator.view.addChild(options.child.view);
 
   function handle(event){
     linearRotator.view.rotation = linearRotator.view.rotation + linearRotator.speed * (event.delta / 1000);

@@ -1,12 +1,16 @@
 import factory from '~/factories/createjs/factory';
 import abstractGroup from './abstract_group';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(children, width, height){
-    var rectangleGroup = abstractGroup(children);
+export default function(options){
 
-    /* Params and defaults */
-    rectangleGroup.width = width ? width : 10;
-    rectangleGroup.height = height ? height : 10;
+    checkParameter(options, 'children', true);
+    checkParameter(options, 'width', false, 10);
+    checkParameter(options, 'height', false, 10);
+
+    var rectangleGroup = abstractGroup(options.children);
+    rectangleGroup.width = options.width;
+    rectangleGroup.height = options.height;
 
     for(var i = 0; i < rectangleGroup.children.length; i++){
       var container = factory.container();

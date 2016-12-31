@@ -1,10 +1,14 @@
 import abstractComponent from './abstract_component';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(circleShape, color){
+export default function(options){
+
+      checkParameter(options, 'circleShape', true);
+      checkParameter(options, 'color', false, '#000');
 
       var circle = abstractComponent();
-      circle.circleShape = circleShape;
-      circle.color = color;
+      circle.circleShape = options.circleShape;
+      circle.color = options.color;
 
       circle.draw = function(){
           circle.view.graphics.clear();

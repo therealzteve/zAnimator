@@ -71,7 +71,9 @@
       "comma-spacing": 2,
       "no-multi-spaces": "error",
       "space-infix-ops": "error",
-      "no-trailing-spaces": "error"
+      "no-trailing-spaces": "error",
+      "no-use-before-define": ["error", { "functions": false }],
+      "key-spacing": ["error", { "mode": "strict" }]
     },
     "parserOptions": {
         "sourceType": "module"

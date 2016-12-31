@@ -1,12 +1,16 @@
 import abstractGroup from './abstract_group';
 import factory from '~/factories/createjs/factory';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(children, options){
-    var centerGroup = abstractGroup(children);
+export default function(options){
 
-    /* Params and defaults */
-    centerGroup.width = options.width ? options.width : false;
-    centerGroup.height = options.height ? options.height : false;
+    checkParameter(options, 'children', true);
+    checkParameter(options, 'width', false, false);
+    checkParameter(options, 'height', false, false);
+
+    var centerGroup = abstractGroup(options.children);
+    centerGroup.width = options.width;
+    centerGroup.height = options.height;
 
     centerGroup.refresh = function(){
       centerGroup.view.removeAllChildren();

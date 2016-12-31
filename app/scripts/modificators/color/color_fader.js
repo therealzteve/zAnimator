@@ -1,13 +1,20 @@
 import color from 'color';
 import pulsar from '~/transitions/transition_loop';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(subject, speed, color1, color2){
+export default function(options){
+
+  checkParameter(options, 'subject', true);
+  checkParameter(options, 'speed', true);
+  checkParameter(options, 'color1', true);
+  checkParameter(options, 'color2', true);
+
   var colorFader = {};
-  colorFader.subject = subject;
-  colorFader.speed = speed;
-  colorFader.color1 = color(color1);
-  colorFader.color2 = color(color2);
-  colorFader.currentColor = color(color1);
+  colorFader.subject = options.subject;
+  colorFader.speed = options.speed;
+  colorFader.color1 = color(options.color1);
+  colorFader.color2 = color(options.color2);
+  colorFader.currentColor = color(options.color1);
   colorFader.pulsar = pulsar(colorFader.speed, 0.5);
 
   colorFader.colorRange = {

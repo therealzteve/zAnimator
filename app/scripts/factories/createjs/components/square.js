@@ -1,10 +1,15 @@
 import abstractComponent from './abstract_component';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(squareGeometry, color){
+
+export default function(options){
+
+      checkParameter(options, 'squareShape', true);
+      checkParameter(options, 'color', false, '#000');
 
       var square = abstractComponent();
-      square.sideLength = squareGeometry.sidelength;
-      square.color = color;
+      square.sideLength = options.squareShape.sidelength;
+      square.color = options.color;
 
       square.draw = function(){
           square.view.graphics.clear();

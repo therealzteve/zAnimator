@@ -1,11 +1,13 @@
 import abstractGroup from './abstract_group';
 import factory from '~/factories/createjs/factory';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(children, radius){
-    var circleGroup = abstractGroup(children);
+export default function(options){
 
-    /* Params and defaults */
-    circleGroup.radius = radius ? radius : 10;
+    checkParameter(options, 'children', true);
+    checkParameter(options, 'radius', false, 10);
+    var circleGroup = abstractGroup(options.children);
+    circleGroup.radius = options.radius;
 
     var angle = 360 / circleGroup.children.length;
     for(var i = 0; i < circleGroup.children.length; i++){

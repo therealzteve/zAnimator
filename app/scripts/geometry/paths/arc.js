@@ -1,11 +1,17 @@
 import angleToRadians from '~/geometry/helper/angle_to_radians';
+import checkParameter from '~/internal/check_parameter';
 
-export default function arcConstructor(start, degrees, radius){
+export default function arcConstructor(options){
+
+  checkParameter(options, 'start', false, {x: 0, y: 0});
+  checkParameter(options, 'degrees', true);
+  checkParameter(options, 'radius', true);
+
   var arc = {};
 
-  arc.start = start ? start : {x: 0, y: 0};
-  arc.degrees = degrees;
-  arc.radius = radius;
+  arc.start = options.start;
+  arc.degrees = options.degrees;
+  arc.radius = options.radius;
   arc.type = 'arc';
 
   arc.getEdgePoint = function(){
@@ -28,7 +34,7 @@ export default function arcConstructor(start, degrees, radius){
 
   arc.getPartPath = function(progress){
     var partOfDegrees = arc.degrees * progress;
-    return arcConstructor(start, partOfDegrees, radius);
+    return arcConstructor({start: arc.start, degrees: partOfDegrees, radius: arc.radius});
   };
 
   return arc;

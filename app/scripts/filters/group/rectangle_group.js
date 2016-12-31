@@ -1,17 +1,23 @@
 import abstractGroup from './abstract_group';
 import factory from '~/factories/createjs/factory';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(children, spacing, columns){
-    var rectangleGroup = abstractGroup(children);
+export default function(options){
 
-    /* Params and defaults */
-    rectangleGroup.columns = columns ? columns : 3;
+    checkParameter(options, 'children', true);
+    checkParameter(options, 'columns', false, 3);
+    checkParameter(options, 'spacing', false, 10);
+
+    var rectangleGroup = abstractGroup(options.children);
+
+    rectangleGroup.columns = options.columns;
+    rectangleGroup.spacing = options.spacing;
 
     for(var i = 0; i < rectangleGroup.children.length; i++){
       var container = factory.container();
       container.addChild(rectangleGroup.children[i].view);
-      container.x = (i % rectangleGroup.columns) * spacing;
-      container.y = Math.floor(i / rectangleGroup.columns) * spacing;
+      container.x = (i % rectangleGroup.columns) * rectangleGroup.spacing;
+      container.y = Math.floor(i / rectangleGroup.columns) * rectangleGroup.spacing;
       rectangleGroup.view.addChild(container);
     }
 

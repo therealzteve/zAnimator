@@ -1,11 +1,15 @@
 import abstractComponent from './abstract_component';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(rectangle, color){
+export default function(options){
+
+      checkParameter(options, 'rectangleShape', true);
+      checkParameter(options, 'color', false, '#000');
 
       var rect = abstractComponent();
-      rect.width = rectangle.width;
-      rect.height = rectangle.height;
-      rect.color = color;
+      rect.width = options.rectangleShape.width;
+      rect.height = options.rectangleShape.height;
+      rect.color = options.color;
 
       rect.draw = function(){
           rect.view.graphics.clear();

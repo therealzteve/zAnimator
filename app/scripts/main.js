@@ -2,15 +2,12 @@ import factory from './factories/createjs/factory';
 import flasher from './filters/opacity/flasher';
 import fader from './filters/opacity/fader';
 import linear from './filters/mover/point2point/linear';
-import inOutQuad from './filters/mover/point2point/in_out_quad';
-import inOutBack from './filters/mover/point2point/in_out_back';
 import linearShake from './filters/mover/point2point/linear_shake';
 import group from './filters/group/group';
 import linearRotator from './filters/rotator/linear_rotator';
 import randomColorChanger from './modificators/color/random_color_changer';
 import colorFader from './modificators/color/color_fader';
 import linearPulsar from './modificators/scale/linear_pulsar';
-import exponentialPulsar from './modificators/scale/exponential_pulsar';
 import randomColor from 'randomColor';
 import loop from './loop';
 import shapes from './geometry/shapes/shapes';
@@ -42,9 +39,7 @@ export function create(canvasId) {
         mover: {
           point2point: {
             linear: linear,
-            linearShake: linearShake,
-            inOutQuad: inOutQuad,
-            inOutBack: inOutBack
+            linearShake: linearShake
           },
           path: {
             pathMover: pathMover
@@ -61,8 +56,7 @@ export function create(canvasId) {
           colorFader: colorFader
         },
         scale: {
-          linearPulsar: linearPulsar,
-          exponentialPulsar: exponentialPulsar
+          linearPulsar: linearPulsar
         }
       },
       compositions: compositions

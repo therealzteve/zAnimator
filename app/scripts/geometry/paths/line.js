@@ -1,10 +1,15 @@
 import toVector from '~/geometry/to_vector';
 import distance from '~/geometry/distance';
+import checkParameter from '~/internal/check_parameter';
 
-export default function lineConstructor(start, end){
+export default function lineConstructor(options){
+
+checkParameter(options, 'start', false, {x: 0, y: 0});
+checkParameter(options, 'end', true);
+
   var line = {};
-  line.start = start ? start : {x: 0, y: 0};
-  line.end = end;
+  line.start = options.start;
+  line.end = options.end;
   line.type = 'line';
 
   line.getEdgePoint = function(){
@@ -23,8 +28,8 @@ export default function lineConstructor(start, end){
   };
 
   line.getPartPath = function(progress){
-    var newEnd = { x: end.x * progress, y: end.y * progress};
-    var pathPart = lineConstructor(start, newEnd);
+    var newEnd = { x: line.end.x * progress, y: line.end.y * progress};
+    var pathPart = lineConstructor({start: line.start, end: newEnd});
     return pathPart;
   };
 

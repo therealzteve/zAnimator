@@ -1,15 +1,21 @@
 import abstractComponent from './abstract_component';
 import pathDrawer from './helper/path_drawer';
 import addUpPoints from '~/geometry/add_up_points';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(completePath, options){
+export default function(options){
       if(!options){
         options = {};
       }
+
+      checkParameter(options, 'path', true);
+      checkParameter(options, 'color', false, '#000');
+      checkParameter(options, 'width', false, 1);
+
       var custom = abstractComponent();
-      custom.completePath = completePath;
-      custom.color = options.color ? options.color : '#000';
-      custom.width = options.width ? options.width : 1;
+      custom.completePath = options.path;
+      custom.color = options.color;
+      custom.width = options.width;
 
       custom.draw = function(){
           custom.view.graphics.clear();

@@ -1,19 +1,26 @@
 import abstractFilter from '~/filters/abstract_filter';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(child, progressRate, path){
+export default function(options){
+
+  checkParameter(options, 'child', true);
+  checkParameter(options, 'path', true);
+  checkParameter(options, 'progressRate', false, 0);
+
 
   var pathMover = abstractFilter();
-  pathMover.view.addChild(child.view);
   pathMover.currentProgress = 0;
-  pathMover.progressRate = progressRate;
+  pathMover.progressRate = options.progressRate;
+  pathMover.path = options.path;
 
+  pathMover.view.addChild(options.child.view);
 
   pathMover.handle = function(event){
     pathMover.currentProgress += pathMover.progressRate * (event.delta / 1000);
     if(pathMover.currentProgress > 1) {
       pathMover.currentProgress -= 1;
     }
-    var point = path.getPoint(pathMover.currentProgress);
+    var point = pathMover.path.getPoint(pathMover.currentProgress);
     pathMover.view.x = point.x;
     pathMover.view.y = point.y;
   };

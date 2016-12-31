@@ -6,6 +6,7 @@ import MainContainer from './components/main_container';
 import Line from './components/line';
 import CustomObject from './components/custom_object';
 import Image from './components/image';
+import Video from './components/video';
 import Path from './components/path';
 
 export default
@@ -18,5 +19,6 @@ export default
     customObject: CustomObject,
     mainContainer: MainContainer,
     image: Image,
+    video: Video,
     path: Path
 };

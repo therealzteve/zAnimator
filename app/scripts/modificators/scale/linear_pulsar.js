@@ -1,10 +1,16 @@
 import {pulsarTransition} from '~/transitions/transition_loop';
+import checkParameter from '~/internal/check_parameter';
 
-export default function(subject, speed, limit){
+export default function(options){
+
+  checkParameter(options, 'subject', true);
+  checkParameter(options, 'speed', true);
+  checkParameter(options, 'limit', true);
+
   var linearPulsar = {};
-  linearPulsar.subject = subject;
-  linearPulsar.speed = speed;
-  linearPulsar.limit = limit;
+  linearPulsar.subject = options.subject;
+  linearPulsar.speed = options.speed;
+  linearPulsar.limit = options.limit;
   linearPulsar.pulsar = pulsarTransition(linearPulsar.speed);
 
   linearPulsar.start = function(){
