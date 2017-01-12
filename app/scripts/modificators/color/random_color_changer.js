@@ -1,6 +1,7 @@
 import loop from '~/loop';
 import randomColor from 'randomColor';
 import checkParameter from '~/internal/check_parameter';
+import setProp from '~/internal/set_prop';
 
 export default function(options){
 
@@ -18,7 +19,7 @@ export default function(options){
   };
 
   randomColorChanger.handle = function(){
-    randomColorChanger.subject.color = randomColor();
+    setProp(randomColorChanger.subject, 'color', randomColor());
     randomColorChanger.subject.draw();
   };
 

@@ -1,5 +1,6 @@
 import {pulsarTransition} from '~/transitions/transition_loop';
 import checkParameter from '~/internal/check_parameter';
+import setProp from '~/internal/set_prop';
 
 export default function(options){
 
@@ -22,7 +23,7 @@ export default function(options){
   };
 
   linearPulsar.handle = function(current){
-    linearPulsar.subject.scale = 1 + current * linearPulsar.limit;
+    setProp(linearPulsar.subject, 'scale', 1 + current * linearPulsar.limit);
     linearPulsar.subject.draw();
   };
 

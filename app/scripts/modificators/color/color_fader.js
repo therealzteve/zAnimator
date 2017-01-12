@@ -1,6 +1,7 @@
 import color from 'color';
 import pulsar from '~/transitions/transition_loop';
 import checkParameter from '~/internal/check_parameter';
+import setProp from '~/internal/set_prop';
 
 export default function(options){
 
@@ -35,7 +36,7 @@ export default function(options){
     colorFader.currentColor.red(colorFader.color1.red() + current * colorFader.colorRange.r);
     colorFader.currentColor.green(colorFader.color1.green() + current * colorFader.colorRange.g);
     colorFader.currentColor.blue(colorFader.color1.blue() + current * colorFader.colorRange.b);
-    colorFader.subject.color = colorFader.currentColor.rgbString();
+    setProp(colorFader.subject, 'color', colorFader.currentColor.rgbString() );
     colorFader.subject.draw();
   };
 

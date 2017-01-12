@@ -14,6 +14,9 @@ import shapes from './geometry/shapes/shapes';
 import paths from './geometry/paths/paths';
 import pathMover from './filters/mover/path/path-mover';
 import compositions from './compositions/compositions';
+import proxies from './proxies/proxies';
+
+//TODO Organize imports
 
 export function create(canvasId) {
     var mainContainer = factory.mainContainer(canvasId);
@@ -59,6 +62,7 @@ export function create(canvasId) {
           linearPulsar: linearPulsar
         }
       },
-      compositions: compositions
+      compositions: compositions,
+      proxies: proxies
     };
   }

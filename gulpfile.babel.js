@@ -39,7 +39,7 @@ gulp.task('build', ['lint', 'buildlib'], () => {
 gulp.task('lint', () => {
   return gulp.src('app/scripts/**/*.js')
     .pipe($.eslint())
-    .pipe($.eslint.format())
+    .pipe($.eslint.format());
 });
 
 /**
