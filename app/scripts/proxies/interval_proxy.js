@@ -12,7 +12,7 @@ export default function(options){
   proxy.timer = intervalTimer(proxy.interval);
 
   proxy.setProp = function(name, value){
-      var p = incrementProxy();
+      var p = incrementProxy({});
       p.group = proxy.group;
       var changePropCallback = function(){
         p.setProp(name, value);

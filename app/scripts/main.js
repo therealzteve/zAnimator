@@ -20,7 +20,7 @@ import proxies from './proxies/proxies';
 
 export function create(canvasId) {
     var mainContainer = factory.mainContainer(canvasId);
-    loop.addAnimation(mainContainer);
+    loop.addAnimation(mainContainer.stage);
     return {
       version: '0.0.1',
       mainContainer: mainContainer,

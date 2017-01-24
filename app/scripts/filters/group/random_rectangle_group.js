@@ -12,13 +12,17 @@ export default function(options){
     rectangleGroup.width = options.width;
     rectangleGroup.height = options.height;
 
-    for(var i = 0; i < rectangleGroup.children.length; i++){
-      var container = factory.container();
-      container.addChild(rectangleGroup.children[i].view);
-      container.x = Math.floor(rectangleGroup.width * Math.random());
-      container.y = Math.floor(rectangleGroup.height * Math.random());
-      rectangleGroup.view.addChild(container);
-    }
+    rectangleGroup.refresh = function(){
+      rectangleGroup.view.removeAllChildren();
+      for(var i = 0; i < rectangleGroup.children.length; i++){
+        var container = factory.container();
+        container.addChild(rectangleGroup.children[i].view);
+        container.x = Math.floor(rectangleGroup.width * Math.random());
+        container.y = Math.floor(rectangleGroup.height * Math.random());
+        rectangleGroup.view.addChild(container);
+      }
+    };
 
+    rectangleGroup.refresh();
     return rectangleGroup;
 }
