@@ -21,7 +21,6 @@ import proxies from './proxies/proxies';
 export function create(canvasId) {
     var mainContainer = factory.mainContainer(canvasId);
     loop.addAnimation(mainContainer);
-    createjs.Ticker.setFPS(60);
     return {
       version: '0.0.1',
       mainContainer: mainContainer,
