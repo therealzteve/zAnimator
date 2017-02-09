@@ -11,6 +11,10 @@ export default function(id) {
       stage.removeChild(child.view);
     };
 
+    container.removeAll = function(){
+      stage.removeAllChildren();
+    };
+
     container.stage = stage;
 
     return container;
