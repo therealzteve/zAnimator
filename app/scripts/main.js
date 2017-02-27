@@ -15,6 +15,7 @@ import paths from './geometry/paths/paths';
 import pathMover from './filters/mover/path/path-mover';
 import compositions from './compositions/compositions';
 import proxies from './proxies/proxies';
+import interval from './timers/interval';
 
 //TODO Organize imports
 
@@ -26,6 +27,7 @@ export function create(canvasId) {
       mainContainer: mainContainer,
       factory: factory,
       loop: loop,
+      interval: interval,
       utils: {
         randomColor: randomColor
       },

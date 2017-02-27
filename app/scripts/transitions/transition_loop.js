@@ -1,13 +1,13 @@
 import loop from '~/loop';
 
 
-function transitionLoop(time, steepness, current){
+function transitionLoop(interval, steepness, current){
   var pulsar = {};
-  pulsar.time = time;
+  pulsar.interval = interval;
   pulsar.steepness = (typeof steepness !== 'undefined') ? steepness : 0.5;
   pulsar.current = current ? current : 0;
   pulsar.increase = true;
-  pulsar.currentMseconds = current ? current * time : 0;
+  pulsar.currentMseconds = current ? current * interval.getMs() : 0;
 
 
 
@@ -23,9 +23,6 @@ function transitionLoop(time, steepness, current){
   pulsar.handle = function(event){
     pulsar.currentMseconds = pulsar.currentMseconds + event.delta;
 
-    var limitTimeFactor = Math.floor(pulsar.currentMseconds / pulsar.time);
-
-    pulsar.currentMseconds = pulsar.currentMseconds - pulsar.time * limitTimeFactor;
     var lastCurrent = pulsar.current;
     pulsar.current = pulsar.calculateCurrent(pulsar.currentMseconds);
     pulsar.increase = (lastCurrent < pulsar.current);
@@ -35,7 +32,14 @@ function transitionLoop(time, steepness, current){
   };
 
   pulsar.calculateCurrent = function(ms){
-    var relativeCurrent = ms / pulsar.time;
+    var relativeCurrent;
+    if(pulsar.interval.type === 'ms'){
+      relativeCurrent = (ms / pulsar.interval.time) % 1;
+    }
+    if(pulsar.interval.type === 'bpm'){
+      relativeCurrent = (( ms * pulsar.interval.bpm) / (60000)) % 1;
+    }
+
     if(relativeCurrent <= pulsar.steepness){
       return (relativeCurrent) / pulsar.steepness;
     }else{
@@ -46,19 +50,22 @@ function transitionLoop(time, steepness, current){
   pulsar.getRelativeCurrent = function(factor){
 
     // First prepare the value which is passed to the calculateCurrent function:
-    var factorInMs = factor * pulsar.time;
+    var factorInMs;
+    if(pulsar.interval.type === 'ms'){
+      factorInMs = factor * pulsar.interval.ms;
+    }
+    if(pulsar.interval.type === 'bpm'){
+      factorInMs = factor * (60000 / pulsar.interval.bpm);
+    }
     var msToCheck = factorInMs + pulsar.currentMseconds;
 
     if(msToCheck < 0 ){
-      // When msToCheck is negative, we subtract the last part smaller
-      // than the pulsar time from the pulsar time (with modulo)
-      // e.g.: msToCheck = -33, time = 10
-      // --> new msToCheck is 10 - 3 = 7
-      msToCheck = pulsar.time - (((Math.abs(msToCheck) / pulsar.time) % 1) * pulsar.time);
-    }else{
-      // If msToCheck is positive, we only have to check values greater than time
-      var limitTimeFactor = Math.floor(msToCheck / pulsar.time);
-      msToCheck = msToCheck - pulsar.time * limitTimeFactor;
+      if(pulsar.interval.type === 'ms'){
+        msToCheck = msToCheck + pulsar.interval.ms * Math.ceil(Math.abs(msToCheck) / pulsar.interval.ms);
+      }
+      if(pulsar.interval.type === 'bpm'){
+        msToCheck = msToCheck + (60000 / pulsar.interval.bpm) * Math.ceil( Math.abs(msToCheck) / (60000 / pulsar.interval.bpm));
+      }
     }
 
     return pulsar.calculateCurrent(msToCheck);
