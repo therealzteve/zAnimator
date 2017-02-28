@@ -43,6 +43,7 @@ export default function(options){
 
   swingLine.handle = function(current){
       var coordinates = degreesToCoordinates(current * 360, swingLine.radius);
+      console.log(coordinates);
       swingLine.bezierCurve.cpoint1.x = swingLine.length / 2 - coordinates.x;
       swingLine.bezierCurve.cpoint1.y = -coordinates.y;
       swingLine.bezierCurve.cpoint2.x = swingLine.length / 2 + coordinates.x;

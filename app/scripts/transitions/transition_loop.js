@@ -34,7 +34,7 @@ function transitionLoop(interval, steepness, current){
   pulsar.calculateCurrent = function(ms){
     var relativeCurrent;
     if(pulsar.interval.type === 'ms'){
-      relativeCurrent = (ms / pulsar.interval.time) % 1;
+      relativeCurrent = (ms / pulsar.interval.ms) % 1;
     }
     if(pulsar.interval.type === 'bpm'){
       relativeCurrent = (( ms * pulsar.interval.bpm) / (60000)) % 1;
