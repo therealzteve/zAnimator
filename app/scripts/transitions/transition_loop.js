@@ -1,15 +1,16 @@
 import loop from '~/loop';
 
 
-function transitionLoop(interval, steepness, current){
+function transitionLoop(interval, steepness, current, numberOfIntervals, onFinishedInterval){
   var pulsar = {};
   pulsar.interval = interval;
+  pulsar.currentInterval = 0;
   pulsar.steepness = (typeof steepness !== 'undefined') ? steepness : 0.5;
   pulsar.current = current ? current : 0;
   pulsar.increase = true;
   pulsar.currentMseconds = current ? current * interval.getMs() : 0;
-
-
+  pulsar.numberOfIntervals = numberOfIntervals ? numberOfIntervals : 0;
+  pulsar.onFinishedInterval = onFinishedInterval;
 
   pulsar.start = function(callback){
     pulsar.callback = callback;
@@ -18,6 +19,7 @@ function transitionLoop(interval, steepness, current){
 
   pulsar.stop = function(){
     loop.removeAnimation(pulsar.handle);
+    pulsar.currentInterval = 0;
   };
 
   pulsar.handle = function(event){
@@ -29,6 +31,8 @@ function transitionLoop(interval, steepness, current){
     if(pulsar.callback){
       pulsar.callback(pulsar.current, event);
     }
+
+    intervalPostProcessing();
   };
 
   pulsar.calculateCurrent = function(ms){
@@ -71,15 +75,40 @@ function transitionLoop(interval, steepness, current){
     return pulsar.calculateCurrent(msToCheck);
   };
 
+  function intervalPostProcessing(){
+    var currentInterval;
+    if(pulsar.interval.type === 'ms'){
+      currentInterval = Math.floor(pulsar.currentMseconds / pulsar.interval.ms);
+    }
+    if(pulsar.interval.type === 'bpm'){
+      currentInterval = Math.floor(( pulsar.currentMseconds * pulsar.interval.bpm) / (60000));
+    }
+    if(pulsar.currentInterval < currentInterval){
+      pulsar.currentInterval = currentInterval;
+      handleIntervalFinished();
+    }
+  }
+
+  function handleIntervalFinished(){
+    if(pulsar.numberOfIntervals > 0){
+      if(pulsar.currentInterval === pulsar.numberOfIntervals){
+        pulsar.stop();
+      }
+    }
+    if(pulsar.onFinishedInterval){
+      pulsar.onFinishedInterval();
+    }
+  }
+
   return pulsar;
 }
 
-export function risingTransition(time, current){
-  return transitionLoop(time, 1, current);
+export function risingTransition(time, current, numberOfIntervals, onFinishedInterval){
+  return transitionLoop(time, 1, current, numberOfIntervals, onFinishedInterval);
 }
 
-export function pulsarTransition(time, current){
-  return transitionLoop(time, 0, current);
+export function pulsarTransition(time, current, numberOfIntervals, onFinishedInterval){
+  return transitionLoop(time, 0, current, numberOfIntervals, onFinishedInterval);
 }
 
 export default transitionLoop;

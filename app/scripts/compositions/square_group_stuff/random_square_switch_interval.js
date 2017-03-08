@@ -1,4 +1,4 @@
-import randomRectGroupSwitch from './random_square_karo';
+import randomRectGroupSwitch from './random_square_switch';
 import checkParameter from '~/internal/check_parameter';
 import timer from '~/timers/interval_timer';
 

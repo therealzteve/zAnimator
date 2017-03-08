@@ -7,12 +7,13 @@ export default function(options){
   checkParameter(options, 'subject', true);
   checkParameter(options, 'speed', true);
   checkParameter(options, 'limit', true);
+  checkParameter(options, 'numberOfIntervals', false);
 
   var linearPulsar = {};
   linearPulsar.subject = options.subject;
   linearPulsar.speed = options.speed;
   linearPulsar.limit = options.limit;
-  linearPulsar.pulsar = pulsarTransition(linearPulsar.speed);
+  linearPulsar.pulsar = pulsarTransition(linearPulsar.speed, 0, options.numberOfIntervals);
 
   linearPulsar.start = function(){
     linearPulsar.pulsar.start(linearPulsar.handle);
