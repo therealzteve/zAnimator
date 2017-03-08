@@ -7,7 +7,8 @@ export default function(options){
   checkParameter(options, 'speed', true);
 
   options.numberOfIntervals = 1;
-  options.limit = 2;
+  options.limit = 0;
+  options.rising = true;
   var zoomer = linearPulsar(options);
 
   var zoomOut = {};
