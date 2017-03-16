@@ -1,16 +1,20 @@
 import checkParameter from '~/internal/check_parameter';
+import abstractShape from './abstract_shape';
 
 export default function(options){
 
+      /* Parameters */
       checkParameter(options, 'source', true);
       // If the source is a string, convert it to a video
       handleVideoSource();
 
-      var video = {
-        view: new createjs.Bitmap(options.source),
-        scale: 0.5
-      };
+      /* private vars */
+      var video = abstractShape();
 
+      /* public properties */
+      video.view = new createjs.Bitmap(options.source);
+
+      /* public methods */
       video.draw = function(){
         video.view.scaleX = video.scale;
         video.view.scaleY = video.scale;
@@ -29,6 +33,7 @@ export default function(options){
         options.source.pause();
       };
 
+      /* private functions */
       function handleVideoSource(){
         if (typeof options.source === 'string') {
           var source = document.createElement('source');
@@ -39,6 +44,7 @@ export default function(options){
         }
       }
 
+      /* init */
       video.draw();
       return video;
 }

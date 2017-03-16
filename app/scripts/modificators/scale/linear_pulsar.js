@@ -1,4 +1,4 @@
-import {pulsarTransition, risingTransition} from '~/transitions/transition_loop';
+import { pulsarTransition, risingTransition } from '~/transitions/transition_loop';
 import checkParameter from '~/internal/check_parameter';
 import setProp from '~/internal/set_prop';
 
@@ -9,6 +9,8 @@ export default function(options){
   checkParameter(options, 'limit', true);
   checkParameter(options, 'numberOfIntervals', false);
   checkParameter(options, 'rising', false, true);
+  checkParameter(options, 'centerIfPossible', false, true);
+
 
   var linearPulsar = {};
   linearPulsar.subject = options.subject;

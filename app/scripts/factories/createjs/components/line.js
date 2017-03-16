@@ -1,8 +1,8 @@
-import abstractComponent from './abstract_component';
+import abstractShape from './abstract_shape';
 import checkParameter from '~/internal/check_parameter';
 
 export default function(options){
-      var line = abstractComponent();
+      var line = abstractShape();
 
       checkParameter(options, 'linePath', true);
       checkParameter(options, 'thickness', false, 1);
@@ -19,6 +19,15 @@ export default function(options){
             .moveTo(line.path.start.x * line.scale, line.path.start.y * line.scale)
             .lineTo(line.path.end.x * line.scale, line.path.end.y * line.scale);
       };
+
+      line.getWidth = function(){
+        return (line.path.end.x - line.path.start.x) * line.scale;
+      };
+
+      line.getHeight = function(){
+        return (line.path.end.y - line.path.start.y) * line.scale;
+      };
+
 
       line.draw();
       return line;

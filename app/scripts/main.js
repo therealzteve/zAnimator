@@ -1,9 +1,8 @@
 import factory from './factories/createjs/factory';
 import flasher from './filters/opacity/flasher';
 import fader from './filters/opacity/fader';
-import linear from './filters/mover/point2point/linear';
-import linearShake from './filters/mover/point2point/linear_shake';
 import group from './filters/group/group';
+import mover from './filters/mover/mover';
 import linearRotator from './filters/rotator/linear_rotator';
 import randomColorChanger from './modificators/color/random_color_changer';
 import colorFader from './modificators/color/color_fader';
@@ -12,7 +11,6 @@ import randomColor from 'randomColor';
 import loop from './loop';
 import shapes from './geometry/shapes/shapes';
 import paths from './geometry/paths/paths';
-import pathMover from './filters/mover/path/path-mover';
 import compositions from './compositions/compositions';
 import proxies from './proxies/proxies';
 import interval from './timers/interval';
@@ -40,15 +38,7 @@ export function create(canvasId) {
           flasher: flasher,
           fader: fader
         },
-        mover: {
-          point2point: {
-            linear: linear,
-            linearShake: linearShake
-          },
-          path: {
-            pathMover: pathMover
-          }
-        },
+        mover: mover,
         group: group,
         rotator: {
           linearRotator: linearRotator

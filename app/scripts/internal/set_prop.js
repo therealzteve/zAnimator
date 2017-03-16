@@ -7,6 +7,9 @@ export default function(element, property, value, doNotChain){
 
   if(element.hasOwnProperty(property)){
     element[property] = value;
+    if(element.sendEvent){
+      element.sendEvent('property_change');
+    }
   }else{
     console.log(element);
     throw new Error('Cannot set property of object. Object hasn\'t the property: ' + property);

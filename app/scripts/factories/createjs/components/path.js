@@ -1,4 +1,4 @@
-import abstractComponent from './abstract_component';
+import abstractShape from './abstract_shape';
 import pathDrawer from './helper/path_drawer';
 import addUpPoints from '~/geometry/add_up_points';
 import checkParameter from '~/internal/check_parameter';
@@ -12,7 +12,7 @@ export default function(options){
       checkParameter(options, 'color', false, '#000');
       checkParameter(options, 'width', false, 1);
 
-      var custom = abstractComponent();
+      var custom = abstractShape();
       custom.completePath = options.path;
       custom.color = options.color;
       custom.width = options.width;
