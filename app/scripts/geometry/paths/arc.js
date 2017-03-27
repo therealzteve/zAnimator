@@ -3,10 +3,12 @@ import checkParameter from '~/internal/check_parameter';
 
 export default function arcConstructor(options){
 
+  // Parameters
   checkParameter(options, 'start', false, {x: 0, y: 0});
   checkParameter(options, 'degrees', true);
   checkParameter(options, 'radius', true);
 
+  // private vars
   var arc = {};
 
   arc.start = options.start;
@@ -14,6 +16,7 @@ export default function arcConstructor(options){
   arc.radius = options.radius;
   arc.type = 'arc';
 
+  // public functions
   arc.getEdgePoint = function(){
     return arc.getPoint(1);
   };
@@ -30,6 +33,10 @@ export default function arcConstructor(options){
       y: origin.y + arc.radius * -Math.cos(angleToRadians(partOfDegrees))
     };
 
+  };
+
+  arc.getAngle = function(progress){
+    return angleToRadians(arc.degrees * progress);
   };
 
   arc.getPartPath = function(progress){
