@@ -1,18 +1,15 @@
-import p2pMover from './abstract-mover';
+import abstractFilter from '~/filters/abstract_filter';
+import modificatorFilter from '~/filters/modificator_filter';
+import singleChildFilter from '~/filters/single_child_filter';
+import lineMover from '~/modificators/position/line_mover';
 
 export default function(options){
 
     /* Private vars */
-    var linearP2PMover = p2pMover(options);
+    var linearP2PMover = singleChildFilter(modificatorFilter(abstractFilter(options)), options);
 
-    /* Public functions */
-    linearP2PMover.handle = function(current){
-      var amountX = (linearP2PMover.goalPoint.x - linearP2PMover.startPoint.x) * current;
-      var amountY = (linearP2PMover.goalPoint.y - linearP2PMover.startPoint.y) * current;
-
-      linearP2PMover.view.x = linearP2PMover.startPoint.x + amountX;
-      linearP2PMover.view.y = linearP2PMover.startPoint.y + amountY;
-    };
+    options.subject = linearP2PMover.view;
+    linearP2PMover.modificator = lineMover(options);
 
     return linearP2PMover;
 }

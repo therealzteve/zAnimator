@@ -35,6 +35,7 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
 
     // check if interval is finished and set it to 1 if it was the last interval
     newCurrent = intervalPostProcessing(newCurrent);
+
     // calculate current value and compare it with last value
     var currentValue = pulsar.calculateCurrentValue(newCurrent);
     pulsar.increase = (pulsar.calculateCurrentValue(lastCurrent) < currentValue);
@@ -59,7 +60,7 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
   };
 
   pulsar.calculateCurrentValue = function(currentToCalculate){
-    if(current <= pulsar.steepness){
+    if(currentToCalculate <= pulsar.steepness){
       return (currentToCalculate) / pulsar.steepness;
     }else{
       return 1 - (currentToCalculate - pulsar.steepness) / (1 - pulsar.steepness);
