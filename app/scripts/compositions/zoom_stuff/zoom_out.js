@@ -9,6 +9,7 @@ export default function(options){
   options.numberOfIntervals = 1;
   options.limit = 0;
   options.rising = true;
+  options.centerIfPossible = true;
   var zoomer = linearPulsar(options);
 
   var zoomOut = {};

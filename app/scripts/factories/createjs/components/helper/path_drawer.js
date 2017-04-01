@@ -8,7 +8,11 @@ pathDrawer.line = function(graphics, path, current){
 
 pathDrawer.arc = function(graphics, path, current){
   graphics.moveTo(current.x + path.start.x, current.y + path.start.y);
-  graphics.arc(path.start.x, path.start.y + path.radius, path.radius, angleToRadians(-90), angleToRadians(path.degrees - 90));
+  if(path.degrees < 0){
+    graphics.arc(path.start.x, path.start.y - path.radius, path.radius, angleToRadians(90), angleToRadians(90 + path.degrees), true);
+  }else{
+    graphics.arc(path.start.x, path.start.y + path.radius, path.radius, angleToRadians(-90), angleToRadians(path.degrees - 90));
+  }
 };
 
 pathDrawer.sine_wave = function(graphics, path, current){

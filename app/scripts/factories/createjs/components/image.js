@@ -1,14 +1,13 @@
 import checkParameter from '~/internal/check_parameter';
-
+import abstractShape from './abstract_shape';
 
 export default function(options) {
 
   checkParameter(options, 'source', true);
 
-  var image = {
-    view: new createjs.Bitmap(options.source),
-    scale: 0.5
-  };
+  var image = abstractShape();
+  image.view = new createjs.Bitmap(options.source);
+
 
   image.draw = function() {
     image.view.scaleX = image.scale;
