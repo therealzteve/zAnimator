@@ -1,6 +1,5 @@
 import loop from '~/loop';
 
-
 function transitionLoop(interval, steepness, current, numberOfIntervals, onFinishedInterval){
   var pulsar = {};
   pulsar.interval = interval;
@@ -14,25 +13,38 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
 
   pulsar.start = function(callback){
     pulsar.callback = callback;
+    pulsar.currentInterval = 0;
+    pulsar.currentMseconds = current ? current * interval.getMs() : 0;
     loop.addAnimation(pulsar.handle);
   };
 
   pulsar.stop = function(){
     loop.removeAnimation(pulsar.handle);
-    pulsar.currentInterval = 0;
   };
 
   pulsar.handle = function(event){
+
+    // First sum current ms
     pulsar.currentMseconds = pulsar.currentMseconds + event.delta;
 
+    // store current current
     var lastCurrent = pulsar.current;
-    pulsar.current = pulsar.calculateCurrent(pulsar.currentMseconds);
-    pulsar.increase = (lastCurrent < pulsar.current);
-    if(pulsar.callback){
-      pulsar.callback(pulsar.current, event);
-    }
 
-    intervalPostProcessing();
+    // calculate new current
+    var newCurrent = pulsar.calculateCurrent(pulsar.currentMseconds);
+
+    // check if interval is finished and set it to 1 if it was the last interval
+    newCurrent = intervalPostProcessing(newCurrent);
+    // calculate current value and compare it with last value
+    var currentValue = pulsar.calculateCurrentValue(newCurrent);
+    pulsar.increase = (pulsar.calculateCurrentValue(lastCurrent) < currentValue);
+
+    if(pulsar.callback){
+      pulsar.callback(currentValue, event);
+    }
+    //if(pulsar.onFinishedInterval){
+    //    pulsar.onFinishedInterval();
+    //}
   };
 
   pulsar.calculateCurrent = function(ms){
@@ -43,11 +55,14 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
     if(pulsar.interval.type === 'bpm'){
       relativeCurrent = (( ms * pulsar.interval.bpm) / (60000)) % 1;
     }
+    return relativeCurrent;
+  };
 
-    if(relativeCurrent <= pulsar.steepness){
-      return (relativeCurrent) / pulsar.steepness;
+  pulsar.calculateCurrentValue = function(currentToCalculate){
+    if(current <= pulsar.steepness){
+      return (currentToCalculate) / pulsar.steepness;
     }else{
-      return 1 - (relativeCurrent - pulsar.steepness) / (1 - pulsar.steepness);
+      return 1 - (currentToCalculate - pulsar.steepness) / (1 - pulsar.steepness);
     }
   };
 
@@ -72,10 +87,10 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
       }
     }
 
-    return pulsar.calculateCurrent(msToCheck);
+    return pulsar.calculateCurrentValue(pulsar.calculateCurrent(msToCheck));
   };
 
-  function intervalPostProcessing(){
+  function intervalPostProcessing(tempCurrent){
     var currentInterval;
     if(pulsar.interval.type === 'ms'){
       currentInterval = Math.floor(pulsar.currentMseconds / pulsar.interval.ms);
@@ -85,19 +100,17 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
     }
     if(pulsar.currentInterval < currentInterval){
       pulsar.currentInterval = currentInterval;
-      handleIntervalFinished();
+      return handleIntervalFinished(tempCurrent);
     }
+    return tempCurrent;
   }
 
-  function handleIntervalFinished(){
-    if(pulsar.numberOfIntervals > 0){
-      if(pulsar.currentInterval === pulsar.numberOfIntervals){
+  function handleIntervalFinished(tempCurrent){
+    if(pulsar.numberOfIntervals > 0 && pulsar.currentInterval === pulsar.numberOfIntervals){
         pulsar.stop();
-      }
+        tempCurrent = 1;
     }
-    if(pulsar.onFinishedInterval){
-      pulsar.onFinishedInterval();
-    }
+    return tempCurrent;
   }
 
   return pulsar;
