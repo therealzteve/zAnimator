@@ -14,6 +14,7 @@ export default function(options){
 
       line.draw = function(){
           line.view.graphics
+            .clear()
             .beginStroke(line.color)
             .setStrokeStyle(line.thickness * line.scale)
             .moveTo(line.path.start.x * line.scale, line.path.start.y * line.scale)

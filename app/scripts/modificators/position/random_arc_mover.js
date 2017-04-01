@@ -17,7 +17,7 @@ export default function(options){
 
   // private functions
   function createRandomArc(){
-    return arc({degrees: Math.random() * 90, radius: 100});
+    return arc({degrees: (Math.random() * 360) - 180, radius: 25});
   }
 
   var randomArcMover = {};
@@ -30,6 +30,12 @@ export default function(options){
 
   randomArcMover.stop = function(){
     loop.removeAnimation(randomArcMover.handle);
+
+    // Reset everything
+    currentArc = createRandomArc();
+    currentStartPosition = { x: 0, y: 0};
+    currentMs = 0;
+    currentAngle = 0;
   };
 
   randomArcMover.handle = function(event){
@@ -41,7 +47,7 @@ export default function(options){
       currentStartPosition.x = currentStartPosition.x + rotatedPoint.x;
       currentStartPosition.y = currentStartPosition.y + rotatedPoint.y;
       currentMs = currentMs - (currentArc.getLength() * 1000) / randomArcMover.speed;
-      currentAngle = currentArc.getAngle(1);
+      currentAngle = currentAngle + currentArc.getAngle(1);
       currentArc = createRandomArc();
     }
     var progress = ((currentMs / 1000) * randomArcMover.speed) / currentArc.getLength();

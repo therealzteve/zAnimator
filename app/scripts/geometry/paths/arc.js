@@ -22,18 +22,28 @@ export default function arcConstructor(options){
   };
 
   arc.getLength = function(){
-    return 2 * Math.PI * arc.radius * ( arc.degrees / 360 );
+    return Math.abs(2 * Math.PI * arc.radius * ( arc.degrees / 360 ));
   };
 
   arc.getPoint = function(progress){
-    var origin = {x: 0, y: arc.start.y + arc.radius };
+    var origin = {x: arc.start.x, y: arc.start.y };
     var partOfDegrees = arc.degrees * progress;
+
+    if(arc.degrees < 0){
+      return {
+        x: origin.x + arc.radius * Math.sin(angleToRadians(-partOfDegrees)),
+        y: origin.y - arc.radius + arc.radius * Math.cos(angleToRadians(partOfDegrees))
+      };
+    }
+
     return {
       x: origin.x + arc.radius * Math.sin(angleToRadians(partOfDegrees)),
-      y: origin.y + arc.radius * -Math.cos(angleToRadians(partOfDegrees))
+      y: origin.y + arc.radius + arc.radius * -Math.cos(angleToRadians(partOfDegrees))
     };
 
   };
+
+  arc.subPaths = [arc];
 
   arc.getAngle = function(progress){
     return angleToRadians(arc.degrees * progress);
