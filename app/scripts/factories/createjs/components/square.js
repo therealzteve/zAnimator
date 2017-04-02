@@ -1,7 +1,7 @@
 import abstractShape from './abstract_shape';
 import checkParameter from '~/internal/check_parameter';
 
-export default function(options){
+function squareConstructor(options){
 
       checkParameter(options, 'squareShape', true);
       checkParameter(options, 'color', false, '#000');
@@ -23,6 +23,16 @@ export default function(options){
         return square.squareShape.sidelength * square.scale;
       };
 
+      square.getCopy = function(){
+        // var copy = squareConstructor({
+        //   squareShape: square.squareShape.getCopy(),
+        //   color: square.color
+        // });
+        // return copy;
+      };
+
       square.draw();
       return square;
 }
+
+export default squareConstructor;

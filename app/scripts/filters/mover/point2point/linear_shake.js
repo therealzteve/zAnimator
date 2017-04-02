@@ -1,25 +1,15 @@
-import linearP2PMover from './abstract-mover';
-import checkParameter from '~/internal/check_parameter';
+import abstractFilter from '~/filters/abstract_filter';
+import modificatorFilter from '~/filters/modificator_filter';
+import singleChildFilter from '~/filters/single_child_filter';
+import lineShakeMover from '~/modificators/position/line_shake_mover';
 
 export default function(options){
 
-    /* PArameters */
-    checkParameter(options, 'shakeFactor', false, 1);
+    /* Private vars */
+    var linearP2PMover = singleChildFilter(modificatorFilter(abstractFilter(options)), options);
 
-    /* private vars */
-    var shakeMover = linearP2PMover(options);
+    options.subject = linearP2PMover.view;
+    linearP2PMover.modificator = lineShakeMover(options);
 
-    shakeMover.shakeFactor = options.shakeFactor;
-
-    /* Public functions */
-    shakeMover.handle = function(current){
-      var randomFactor = Math.random() * shakeMover.shakeFactor - shakeMover.shakeFactor / 2;
-      var amountX = (shakeMover.goalPoint.x - shakeMover.startPoint.x + randomFactor) * current;
-      var amountY = (shakeMover.goalPoint.y - shakeMover.startPoint.y + randomFactor) * current;
-
-      shakeMover.view.x = shakeMover.startPoint.x + amountX;
-      shakeMover.view.y = shakeMover.startPoint.y + amountY;
-    };
-
-    return shakeMover;
+    return linearP2PMover;
 }

@@ -20,6 +20,14 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
 
   pulsar.stop = function(){
     loop.removeAnimation(pulsar.handle);
+    pulsar.reset();
+  };
+
+  pulsar.reset = function(){
+    pulsar.current = 0;
+    pulsar.increase = true;
+    pulsar.currentMseconds = 0;
+    pulsar.currentInterval = 0;
   };
 
   pulsar.handle = function(event){
@@ -43,9 +51,6 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
     if(pulsar.callback){
       pulsar.callback(currentValue, event);
     }
-    //if(pulsar.onFinishedInterval){
-    //    pulsar.onFinishedInterval();
-    //}
   };
 
   pulsar.calculateCurrent = function(ms){
@@ -107,6 +112,9 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
   }
 
   function handleIntervalFinished(tempCurrent){
+    if(pulsar.onFinishedInterval){
+        pulsar.onFinishedInterval();
+    }
     if(pulsar.numberOfIntervals > 0 && pulsar.currentInterval === pulsar.numberOfIntervals){
         pulsar.stop();
         tempCurrent = 1;

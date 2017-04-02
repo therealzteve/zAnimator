@@ -1,62 +1,61 @@
-import arc from '~/geometry/paths/arc';
-import loop from '~/loop';
 import checkParameter from '~/internal/check_parameter';
-import rotatePoint from '~/geometry/rotate_point';
-import setProp from '~/internal/set_prop';
+import createLineMover from './line_mover';
+import createInterval from '~/timers/interval';
+import abstractModificator from '~/modificators/abstract_modificator';
+
+import toVector from '~/geometry/to_vector';
+import distance from '~/geometry/distance';
 
 export default function(options){
 
-  checkParameter(options, 'subject', true);
+  /* Parameters */
   checkParameter(options, 'speed', true);
+  checkParameter(options, 'width', true);
+  checkParameter(options, 'height', true);
+
+  /* create object and set properties */
+  var randomInRectMover = abstractModificator(options);
+  randomInRectMover.speed = options.speed;
+
+  // callbacks
+  var onCurrentGoalReached = function(){
+    lineMover.stop();
+    lineMover.startPoint.x = lineMover.goalPoint.x;
+    lineMover.startPoint.y = lineMover.goalPoint.y;
+
+    lineMover.goalPoint.x = Math.random() * options.width;
+    lineMover.goalPoint.y = Math.random() * options.height;
+
+    interval.ms = calculateIntervalTime();
+
+    lineMover.start();
+  };
 
   // private vars
-  var currentArc = createRandomArc();
-  var currentStartPosition = { x: 0, y: 0};
-  var currentMs = 0;
-  var currentAngle = 0;
+  var interval = createInterval({type: 'ms', ms: 1});
+  var lineMover = createLineMover({
+      subject: randomInRectMover.subject,
+      goalPoint: { x: 0, y: 0 },
+      onFinishedInterval: onCurrentGoalReached,
+      interval: interval,
+      steepness: 1
+    });
 
-  // private functions
-  function createRandomArc(){
-    return arc({degrees: (Math.random() * 360) - 180, radius: 25});
+
+  /* Public functions */
+  randomInRectMover.start = function(){
+    onCurrentGoalReached();
+  };
+
+  randomInRectMover.stop = function(){
+    lineMover.stop();
+  };
+
+  /* Private functions */
+  function calculateIntervalTime(){
+    var dist = distance(toVector(lineMover.goalPoint), toVector(lineMover.startPoint));
+    return (dist / randomInRectMover.speed) * 1000;
   }
 
-  var randomArcMover = {};
-  randomArcMover.subject = options.subject;
-  randomArcMover.speed = options.speed;
-
-  randomArcMover.start = function(){
-    loop.addAnimation(randomArcMover.handle);
-  };
-
-  randomArcMover.stop = function(){
-    loop.removeAnimation(randomArcMover.handle);
-
-    // Reset everything
-    currentArc = createRandomArc();
-    currentStartPosition = { x: 0, y: 0};
-    currentMs = 0;
-    currentAngle = 0;
-  };
-
-  randomArcMover.handle = function(event){
-    var ms = event.delta;
-    currentMs += ms;
-
-    while(((currentMs / 1000) * randomArcMover.speed) >= currentArc.getLength()){
-      var rotatedPoint = rotatePoint(currentArc.getPoint(1), currentAngle);
-      currentStartPosition.x = currentStartPosition.x + rotatedPoint.x;
-      currentStartPosition.y = currentStartPosition.y + rotatedPoint.y;
-      currentMs = currentMs - (currentArc.getLength() * 1000) / randomArcMover.speed;
-      currentAngle = currentAngle + currentArc.getAngle(1);
-      currentArc = createRandomArc();
-    }
-    var progress = ((currentMs / 1000) * randomArcMover.speed) / currentArc.getLength();
-
-    var position = rotatePoint(currentArc.getPoint(progress), currentAngle);
-    setProp(randomArcMover.subject, 'x', currentStartPosition.x + position.x);
-    setProp(randomArcMover.subject, 'y', currentStartPosition.y + position.y);
-    //randomArcMover.subject.draw();
-  };
-
-  return randomArcMover;
+  return randomInRectMover;
 }

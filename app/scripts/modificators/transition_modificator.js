@@ -5,9 +5,10 @@ export default function(modificator, options){
 
     /* Parameters */
     checkParameter(options, 'interval', true);
+    checkParameter(options, 'steepness', false, 0.5);
 
     /* private vars */
-    var modificatorTransition = transitionLoop(options.interval, 0.5);
+    var modificatorTransition = transitionLoop(options.interval, options.steepness, 0, 0, options.onFinishedInterval);
 
     /* Public methods */
     modificator.start = function(){
