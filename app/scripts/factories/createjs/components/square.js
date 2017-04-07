@@ -11,24 +11,16 @@ function squareConstructor(options){
       square.color = options.color;
 
       square.draw = function(){
-          square.view.graphics.clear();
-          square.view.graphics.beginFill(square.color).drawRect(0, 0, square.squareShape.sidelength * square.scale, square.squareShape.sidelength * square.scale);
+          this.view.graphics.clear();
+          this.view.graphics.beginFill(this.color).drawRect(0, 0, this.squareShape.sidelength * this.scale, this.squareShape.sidelength * this.scale);
       };
 
       square.getWidth = function(){
-        return square.squareShape.sidelength * square.scale;
+        return this.squareShape.sidelength * this.scale;
       };
 
       square.getHeight = function(){
-        return square.squareShape.sidelength * square.scale;
-      };
-
-      square.getCopy = function(){
-        // var copy = squareConstructor({
-        //   squareShape: square.squareShape.getCopy(),
-        //   color: square.color
-        // });
-        // return copy;
+        return this.squareShape.sidelength * this.scale;
       };
 
       square.draw();

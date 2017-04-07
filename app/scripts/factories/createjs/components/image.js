@@ -10,8 +10,8 @@ export default function(options) {
 
 
   image.draw = function() {
-    image.view.scaleX = image.scale;
-    image.view.scaleY = image.scale;
+    this.view.scaleX = this.scale;
+    this.view.scaleY = this.scale;
   };
 
   image.draw();

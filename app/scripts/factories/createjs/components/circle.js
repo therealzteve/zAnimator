@@ -16,16 +16,16 @@ export default function(options){
 
       /* public methods */
       circle.draw = function(){
-          circle.view.graphics.clear();
-          circle.view.graphics.beginFill(circle.color).drawCircle(0, 0, circle.circleShape.radius * circle.scale);
+          this.view.graphics.clear();
+          this.view.graphics.beginFill(this.color).drawCircle(0, 0, this.circleShape.radius * this.scale);
       };
 
       circle.getWidth = function(){
-        return circle.circleShape.radius * circle.scale * 2;
+        return this.circleShape.radius * this.scale * 2;
       };
 
       circle.getHeight = function(){
-        return circle.circleShape.radius * circle.scale * 2;
+        return this.circleShape.radius * this.scale * 2;
       };
 
       /* init */

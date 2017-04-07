@@ -1,33 +1,39 @@
+import copy from '~/internal/copy';
+
 export default function(){
 
   /* private vars */
   var abstractComponent = {};
-  var callbacks = {};
+  abstractComponent._callbacks = {};
 
   abstractComponent.addEventListener = function(eventName, callback){
-    if(!callbacks[eventName]){
-      callbacks[eventName] = [];
+    if(!this._callbacks[eventName]){
+      this._callbacks[eventName] = [];
     }
-    callbacks[eventName].push(callback);
+    this._callbacks[eventName].push(callback);
   };
 
   abstractComponent.removeEventListener = function(eventName, callback){
-      if(callbacks[eventName]){
-        var index = callbacks[eventName].indexOf(callback);
+      if(this._callbacks[eventName]){
+        var index = this._callbacks[eventName].indexOf(callback);
         if(index > -1){
-          callbacks.splice(index, 1);
+          this._callbacks.splice(index, 1);
         }
 
       }
   };
 
   abstractComponent.sendEvent = function(eventName){
-    if(!callbacks[eventName]){
+    if(!this._callbacks[eventName]){
       return;
     }
-    for(var callback of callbacks[eventName]){
+    for(var callback of this._callbacks[eventName]){
       callback();
     }
+  };
+
+  abstractComponent.getCopy = function(){
+    return copy(this);
   };
 
   return abstractComponent;

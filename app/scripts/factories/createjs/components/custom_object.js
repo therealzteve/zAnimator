@@ -12,15 +12,15 @@ export default function(options) {
   custom.color = options.color;
 
   custom.draw = function() {
-    custom.view.graphics.clear();
-    custom.view.graphics.beginFill(custom.color).beginStroke('#00F').moveTo(0, 0);
+    this.view.graphics.clear();
+    this.view.graphics.beginFill(this.color).beginStroke('#00F').moveTo(0, 0);
     var current = {
       x: 0,
       y: 0
     };
     var i = 1;
-    for (var path of custom.customShape.path.subPaths) {
-      pathDrawer[path.type](custom.view.graphics, path, current);
+    for (var path of this.customShape.path.subPaths) {
+      pathDrawer[path.type](this.view.graphics, path, current);
       current = addUpPoints(current, path.getEdgePoint());
       i++;
     }
