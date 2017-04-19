@@ -4,9 +4,7 @@ import bezierCurve from '~/geometry/paths/bezier_curve';
 import pulsar from '~/transitions/transition_loop';
 import checkParameter from '~/internal/check_parameter';
 
-/*
- TODO: Change swingline in curve
-*/
+
 
 /**
 * Options:
@@ -15,38 +13,38 @@ import checkParameter from '~/internal/check_parameter';
 * time --> time for a complete swing (up and down)
 */
 export default function(options){
-  var swingLine = {};
+  var curve = {};
 
   checkParameter(options, 'length', true);
   checkParameter(options, 'amplitude', true);
   checkParameter(options, 'time', true);
 
-  swingLine.length = options.length;
-  swingLine.amplitude = options.amplitude;
-  swingLine.time = options.time;
+  curve.length = options.length;
+  curve.amplitude = options.amplitude;
+  curve.time = options.time;
 
-  swingLine.pulsar = pulsar(swingLine.time, 0.5);
-  swingLine.view = container();
-  swingLine.bezierCurve = bezierCurve({start: {x: 0, y: 0}, end: {x: swingLine.length, y: 0}, cpoint1: {x: 0, y: 0}, cpoint2: {x: swingLine.length / 2, y: 0}});
-  swingLine.pathView = pathView({path: swingLine.bezierCurve});
+  curve.pulsar = pulsar(curve.time, 0.5);
+  curve.view = container();
+  curve.bezierCurve = bezierCurve({start: {x: 0, y: 0}, end: {x: curve.length, y: 0}, cpoint1: {x: 0, y: 0}, cpoint2: {x: curve.length / 2, y: 0}});
+  curve.pathView = pathView({path: curve.bezierCurve});
 
-  swingLine.start = function(){
-    swingLine.pulsar.start(swingLine.handle);
-    swingLine.view.addChild(swingLine.pathView.view);
+  curve.start = function(){
+    this.pulsar.start(this.handle);
+    this.view.addChild(this.pathView.view);
   };
 
-  swingLine.stop = function(){
-    swingLine.pulsar.stop();
-    swingLine.view.removeChild(swingLine.pathView.view);
+  curve.stop = function(){
+    this.pulsar.stop();
+    this.view.removeChild(this.pathView.view);
   };
 
-  swingLine.handle = function(current){
-      swingLine.bezierCurve.end.y = (current - 0.5) * swingLine.amplitude;
-      swingLine.bezierCurve.cpoint1.x = Math.abs(current - 0.5 ) * swingLine.length;
-      swingLine.bezierCurve.cpoint2.x = (Math.abs(current - 0.5 ) + 0.5) * swingLine.length;
-      swingLine.bezierCurve.cpoint2.y = (current - 0.5 ) / 2 * swingLine.amplitude;
-      swingLine.pathView.draw();
+  curve.handle = function(current){
+      this.bezierCurve.end.y = (current - 0.5) * this.amplitude;
+      this.bezierCurve.cpoint1.x = Math.abs(current - 0.5 ) * this.length;
+      this.bezierCurve.cpoint2.x = (Math.abs(current - 0.5 ) + 0.5) * this.length;
+      this.bezierCurve.cpoint2.y = (current - 0.5 ) / 2 * this.amplitude;
+      this.pathView.draw();
   };
 
-  return swingLine;
+  return curve;
 }

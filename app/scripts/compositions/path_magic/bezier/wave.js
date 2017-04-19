@@ -4,51 +4,49 @@ import bezierCurve from '~/geometry/paths/bezier_curve';
 import pulsar from '~/transitions/transition_loop';
 import checkParameter from '~/internal/check_parameter';
 
-/*
- TODO: Change swingline in spinner
-*/
 
 /**
 * Options:
-* length --> length of the swing line
-* radius --> radius in which the cpoints should rotate
+* length --> length of the wave
+* amplitude --> amplitude of the wave
+* stretch --> TODO: Define stretch
 * time --> time for a complete animaton
 */
 export default function(options){
-  var swingLine = {};
+  var wave = {};
 
   checkParameter(options, 'length', true);
   checkParameter(options, 'amplitude', true);
   checkParameter(options, 'stretch', false, 0);
   checkParameter(options, 'time', true);
 
-  swingLine.length = options.length;
-  swingLine.amplitude = options.amplitude;
-  swingLine.time = options.time;
-  swingLine.stretch = options.stretch;
+  wave.length = options.length;
+  wave.amplitude = options.amplitude;
+  wave.time = options.time;
+  wave.stretch = options.stretch;
 
-  swingLine.pulsar = pulsar(swingLine.time, 0.5);
-  swingLine.view = container();
-  swingLine.bezierCurve = bezierCurve({start: {x: 0, y: 0}, end: {x: swingLine.length, y: 0}, cpoint1: {x: swingLine.length / 2 - swingLine.stretch, y: 0}, cpoint2: {x: swingLine.length / 2 + swingLine.stretch, y: 0}});
-  swingLine.pathView = pathView({path: swingLine.bezierCurve});
+  wave.pulsar = pulsar(wave.time, 0.5);
+  wave.view = container();
+  wave.bezierCurve = bezierCurve({start: {x: 0, y: 0}, end: {x: wave.length, y: 0}, cpoint1: {x: wave.length / 2 - wave.stretch, y: 0}, cpoint2: {x: wave.length / 2 + wave.stretch, y: 0}});
+  wave.pathView = pathView({path: wave.bezierCurve});
 
-  swingLine.start = function(){
-    swingLine.pulsar.start(swingLine.handle);
-    swingLine.view.addChild(swingLine.pathView.view);
+  wave.start = function(){
+    this.pulsar.start(this.handle);
+    this.view.addChild(this.pathView.view);
   };
 
-  swingLine.stop = function(){
-    swingLine.pulsar.stop();
-    swingLine.view.removeChild(swingLine.pathView.view);
+  wave.stop = function(){
+    this.pulsar.stop();
+    this.view.removeChild(this.pathView.view);
   };
 
-  swingLine.handle = function(current){
-      swingLine.bezierCurve.end.y = (current - 0.5) * swingLine.amplitude;
-      swingLine.bezierCurve.cpoint2.y = (swingLine.pulsar.getRelativeCurrent(-0.25) - 0.5) * 1.5 * swingLine.amplitude;
-      swingLine.bezierCurve.cpoint1.y = (swingLine.pulsar.getRelativeCurrent(-0.5) - 0.5) * 1.5 * swingLine.amplitude;
-      swingLine.bezierCurve.start.y = (swingLine.pulsar.getRelativeCurrent(-0.75) - 0.5) * swingLine.amplitude;
-      swingLine.pathView.draw();
+  wave.handle = function(current){
+      this.bezierCurve.end.y = (current - 0.5) * this.amplitude;
+      this.bezierCurve.cpoint2.y = (this.pulsar.getRelativeCurrent(-0.25) - 0.5) * 1.5 * this.amplitude;
+      this.bezierCurve.cpoint1.y = (this.pulsar.getRelativeCurrent(-0.5) - 0.5) * 1.5 * this.amplitude;
+      this.bezierCurve.start.y = (this.pulsar.getRelativeCurrent(-0.75) - 0.5) * this.amplitude;
+      this.pathView.draw();
   };
 
-  return swingLine;
+  return wave;
 }

@@ -31,7 +31,7 @@ export default function(bpm){
   };
 
   timer.stop = function(){
-    loop.removeAnimation(thi.handle);
+    loop.removeAnimation(this.handle);
   };
 
   timer._callListeners = function(){

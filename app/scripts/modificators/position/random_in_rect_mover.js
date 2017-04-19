@@ -18,14 +18,6 @@ export default function(options){
   randomInRectMover.speed = options.speed;
   randomInRectMover.width = options.width;
   randomInRectMover.height = options.heigth;
-  randomInRectMover._interval = createInterval({type: 'ms', ms: 1});
-  randomInRectMover._lineMover = createLineMover({
-      subject: randomInRectMover.subject,
-      goalPoint: { x: 0, y: 0 },
-      onFinishedInterval: onCurrentGoalReached,
-      interval: interval,
-      steepness: 1
-    });
 
   // callbacks
   randomInRectMover.__onCurrentGoalReached = function(){
@@ -41,6 +33,15 @@ export default function(options){
     this._lineMover.start();
   };
 
+  // Private vars
+  randomInRectMover._interval = createInterval({type: 'ms', ms: 1});
+  randomInRectMover._lineMover = createLineMover({
+      subject: randomInRectMover.subject,
+      goalPoint: { x: 0, y: 0 },
+      onFinishedInterval: randomInRectMover.__onCurrentGoalReached,
+      interval: randomInRectMover._interval,
+      steepness: 1
+    });
 
   /* Public functions */
   randomInRectMover.start = function(){

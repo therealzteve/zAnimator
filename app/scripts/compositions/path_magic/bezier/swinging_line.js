@@ -27,18 +27,18 @@ export default function(options){
   swingLine.pathView = pathView({path: swingLine.bezierCurve});
 
   swingLine.start = function(){
-    swingLine.pulsar.start(swingLine.handle);
-    swingLine.view.addChild(swingLine.pathView.view);
+    this.pulsar.start(this.handle);
+    this.view.addChild(this.pathView.view);
   };
 
   swingLine.stop = function(){
-    swingLine.pulsar.stop();
-    swingLine.view.removeChild(swingLine.pathView.view);
+    this.pulsar.stop();
+    this.view.removeChild(this.pathView.view);
   };
 
   swingLine.handle = function(current){
-      swingLine.bezierCurve.cpoint1.y = (current - 0.5) * swingLine.amplitude;
-      swingLine.pathView.draw();
+      this.bezierCurve.cpoint1.y = (current - 0.5) * this.amplitude;
+      this.pathView.draw();
   };
 
   return swingLine;

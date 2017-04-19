@@ -10,25 +10,27 @@ export default function(options){
   checkParameter(options, 'spacing', false);
   checkParameter(options, 'children', false, []);
 
-  var groupSwitch = randomRectGroupSwitch(options);
-  var groupSwitchTimer = timer(options.interval);
+
   var switchInterval = {};
 
+  switchInterval._groupSwitch = randomRectGroupSwitch(options);
+  switchInterval._groupSwitchTimer = timer(options.interval);
+
   switchInterval.start = function(){
-    groupSwitchTimer.addListener(handle);
-    groupSwitchTimer.start();
+    this._groupSwitchTimer.addListener(this.handle);
+    this._groupSwitchTimer.start();
   };
 
   switchInterval.stop = function(){
-    groupSwitchTimer.stop();
-    groupSwitchTimer.removeListener(handle);
+    this._groupSwitchTimer.stop();
+    this._groupSwitchTimer.removeListener(this.handle);
   };
 
-  switchInterval.view = groupSwitch.view;
+  switchInterval.view = switchInterval._groupSwitch.view;
 
-  function handle(){
-    groupSwitch.switch();
-  }
+  switchInterval.handle = function(){
+    this._groupSwitch.switch();
+  };
 
   return switchInterval;
 }

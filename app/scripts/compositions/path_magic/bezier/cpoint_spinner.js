@@ -5,9 +5,6 @@ import pulsar from '~/transitions/transition_loop';
 import degreesToCoordinates from '~/geometry/helper/degrees_to_coordinates';
 import checkParameter from '~/internal/check_parameter';
 
-/*
- TODO: Change swingline in spinner
-*/
 
 /**
 * Options:
@@ -16,40 +13,39 @@ import checkParameter from '~/internal/check_parameter';
 * time --> time for a complete animaton
 */
 export default function(options){
-  var swingLine = {};
+  var spinner = {};
 
   checkParameter(options, 'length', true);
   checkParameter(options, 'radius', true);
   checkParameter(options, 'time', true);
 
-  swingLine.length = options.length;
-  swingLine.radius = options.radius;
-  swingLine.time = options.time;
+  spinner.length = options.length;
+  spinner.radius = options.radius;
+  spinner.time = options.time;
 
-  swingLine.pulsar = pulsar(swingLine.time, 1);
-  swingLine.view = container();
-  swingLine.bezierCurve = bezierCurve({start: {x: 0, y: 0}, end: {x: swingLine.length, y: 0}, cpoint1: {x: swingLine.length / 2 - swingLine.radius, y: 0}, cpoint2: {x: swingLine.length / 2 + swingLine.radius, y: 0}});
-  swingLine.pathView = pathView({path: swingLine.bezierCurve});
+  spinner.pulsar = pulsar(spinner.time, 1);
+  spinner.view = container();
+  spinner.bezierCurve = bezierCurve({start: {x: 0, y: 0}, end: {x: spinner.length, y: 0}, cpoint1: {x: spinner.length / 2 - spinner.radius, y: 0}, cpoint2: {x: spinner.length / 2 + spinner.radius, y: 0}});
+  spinner.pathView = pathView({path: spinner.bezierCurve});
 
-  swingLine.start = function(){
-    swingLine.pulsar.start(swingLine.handle);
-    swingLine.view.addChild(swingLine.pathView.view);
+  spinner.start = function(){
+    this.pulsar.start(spinner.handle);
+    this.view.addChild(spinner.pathView.view);
   };
 
-  swingLine.stop = function(){
-    swingLine.pulsar.stop();
-    swingLine.view.removeChild(swingLine.pathView.view);
+  spinner.stop = function(){
+    this.pulsar.stop();
+    this.view.removeChild(spinner.pathView.view);
   };
 
-  swingLine.handle = function(current){
-      var coordinates = degreesToCoordinates(current * 360, swingLine.radius);
-      console.log(coordinates);
-      swingLine.bezierCurve.cpoint1.x = swingLine.length / 2 - coordinates.x;
-      swingLine.bezierCurve.cpoint1.y = -coordinates.y;
-      swingLine.bezierCurve.cpoint2.x = swingLine.length / 2 + coordinates.x;
-      swingLine.bezierCurve.cpoint2.y = coordinates.y;
-      swingLine.pathView.draw();
+  spinner.handle = function(current){
+      var coordinates = degreesToCoordinates(current * 360, this.radius);
+      this.bezierCurve.cpoint1.x = this.length / 2 - coordinates.x;
+      this.bezierCurve.cpoint1.y = -coordinates.y;
+      this.bezierCurve.cpoint2.x = this.length / 2 + coordinates.x;
+      this.bezierCurve.cpoint2.y = coordinates.y;
+      this.pathView.draw();
   };
 
-  return swingLine;
+  return spinner;
 }

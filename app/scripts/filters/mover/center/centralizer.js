@@ -9,7 +9,6 @@ export default function(options){
     checkParameter(options, 'height', true);
 
     /* Private vars */
-
     var centerFilter = singleChildFilter(abstractFilter(), options);
 
     /* public vars */
@@ -17,7 +16,7 @@ export default function(options){
     centerFilter.height = options.height;
 
     /* Callbacks */
-    centerFilter.onPropertyChange = () =>{
+    centerFilter.onPropertyChange = function(){
       if(this.getChild().getWidth){
         this.view.x = (this.width / 2) - (this.getChild().getWidth() / 2);
       }

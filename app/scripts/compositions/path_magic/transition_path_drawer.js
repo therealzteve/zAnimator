@@ -23,18 +23,18 @@ export default function(options){
   pathDrawer.view = container();
 
   pathDrawer.start = function(){
-    pathDrawer.pulsar.start(pathDrawer.handle);
-    pathDrawer.view.addChild(pathDrawer.pathView.view);
+    this.pulsar.start(this.handle);
+    this.view.addChild(this.pathView.view);
   };
 
   pathDrawer.stop = function(){
-    pathDrawer.pulsar.stop();
-    pathDrawer.view.removeChild(pathDrawer.pathView.view);
+    this.pulsar.stop();
+    this.view.removeChild(this.pathView.view);
   };
 
   pathDrawer.handle = function(current){
-      pathDrawer.pathView.completePath = pathDrawer.path.getPartPath(current);
-      pathDrawer.pathView.draw();
+      this.pathView.completePath = this.path.getPartPath(current);
+      this.pathView.draw();
   };
 
   return pathDrawer;

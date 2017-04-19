@@ -10,15 +10,16 @@ export default function(options){
   options.limit = 0;
   options.rising = true;
   options.centerIfPossible = true;
-  var zoomer = linearPulsar(options);
 
   var zoomOut = {};
+  zoomOut._zoomer = linearPulsar(options);
+
   zoomOut.start = function(){
-    zoomer.start();
+    this._zoomer.start();
   };
 
   zoomOut.stop = function(){
-    zoomer.stop();
+    this._zoomer.stop();
   };
 
   return zoomOut;

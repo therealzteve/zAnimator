@@ -17,7 +17,7 @@ export default function(options){
       for(var i = 0; i < this.children.length; i++){
         var container = factory.container();
         container.addChild(this.children[i].view);
-        container.x = Math.floor(thid.width * Math.random());
+        container.x = Math.floor(this.width * Math.random());
         container.y = Math.floor(this.height * Math.random());
         this.view.addChild(container);
       }

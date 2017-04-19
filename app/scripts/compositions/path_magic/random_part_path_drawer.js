@@ -6,6 +6,7 @@ import checkParameter from '~/internal/check_parameter';
 /**
 * Options:
 * Path --> Path to draw
+* PathOptions --> Styling options of path
 */
 export default function(options){
   var pathDrawer = {};
@@ -21,18 +22,18 @@ export default function(options){
   pathDrawer.view = container();
 
   pathDrawer.start = function(){
-    loop.addAnimation(pathDrawer.handle);
-    pathDrawer.view.addChild(pathDrawer.pathView.view);
+    loop.addAnimation(this.handle);
+    this.view.addChild(this.pathView.view);
   };
 
   pathDrawer.stop = function(){
-    loop.removeAnimation(pathDrawer.handle);
-    pathDrawer.view.removeChild(pathDrawer.pathView.view);
+    loop.removeAnimation(this.handle);
+    this.view.removeChild(this.pathView.view);
   };
 
   pathDrawer.handle = function(){
-      pathDrawer.pathView.completePath = pathDrawer.path.getPartPath(Math.random());
-      pathDrawer.pathView.draw();
+      this.pathView.completePath = this.path.getPartPath(Math.random());
+      this.pathView.draw();
   };
 
   return pathDrawer;

@@ -16,27 +16,27 @@ export default function(options){
   randomRectMoveBackground.sourceComponent = options.component;
   randomRectMoveBackground.view = container();
 
-  var movers = [];
-  var squares = [];
+  randomRectMoveBackground._movers = [];
+  randomRectMoveBackground._squares = [];
 
   for(var i = 0; i < randomRectMoveBackground.amount; i++){
-    var square = randomRectMoveBackground.sourceComponent.getCopy();
-    squares.push(square);
+    var square = this.sourceComponent.getCopy();
+    this._movers.push(square);
 
-    movers.push(randomInRectMover({subject: square.view, speed: 100, width: randomRectMoveBackground.width, height: randomRectMoveBackground.height}));
+    this._squares.push(randomInRectMover({subject: square.view, speed: 100, width: this.width, height: this.height}));
     randomRectMoveBackground.view.addChild(square.view);
   }
 
 
   randomRectMoveBackground.start = function(){
-    for(var j = 0; j < randomRectMoveBackground.amount; j++){
-      movers[j].start();
+    for(var j = 0; j < this.amount; j++){
+      this._movers[j].start();
     }
   };
 
   randomRectMoveBackground.stop = function(){
-    for(var j = 0; j < randomRectMoveBackground.amount; j++){
-      movers[j].stop();
+    for(var j = 0; j < this.amount; j++){
+      this._movers[j].stop();
     }
   };
 
