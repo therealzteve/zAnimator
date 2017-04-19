@@ -18,27 +18,27 @@ export default function arcConstructor(options){
 
   // public functions
   arc.getEdgePoint = function(){
-    return arc.getPoint(1);
+    return this.getPoint(1);
   };
 
   arc.getLength = function(){
-    return Math.abs(2 * Math.PI * arc.radius * ( arc.degrees / 360 ));
+    return Math.abs(2 * Math.PI * this.radius * ( this.degrees / 360 ));
   };
 
   arc.getPoint = function(progress){
-    var origin = {x: arc.start.x, y: arc.start.y };
-    var partOfDegrees = arc.degrees * progress;
+    var origin = {x: this.start.x, y: this.start.y };
+    var partOfDegrees = this.degrees * progress;
 
-    if(arc.degrees < 0){
+    if(this.degrees < 0){
       return {
-        x: origin.x + arc.radius * Math.sin(angleToRadians(-partOfDegrees)),
-        y: origin.y - arc.radius + arc.radius * Math.cos(angleToRadians(partOfDegrees))
+        x: origin.x + this.radius * Math.sin(angleToRadians(-partOfDegrees)),
+        y: origin.y - this.radius + this.radius * Math.cos(angleToRadians(partOfDegrees))
       };
     }
 
     return {
-      x: origin.x + arc.radius * Math.sin(angleToRadians(partOfDegrees)),
-      y: origin.y + arc.radius + arc.radius * -Math.cos(angleToRadians(partOfDegrees))
+      x: origin.x + this.radius * Math.sin(angleToRadians(partOfDegrees)),
+      y: origin.y + this.radius + this.radius * -Math.cos(angleToRadians(partOfDegrees))
     };
 
   };
@@ -46,12 +46,12 @@ export default function arcConstructor(options){
   arc.subPaths = [arc];
 
   arc.getAngle = function(progress){
-    return angleToRadians(arc.degrees * progress);
+    return angleToRadians(this.degrees * progress);
   };
 
   arc.getPartPath = function(progress){
-    var partOfDegrees = arc.degrees * progress;
-    return arcConstructor({start: arc.start, degrees: partOfDegrees, radius: arc.radius});
+    var partOfDegrees = this.degrees * progress;
+    return arcConstructor({start: this.start, degrees: partOfDegrees, radius: this.radius});
   };
 
   return arc;

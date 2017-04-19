@@ -13,24 +13,24 @@ export default function(options){
 
       /* public properties */
       video.view = new createjs.Bitmap(options.source);
-
+      video.source = options.source;
       /* public methods */
       video.draw = function(){
-        video.view.scaleX = video.scale;
-        video.view.scaleY = video.scale;
+        this.view.scaleX = video.scale;
+        this.view.scaleY = video.scale;
       };
 
       video.play = function(){
-        options.source.play();
+        this.source.play();
       };
 
       video.stop = function(){
-        options.source.pause();
-        options.source.currentTime = 0;
+        this.source.pause();
+        this.source.currentTime = 0;
       };
 
       video.pause = function(){
-        options.source.pause();
+        this.source.pause();
       };
 
       /* private functions */

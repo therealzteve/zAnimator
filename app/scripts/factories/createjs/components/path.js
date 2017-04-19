@@ -18,12 +18,12 @@ export default function(options){
       custom.width = options.width;
 
       custom.draw = function(){
-          custom.view.graphics.clear();
-          custom.view.graphics.beginStroke(custom.color).setStrokeStyle(custom.width).moveTo(0, 0);
+          this.view.graphics.clear();
+          this.view.graphics.beginStroke(this.color).setStrokeStyle(this.width).moveTo(0, 0);
           var current = {x: 0, y: 0};
           var i = 1;
-          for(var path of custom.completePath.subPaths){
-            pathDrawer[path.type](custom.view.graphics, path, current);
+          for(var path of this.completePath.subPaths){
+            pathDrawer[path.type](this.view.graphics, path, current);
             current = addUpPoints(current, path.getEdgePoint());
             i++;
           }

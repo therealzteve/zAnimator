@@ -5,8 +5,8 @@ export default function(){
 
 
   proxy.setProp = function(name, value){
-      for(var obj of proxy.group){
-        proxy._setPropOfElement(obj, name, value);
+      for(var obj of this.group){
+        this._setPropOfElement(obj, name, value);
       }
   };
 

@@ -9,36 +9,36 @@ export default function(bpm){
 
 
   timer.handle = function(event){
-    timer.currentTime += event.delta;
+    this.currentTime += event.delta;
 
-    if( Math.floor(timer.currentTime / timer.bpm) > timer.currentBpmSlot){
-       callListeners();
-       timer.currentBpmSlot = Math.floor(timer.currentTime / timer.bpm);
+    if( Math.floor(this.currentTime / this.bpm) > this.currentBpmSlot){
+       this._callListeners();
+       this.currentBpmSlot = Math.floor(this.currentTime / this.bpm);
     }
 
   };
 
   timer.addListener = function(listener){
-    timer.listeners.push(listener);
+    this.listeners.push(listener);
   };
 
   timer.removeListener = function(listener){
-    timer.listeners.splice(timer.listeners.indexOf(listener), 1);
+    this.listeners.splice(this.listeners.indexOf(listener), 1);
   };
 
   timer.start = function(){
-    loop.addAnimation(timer.handle);
+    loop.addAnimation(this.handle);
   };
 
   timer.stop = function(){
-    loop.removeAnimation(timer.handle);
+    loop.removeAnimation(thi.handle);
   };
 
-  function callListeners(){
-    for(var listener of timer.listeners){
+  timer._callListeners = function(){
+    for(var listener of this.listeners){
       listener();
     }
-  }
+  };
 
   return timer;
 }

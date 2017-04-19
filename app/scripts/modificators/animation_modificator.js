@@ -4,11 +4,11 @@ export default function(modificator){
 
     /* Public functions */
     function start(){
-      loop.addAnimation(modificator.handle);
+      loop.addAnimation(this.handle);
     }
 
     function stop(){
-      loop.removeAnimation(modificator.handle);
+      loop.removeAnimation(this.handle);
     }
 
     modificator.start = start;

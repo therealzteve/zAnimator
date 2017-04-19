@@ -18,11 +18,11 @@ export default function(options){
 
     /* Public functions */
     p2PMover.handle = function(current){
-      var amountX = (p2PMover.goalPoint.x - p2PMover.startPoint.x) * current;
-      var amountY = (p2PMover.goalPoint.y - p2PMover.startPoint.y) * current;
+      var amountX = (this.goalPoint.x - this.startPoint.x) * current;
+      var amountY = (this.goalPoint.y - this.startPoint.y) * current;
 
-      p2PMover.subject.x = p2PMover.startPoint.x + amountX;
-      p2PMover.subject.y = p2PMover.startPoint.y + amountY;
+      this.subject.x = this.startPoint.x + amountX;
+      this.subject.y = this.startPoint.y + amountY;
     };
 
     /* Init */

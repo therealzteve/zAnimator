@@ -13,16 +13,17 @@ export default function(options){
 
   proxy.setProp = function(name, value){
       var p = incrementProxy({});
-      p.group = proxy.group;
+      p.group = this.group;
+      var timer = this.timer;
       var changePropCallback = function(){
         p.setProp(name, value);
         p.draw();
         if(p.currentElementIndex === 0){
-          proxy.timer.removeListener(changePropCallback);
+          timer.removeListener(changePropCallback);
           p.group = null;
         }
       };
-      proxy.timer.addListener(changePropCallback);
+      this.timer.addListener(changePropCallback);
   };
 
   proxy.timer.start();

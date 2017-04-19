@@ -12,16 +12,16 @@ export default function(options){
       rect.color = options.color;
 
       rect.draw = function(){
-          rect.view.graphics.clear();
-          rect.view.graphics.beginFill(rect.color).drawRect(0, 0, rect.width * rect.scale, rect.height * rect.scale);
+          this.view.graphics.clear();
+          this.view.graphics.beginFill(this.color).drawRect(0, 0, this.width * this.scale, this.height * this.scale);
       };
 
       rect.getWidth = function(){
-        return rect.width * rect.scale;
+        return this.width * this.scale;
       };
 
       rect.getHeight = function(){
-        return rect.height * rect.scale;
+        return this.height * this.scale;
       };
 
       rect.draw();

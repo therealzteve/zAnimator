@@ -10,7 +10,7 @@ export default function(options){
   linearRotator.view.addChild(options.child.view);
 
   function handle(event){
-    linearRotator.view.rotation = linearRotator.view.rotation + linearRotator.speed * (event.delta / 1000);
+    this.view.rotation = this.view.rotation + this.speed * (event.delta / 1000);
   }
 
   linearRotator.handle = handle;

@@ -3,11 +3,11 @@ export default function(filter){
 
     /* Public functions */
     function start(){
-      filter.modificator.start();
+      this.modificator.start();
     }
 
     function stop(){
-      filter.modificator.stop();
+      this.modificator.stop();
     }
 
     filter.start = start;

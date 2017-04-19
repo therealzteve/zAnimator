@@ -24,15 +24,15 @@ export default function(options){
   bezierCurve.subPaths = [bezierCurve];
 
   bezierCurve.getEdgePoint = function(){
-    return bezierCurve.end;
+    return this.end;
   };
 
   bezierCurve.getLength = function(){
-    return bezierCurve.internalBezier.length();
+    return this.internalBezier.length();
   };
 
   bezierCurve.getPoint = function(progress){
-    return bezierCurve.internalBezier.get(progress);
+    return this.internalBezier.get(progress);
   };
 
   //TODO Add get part path function

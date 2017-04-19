@@ -7,35 +7,35 @@ export default function(interval){
   timer.listeners = [];
 
   timer.handle = function(event){
-    timer.currentTime += event.delta;
+    this.currentTime += event.delta;
 
-    while(timer.currentTime > timer.interval){
-       callListeners();
-       timer.currentTime -= timer.interval;
+    while(this.currentTime > this.interval){
+       this._callListeners();
+       this.currentTime -= this.interval;
     }
   };
 
   timer.addListener = function(listener){
-    timer.listeners.push(listener);
+    this.listeners.push(listener);
   };
 
   timer.removeListener = function(listener){
-    timer.listeners.splice(timer.listeners.indexOf(listener), 1);
+    this.listeners.splice(this.listeners.indexOf(listener), 1);
   };
 
   timer.start = function(){
-    loop.addAnimation(timer.handle);
+    loop.addAnimation(this.handle);
   };
 
   timer.stop = function(){
-    loop.removeAnimation(timer.handle);
+    loop.removeAnimation(this.handle);
   };
 
-  function callListeners(){
-    for(var listener of timer.listeners){
+  timer._callListeners = function(){
+    for(var listener of this.listeners){
       listener();
     }
-  }
+  };
 
   return timer;
 }

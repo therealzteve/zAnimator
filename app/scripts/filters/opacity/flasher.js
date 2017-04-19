@@ -1,15 +1,13 @@
 import abstractFilter from '~/filters/abstract_filter';
-import checkParameter from '~/internal/check_parameter';
+import singleChildFilter from '~/filters/single_child_filter';
+import transitionFilter from '~/filters/transition_filter';
 
 export default function(options){
 
-    checkParameter(options, 'child', true);
+    var flasher = transitionFilter(singleChildFilter(abstractFilter(), options), options);
 
-    var flasher = abstractFilter();
-
-    flasher.view.addChild(options.child.view);
     flasher.handle = function(){
-      flasher.view.visible = ( Math.random() > 0.5);
+      this.view.visible = ( Math.random() > 0.5);
     };
 
     return flasher;

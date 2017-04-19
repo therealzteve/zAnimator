@@ -12,9 +12,9 @@ export default function(options){
 
   /* Public functions */
   pathMover.handle = function(current){
-    var point = pathMover.path.getPoint(current);
-    pathMover.view.x = point.x;
-    pathMover.view.y = point.y;
+    var point = this.path.getPoint(current);
+    this.view.x = point.x;
+    this.view.y = point.y;
   };
 
   return pathMover;

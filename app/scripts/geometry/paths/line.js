@@ -13,23 +13,23 @@ checkParameter(options, 'end', true);
   line.type = 'line';
 
   line.getEdgePoint = function(){
-    return line.end;
+    return this.end;
   };
 
   line.getLength = function(){
-    return distance(toVector(line.start), toVector(line.end));
+    return distance(toVector(this.start), toVector(this.end));
   };
 
   line.getPoint = function(progress){
     return {
-              x: line.start.x + (line.end.x - line.start.x) * progress,
-              y: line.start.y + (line.end.y - line.start.y) * progress
+              x: this.start.x + (this.end.x - this.start.x) * progress,
+              y: this.start.y + (this.end.y - this.start.y) * progress
            };
   };
 
   line.getPartPath = function(progress){
-    var newEnd = { x: line.end.x * progress, y: line.end.y * progress};
-    var pathPart = lineConstructor({start: line.start, end: newEnd});
+    var newEnd = { x: this.end.x * progress, y: this.end.y * progress};
+    var pathPart = lineConstructor({start: this.start, end: newEnd});
     return pathPart;
   };
 

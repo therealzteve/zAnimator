@@ -13,20 +13,20 @@ export default function(options){
       line.thickness = options.thickness;
 
       line.draw = function(){
-          line.view.graphics
+          this.view.graphics
             .clear()
-            .beginStroke(line.color)
-            .setStrokeStyle(line.thickness * line.scale)
-            .moveTo(line.path.start.x * line.scale, line.path.start.y * line.scale)
-            .lineTo(line.path.end.x * line.scale, line.path.end.y * line.scale);
+            .beginStroke(this.color)
+            .setStrokeStyle(this.thickness * this.scale)
+            .moveTo(this.path.start.x * this.scale, this.path.start.y * this.scale)
+            .lineTo(this.path.end.x * this.scale, this.path.end.y * this.scale);
       };
 
       line.getWidth = function(){
-        return (line.path.end.x - line.path.start.x) * line.scale;
+        return (this.path.end.x - this.path.start.x) * this.scale;
       };
 
       line.getHeight = function(){
-        return (line.path.end.y - line.path.start.y) * line.scale;
+        return (this.path.end.y - this.path.start.y) * this.scale;
       };
 
 

@@ -9,11 +9,11 @@ export default function(){
 
     /* Public functions */
     function start(){
-      loop.addAnimation(filter.handle);
+      loop.addAnimation(this.handle);
     }
 
     function stop(){
-      loop.removeAnimation(filter.handle);
+      loop.removeAnimation(this.handle);
     }
 
     filter.start = start;

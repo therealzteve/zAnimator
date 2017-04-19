@@ -5,15 +5,15 @@ export default function(){
   proxy.group = [];
 
   proxy.addElement = function(element){
-    proxy.group.push(element);
+    this.group.push(element);
   };
 
   proxy.removeElement = function(element){
-      proxy.group.splice(proxy.group.indexOf(element), 1);
+      this.group.splice(this.group.indexOf(element), 1);
   };
 
   proxy.draw = function(){
-    for(var element of proxy.group){
+    for(var element of this.group){
       element.draw();
     }
   };

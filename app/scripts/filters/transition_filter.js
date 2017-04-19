@@ -7,15 +7,15 @@ export default function(filter, options){
     checkParameter(options, 'interval', true);
 
     /* private vars */
-    var filterTransition = transition(options.interval, 0.5);
+    filter._filterTransition = transition(options.interval, 0.5);
 
     /* Public methods */
     filter.start = function(){
-      filterTransition.start(filter.handle);
+      this._filterTransition.start(this.handle);
     };
 
     filter.stop = function(){
-      filterTransition.stop();
+      this._filterTransition.stop();
     };
 
     return filter;

@@ -9,14 +9,14 @@ export default function(options) {
   proxy.currentElementIndex = 0;
 
   proxy.setProp = function(name, value) {
-    if(proxy.shuffle && proxy.currentElementIndex === 0){
-      proxy.shuffleGroup();
+    if(this.shuffle && this.currentElementIndex === 0){
+      this.shuffleGroup();
     }
-    proxy._setPropOfElement(proxy.group[proxy.currentElementIndex], name, value);
+    this._setPropOfElement(this.group[this.currentElementIndex], name, value);
 
-    proxy.currentElementIndex++;
-    if (proxy.currentElementIndex >= proxy.group.length) {
-      proxy.currentElementIndex = 0;
+    this.currentElementIndex++;
+    if (this.currentElementIndex >= this.group.length) {
+      this.currentElementIndex = 0;
     }
   };
 

@@ -20,16 +20,16 @@ export default function(options){
 
     /* Public functions */
     shakeMover.handle = function(current){
-      var randomFactor = Math.random() * shakeMover.shakeFactor - shakeMover.shakeFactor / 2;
-      var distX = (shakeMover.goalPoint.x - shakeMover.startPoint.x);
-      var distY =  (shakeMover.goalPoint.y - shakeMover.startPoint.y);
+      var randomFactor = Math.random() * this.shakeFactor - this.shakeFactor / 2;
+      var distX = (this.goalPoint.x - this.startPoint.x);
+      var distY = (this.goalPoint.y - this.startPoint.y);
       var randomX = randomFactor * distX / (distX + distY);
       var randomY = randomFactor * distY / (distX + distY);
       var amountX = distX * current + randomX;
       var amountY = distY * current + randomY;
 
-      shakeMover.subject.x = shakeMover.startPoint.x + amountX;
-      shakeMover.subject.y = shakeMover.startPoint.y + amountY;
+      this.subject.x = this.startPoint.x + amountX;
+      this.subject.y = this.startPoint.y + amountY;
     };
 
     return shakeMover;

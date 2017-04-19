@@ -12,63 +12,63 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
   pulsar.onFinishedInterval = onFinishedInterval;
 
   pulsar.start = function(callback){
-    pulsar.callback = callback;
-    pulsar.currentInterval = 0;
-    pulsar.currentMseconds = current ? current * interval.getMs() : 0;
-    loop.addAnimation(pulsar.handle);
+    this.callback = callback;
+    this.currentInterval = 0;
+    this.currentMseconds = current ? current * this.interval.getMs() : 0;
+    loop.addAnimation(this.handle);
   };
 
   pulsar.stop = function(){
-    loop.removeAnimation(pulsar.handle);
-    pulsar.reset();
+    loop.removeAnimation(this.handle);
+    this.reset();
   };
 
   pulsar.reset = function(){
-    pulsar.current = 0;
-    pulsar.increase = true;
-    pulsar.currentMseconds = 0;
-    pulsar.currentInterval = 0;
+    this.current = 0;
+    this.increase = true;
+    this.currentMseconds = 0;
+    this.currentInterval = 0;
   };
 
   pulsar.handle = function(event){
 
     // First sum current ms
-    pulsar.currentMseconds = pulsar.currentMseconds + event.delta;
+    this.currentMseconds = this.currentMseconds + event.delta;
 
     // store current current
-    var lastCurrent = pulsar.current;
+    var lastCurrent = this.current;
 
     // calculate new current
-    var newCurrent = pulsar.calculateCurrent(pulsar.currentMseconds);
+    var newCurrent = this.calculateCurrent(this.currentMseconds);
 
     // check if interval is finished and set it to 1 if it was the last interval
-    newCurrent = intervalPostProcessing(newCurrent);
+    newCurrent = this._intervalPostProcessing(newCurrent);
 
     // calculate current value and compare it with last value
-    var currentValue = pulsar.calculateCurrentValue(newCurrent);
-    pulsar.increase = (pulsar.calculateCurrentValue(lastCurrent) < currentValue);
+    var currentValue = this.calculateCurrentValue(newCurrent);
+    this.increase = (this.calculateCurrentValue(lastCurrent) < currentValue);
 
-    if(pulsar.callback){
-      pulsar.callback(currentValue, event);
+    if(this.callback){
+      this.callback(currentValue, event);
     }
   };
 
   pulsar.calculateCurrent = function(ms){
     var relativeCurrent;
-    if(pulsar.interval.type === 'ms'){
-      relativeCurrent = (ms / pulsar.interval.ms) % 1;
+    if(this.interval.type === 'ms'){
+      relativeCurrent = (ms / this.interval.ms) % 1;
     }
-    if(pulsar.interval.type === 'bpm'){
-      relativeCurrent = (( ms * pulsar.interval.bpm) / (60000)) % 1;
+    if(this.interval.type === 'bpm'){
+      relativeCurrent = (( ms * this.interval.bpm) / (60000)) % 1;
     }
     return relativeCurrent;
   };
 
   pulsar.calculateCurrentValue = function(currentToCalculate){
-    if(currentToCalculate <= pulsar.steepness){
-      return (currentToCalculate) / pulsar.steepness;
+    if(currentToCalculate <= this.steepness){
+      return (currentToCalculate) / this.steepness;
     }else{
-      return 1 - (currentToCalculate - pulsar.steepness) / (1 - pulsar.steepness);
+      return 1 - (currentToCalculate - this.steepness) / (1 - this.steepness);
     }
   };
 
@@ -76,51 +76,51 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
 
     // First prepare the value which is passed to the calculateCurrent function:
     var factorInMs;
-    if(pulsar.interval.type === 'ms'){
-      factorInMs = factor * pulsar.interval.ms;
+    if(this.interval.type === 'ms'){
+      factorInMs = factor * this.interval.ms;
     }
-    if(pulsar.interval.type === 'bpm'){
-      factorInMs = factor * (60000 / pulsar.interval.bpm);
+    if(this.interval.type === 'bpm'){
+      factorInMs = factor * (60000 / this.interval.bpm);
     }
-    var msToCheck = factorInMs + pulsar.currentMseconds;
+    var msToCheck = factorInMs + this.currentMseconds;
 
     if(msToCheck < 0 ){
-      if(pulsar.interval.type === 'ms'){
-        msToCheck = msToCheck + pulsar.interval.ms * Math.ceil(Math.abs(msToCheck) / pulsar.interval.ms);
+      if(this.interval.type === 'ms'){
+        msToCheck = msToCheck + this.interval.ms * Math.ceil(Math.abs(msToCheck) / this.interval.ms);
       }
-      if(pulsar.interval.type === 'bpm'){
-        msToCheck = msToCheck + (60000 / pulsar.interval.bpm) * Math.ceil( Math.abs(msToCheck) / (60000 / pulsar.interval.bpm));
+      if(this.interval.type === 'bpm'){
+        msToCheck = msToCheck + (60000 / this.interval.bpm) * Math.ceil( Math.abs(msToCheck) / (60000 / this.interval.bpm));
       }
     }
 
-    return pulsar.calculateCurrentValue(pulsar.calculateCurrent(msToCheck));
+    return this.calculateCurrentValue(this.calculateCurrent(msToCheck));
   };
 
-  function intervalPostProcessing(tempCurrent){
+  pulsar._intervalPostProcessing = function(tempCurrent){
     var currentInterval;
-    if(pulsar.interval.type === 'ms'){
-      currentInterval = Math.floor(pulsar.currentMseconds / pulsar.interval.ms);
+    if(this.interval.type === 'ms'){
+      currentInterval = Math.floor(this.currentMseconds / this.interval.ms);
     }
-    if(pulsar.interval.type === 'bpm'){
-      currentInterval = Math.floor(( pulsar.currentMseconds * pulsar.interval.bpm) / (60000));
+    if(this.interval.type === 'bpm'){
+      currentInterval = Math.floor(( this.currentMseconds * this.interval.bpm) / (60000));
     }
-    if(pulsar.currentInterval < currentInterval){
-      pulsar.currentInterval = currentInterval;
-      return handleIntervalFinished(tempCurrent);
+    if(this.currentInterval < currentInterval){
+      this.currentInterval = currentInterval;
+      return this._handleIntervalFinished(tempCurrent);
     }
     return tempCurrent;
-  }
+  };
 
-  function handleIntervalFinished(tempCurrent){
-    if(pulsar.onFinishedInterval){
-        pulsar.onFinishedInterval();
+  pulsar._handleIntervalFinished = function(tempCurrent){
+    if(this.onFinishedInterval){
+        this.onFinishedInterval();
     }
-    if(pulsar.numberOfIntervals > 0 && pulsar.currentInterval === pulsar.numberOfIntervals){
-        pulsar.stop();
+    if(this.numberOfIntervals > 0 && this.currentInterval === this.numberOfIntervals){
+        this.stop();
         tempCurrent = 1;
     }
     return tempCurrent;
-  }
+  };
 
   return pulsar;
 }

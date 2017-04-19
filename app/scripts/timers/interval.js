@@ -19,23 +19,23 @@ export default function(options){
 
   interval.generateHalfInterval = function(){
     var halfInterval = {};
-    halfInterval.type = interval.type;
-    halfInterval.bpm = interval.bpm;
-    halfInterval.ms = interval.ms;
-    halfInterval.divisor = interval.divisor * 2;
+    halfInterval.type = this.type;
+    halfInterval.bpm = this.bpm;
+    halfInterval.ms = this.ms;
+    halfInterval.divisor = this.divisor * 2;
 
     return halfInterval;
   };
 
   interval.bisect = function(){
-    interval.divisor = interval.divisor * 2;
+    this.divisor = this.divisor * 2;
   };
 
   interval.getMs = function(){
-    if(interval.type === 'ms'){
-      return interval.ms;
+    if(this.type === 'ms'){
+      return this.ms;
     }else{
-      return (60000 / interval.bpm);
+      return (60000 / this.bpm);
     }
   };
 

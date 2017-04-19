@@ -6,13 +6,13 @@ export default function(children){
     abstractGroup.children = children ? children : [];
 
     abstractGroup.add = function(child){
-      abstractGroup.children.push(child);
-      abstractGroup.refresh();
+      this.children.push(child);
+      this.refresh();
     };
 
     abstractGroup.remove = function(child){
-      abstractGroup.children.splice(abstractGroup.children.indexOf(child), 1);
-      abstractGroup.refresh();
+      this.children.splice(this.children.indexOf(child), 1);
+      this.refresh();
     };
 
     return abstractGroup;

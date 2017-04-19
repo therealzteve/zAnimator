@@ -23,16 +23,16 @@ export default function(options){
   }
 
   linearPulsar.start = function(){
-    linearPulsar.pulsar.start(linearPulsar.handle);
+    this.pulsar.start(this.handle);
   };
 
   linearPulsar.stop = function(){
-    linearPulsar.pulsar.stop();
+    this.pulsar.stop();
   };
 
   linearPulsar.handle = function(current){
-    setProp(linearPulsar.subject, 'scale', 1 + current * (linearPulsar.limit - 1));
-    linearPulsar.subject.draw();
+    setProp(this.subject, 'scale', 1 + current * (this.limit - 1));
+    this.subject.draw();
   };
 
   return linearPulsar;

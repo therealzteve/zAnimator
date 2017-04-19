@@ -13,13 +13,13 @@ export default function(options){
     rectangleGroup.height = options.height;
 
     rectangleGroup.refresh = function(){
-      rectangleGroup.view.removeAllChildren();
-      for(var i = 0; i < rectangleGroup.children.length; i++){
+      this.view.removeAllChildren();
+      for(var i = 0; i < this.children.length; i++){
         var container = factory.container();
-        container.addChild(rectangleGroup.children[i].view);
-        container.x = Math.floor(rectangleGroup.width * Math.random());
-        container.y = Math.floor(rectangleGroup.height * Math.random());
-        rectangleGroup.view.addChild(container);
+        container.addChild(this.children[i].view);
+        container.x = Math.floor(thid.width * Math.random());
+        container.y = Math.floor(this.height * Math.random());
+        this.view.addChild(container);
       }
     };
 

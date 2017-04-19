@@ -16,24 +16,10 @@ export default function(options){
   /* create object and set properties */
   var randomInRectMover = abstractModificator(options);
   randomInRectMover.speed = options.speed;
-
-  // callbacks
-  var onCurrentGoalReached = function(){
-    lineMover.stop();
-    lineMover.startPoint.x = lineMover.goalPoint.x;
-    lineMover.startPoint.y = lineMover.goalPoint.y;
-
-    lineMover.goalPoint.x = Math.random() * options.width;
-    lineMover.goalPoint.y = Math.random() * options.height;
-
-    interval.ms = calculateIntervalTime();
-
-    lineMover.start();
-  };
-
-  // private vars
-  var interval = createInterval({type: 'ms', ms: 1});
-  var lineMover = createLineMover({
+  randomInRectMover.width = options.width;
+  randomInRectMover.height = options.heigth;
+  randomInRectMover._interval = createInterval({type: 'ms', ms: 1});
+  randomInRectMover._lineMover = createLineMover({
       subject: randomInRectMover.subject,
       goalPoint: { x: 0, y: 0 },
       onFinishedInterval: onCurrentGoalReached,
@@ -41,21 +27,35 @@ export default function(options){
       steepness: 1
     });
 
+  // callbacks
+  randomInRectMover.__onCurrentGoalReached = function(){
+    this._lineMover.stop();
+    this._lineMover.startPoint.x = this._lineMover.goalPoint.x;
+    this._lineMover.startPoint.y = this._lineMover.goalPoint.y;
+
+    this._lineMover.goalPoint.x = Math.random() * this.width;
+    this._lineMover.goalPoint.y = Math.random() * this.height;
+
+    this._interval.ms = this._calculateIntervalTime();
+
+    this._lineMover.start();
+  };
+
 
   /* Public functions */
   randomInRectMover.start = function(){
-    onCurrentGoalReached();
+    this.__onCurrentGoalReached();
   };
 
   randomInRectMover.stop = function(){
-    lineMover.stop();
+    this._lineMover.stop();
   };
 
   /* Private functions */
-  function calculateIntervalTime(){
-    var dist = distance(toVector(lineMover.goalPoint), toVector(lineMover.startPoint));
-    return (dist / randomInRectMover.speed) * 1000;
-  }
+  randomInRectMover._calculateIntervalTime = function(){
+    var dist = distance(toVector(this._lineMover.goalPoint), toVector(this._lineMover.startPoint));
+    return (dist / this.speed) * 1000;
+  };
 
   return randomInRectMover;
 }

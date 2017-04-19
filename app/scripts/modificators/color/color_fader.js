@@ -25,19 +25,19 @@ export default function(options){
   };
 
   colorFader.start = function(){
-    colorFader.pulsar.start(colorFader.handle);
+    this.pulsar.start(colorFader.handle);
   };
 
   colorFader.stop = function(){
-    colorFader.pulsar.stop();
+    this.pulsar.stop();
   };
 
   colorFader.handle = function(current){
-    colorFader.currentColor.red(colorFader.color1.red() + current * colorFader.colorRange.r);
-    colorFader.currentColor.green(colorFader.color1.green() + current * colorFader.colorRange.g);
-    colorFader.currentColor.blue(colorFader.color1.blue() + current * colorFader.colorRange.b);
-    setProp(colorFader.subject, 'color', colorFader.currentColor.rgbString() );
-    colorFader.subject.draw();
+    this.currentColor.red(this.color1.red() + current * this.colorRange.r);
+    this.currentColor.green(this.color1.green() + current * this.colorRange.g);
+    this.currentColor.blue(this.color1.blue() + current * this.colorRange.b);
+    setProp(this.subject, 'color', this.currentColor.rgbString() );
+    this.subject.draw();
   };
 
   return colorFader;

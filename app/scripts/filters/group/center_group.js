@@ -13,20 +13,20 @@ export default function(options){
     centerGroup.height = options.height;
 
     centerGroup.refresh = function(){
-      centerGroup.view.removeAllChildren();
-      for(var i = 0; i < centerGroup.children.length; i++){
+      this.view.removeAllChildren();
+      for(var i = 0; i < this.children.length; i++){
         var container = factory.container();
-        container.addChild(centerGroup.children[i].view);
+        container.addChild(this.children[i].view);
 
-        if(centerGroup.width){
-          container.x = container.x = (i + 1) * centerGroup.width / (centerGroup.children.length + 1);
+        if(this.width){
+          container.x = container.x = (i + 1) * this.width / (this.children.length + 1);
         }
 
-        if(centerGroup.height){
-          container.y = container.x = (i + 1) * centerGroup.height / (centerGroup.children.length + 1);
+        if(this.height){
+          container.y = container.x = (i + 1) * this.height / (this.children.length + 1);
         }
 
-        centerGroup.view.addChild(container);
+        this.view.addChild(container);
       }
     };
 

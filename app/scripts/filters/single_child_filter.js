@@ -6,28 +6,30 @@ export default function(filter, options){
     checkParameter(options, 'child', true);
 
     /* private vars */
-    var child = options.child;
+    filter._child = options.child;
 
     /* callbacks */
-    var onPropertyChange = () =>{
-      filter.onPropertyChange();
-      filter.sendEvent('property_change');
+    filter.__onPropertyChange = () =>{
+      if(this.onPropertyChange){
+        this.onPropertyChange();
+      }
+      this.sendEvent('property_change');
     };
 
     /* methods */
     filter.setChild = function(newChild){
-      if(child.removeEventListener){
-        child.removeEventListener('property_change', onPropertyChange);
+      if(this._child.removeEventListener){
+        this._child.removeEventListener('property_change', this.__onPropertyChange);
       }
-      child = newChild;
-      if(child.addEventListener){
-        child.addEventListener('property_change', onPropertyChange);
+      this._child = newChild;
+      if(this._child.addEventListener){
+        this._child.addEventListener('property_change', this.__onPropertyChange);
       }
-      filter.view.addChild(child.view);
+      this.view.addChild(this._child.view);
     };
 
     filter.getChild = function(){
-      return child;
+      return this._child;
     };
 
     /* init */
