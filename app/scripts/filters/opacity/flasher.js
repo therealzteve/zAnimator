@@ -7,10 +7,8 @@ export default function(options){
     var flasher = animationFilter(singleChildFilter(abstractFilter(), options), options);
 
     flasher.handle = function(){
-      console.log(this);
       this.view.visible = ( Math.random() > 0.5);
     };
 
     return flasher;
   }
- 

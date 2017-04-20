@@ -23,7 +23,7 @@ export default function(options){
   }
 
   linearPulsar.start = function(){
-    this.pulsar.start(this.handle);
+    this.pulsar.start(this.handle, this);
   };
 
   linearPulsar.stop = function(){

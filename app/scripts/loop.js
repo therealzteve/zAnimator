@@ -1,9 +1,9 @@
 export default {
-    addAnimation: function(handle){
+    addAnimation: function(handle, scope){
       createjs.Ticker.setFPS(60);
-      createjs.Ticker.addEventListener('tick', handle);
+      return createjs.Ticker.on('tick', handle, scope);
     },
-    removeAnimation: function(handle){
-      createjs.Ticker.removeEventListener('tick', handle);
+    removeAnimation: function(listener){
+      createjs.Ticker.off('tick', listener);
     }
 };

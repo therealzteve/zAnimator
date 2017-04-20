@@ -10,16 +10,18 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
   pulsar.currentMseconds = current ? current * interval.getMs() : 0;
   pulsar.numberOfIntervals = numberOfIntervals ? numberOfIntervals : 0;
   pulsar.onFinishedInterval = onFinishedInterval;
+  pulsar._listener = null;
 
-  pulsar.start = function(callback){
+  pulsar.start = function(callback, scope){
     this.callback = callback;
+    this._cbScope = scope;
     this.currentInterval = 0;
     this.currentMseconds = current ? current * this.interval.getMs() : 0;
-    loop.addAnimation(this.handle);
+    this._listener = loop.addAnimation(this.handle, this);
   };
 
   pulsar.stop = function(){
-    loop.removeAnimation(this.handle);
+    loop.removeAnimation(this._listener);
     this.reset();
   };
 
@@ -49,7 +51,7 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
     this.increase = (this.calculateCurrentValue(lastCurrent) < currentValue);
 
     if(this.callback){
-      this.callback(currentValue, event);
+      this.callback.call(this._cbScope, currentValue, event);
     }
   };
 
