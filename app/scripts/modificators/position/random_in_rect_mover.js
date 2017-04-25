@@ -17,7 +17,7 @@ export default function(options){
   var randomInRectMover = abstractModificator(options);
   randomInRectMover.speed = options.speed;
   randomInRectMover.width = options.width;
-  randomInRectMover.height = options.heigth;
+  randomInRectMover.height = options.height;
 
   // callbacks
   randomInRectMover.__onCurrentGoalReached = function(){
@@ -38,7 +38,7 @@ export default function(options){
   randomInRectMover._lineMover = createLineMover({
       subject: randomInRectMover.subject,
       goalPoint: { x: 0, y: 0 },
-      onFinishedInterval: randomInRectMover.__onCurrentGoalReached,
+      onFinishedInterval: function(){ randomInRectMover.__onCurrentGoalReached(); },
       interval: randomInRectMover._interval,
       steepness: 1
     });

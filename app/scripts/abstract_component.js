@@ -6,16 +6,18 @@ export default function(){
   var abstractComponent = {};
   abstractComponent._callbacks = {};
 
-  abstractComponent.addEventListener = function(eventName, callback){
+  abstractComponent.addEventListener = function(eventName, callback, scope){
     if(!this._callbacks[eventName]){
       this._callbacks[eventName] = [];
     }
-    this._callbacks[eventName].push(callback);
+    var listener = { callback: callback, scope: scope};
+    this._callbacks[eventName].push(listener);
+    return listener;
   };
 
-  abstractComponent.removeEventListener = function(eventName, callback){
+  abstractComponent.removeEventListener = function(eventName, listener){
       if(this._callbacks[eventName]){
-        var index = this._callbacks[eventName].indexOf(callback);
+        var index = this._callbacks[eventName].indexOf(listener);
         if(index > -1){
           this._callbacks.splice(index, 1);
         }
@@ -28,7 +30,7 @@ export default function(){
       return;
     }
     for(var callback of this._callbacks[eventName]){
-      callback();
+      callback.callback.call(callback.scope);
     }
   };
 

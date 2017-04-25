@@ -7,9 +7,10 @@ export default function(filter, options){
 
     /* private vars */
     filter._child = options.child;
+    filter._listener = null;
 
     /* callbacks */
-    filter.__onPropertyChange = () =>{
+    filter.__onPropertyChange = function(){
       if(this.onPropertyChange){
         this.onPropertyChange();
       }
@@ -19,11 +20,12 @@ export default function(filter, options){
     /* methods */
     filter.setChild = function(newChild){
       if(this._child.removeEventListener){
-        this._child.removeEventListener('property_change', this.__onPropertyChange);
+        this._child.removeEventListener('property_change', this._listener);
       }
+      this.view.removeChild(this._child.view);
       this._child = newChild;
       if(this._child.addEventListener){
-        this._child.addEventListener('property_change', this.__onPropertyChange);
+        this._listener = this._child.addEventListener('property_change', this.__onPropertyChange, this);
       }
       this.view.addChild(this._child.view);
     };

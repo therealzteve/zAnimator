@@ -15,15 +15,16 @@ export default function(options){
 
   switchInterval._groupSwitch = randomRectGroupSwitch(options);
   switchInterval._groupSwitchTimer = timer(options.interval);
+  switchInterval._listener = null;
 
   switchInterval.start = function(){
-    this._groupSwitchTimer.addListener(this.handle);
+    this._listener = this._groupSwitchTimer.addListener(this.handle, this);
     this._groupSwitchTimer.start();
   };
 
   switchInterval.stop = function(){
     this._groupSwitchTimer.stop();
-    this._groupSwitchTimer.removeListener(this.handle);
+    this._groupSwitchTimer.removeListener(this._listener);
   };
 
   switchInterval.view = switchInterval._groupSwitch.view;

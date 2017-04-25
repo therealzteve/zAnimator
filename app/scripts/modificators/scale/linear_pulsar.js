@@ -30,6 +30,11 @@ export default function(options){
     this.pulsar.stop();
   };
 
+  linearPulsar.reset = function(){
+    this.pulsar.stop();
+    this.handle(0);
+  };
+
   linearPulsar.handle = function(current){
     setProp(this.subject, 'scale', 1 + current * (this.limit - 1));
     this.subject.draw();

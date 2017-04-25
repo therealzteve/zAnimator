@@ -12,7 +12,7 @@ export default function(modificator, options){
 
     /* Public methods */
     modificator.start = function(){
-      this.transition.start(this.handle);
+      this.transition.start(this.handle, this);
     };
 
     modificator.stop = function(){

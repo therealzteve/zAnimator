@@ -11,7 +11,6 @@ export default function(element, property, value, doNotChain){
       element.sendEvent('property_change');
     }
   }else{
-    console.log(element);
     throw new Error('Cannot set property of object. Object hasn\'t the property: ' + property);
   }
 }

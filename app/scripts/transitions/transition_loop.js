@@ -13,6 +13,9 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
   pulsar._listener = null;
 
   pulsar.start = function(callback, scope){
+    if(this._listener){
+      this.stop();
+    }
     this.callback = callback;
     this._cbScope = scope;
     this.currentInterval = 0;
@@ -22,6 +25,7 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
 
   pulsar.stop = function(){
     loop.removeAnimation(this._listener);
+    this._listener = null;
     this.reset();
   };
 

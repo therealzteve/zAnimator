@@ -18,7 +18,7 @@ export default function(originalObject, circular){
 
   // First in, first out
   /* eslint-disable */
-  while ( current = copies.shift() ){
+  while ( current = copies.shift()){
     /* eslint-enable */
       keys = Object.getOwnPropertyNames( current.source );
 
@@ -44,20 +44,20 @@ export default function(originalObject, circular){
               [] :
               Object.create( Object.getPrototypeOf( nextSource ) );
 
-          if ( circular ){
-              indexOf = sourceReferences.indexOf( nextSource );
 
-              if ( indexOf !== -1 )
-              {
-                  // The source is already referenced, just assign reference
-                  descriptor.value = targetReferences[ indexOf ];
-                  Object.defineProperty( current.target, keys[ propertyIndex ], descriptor );
-                  continue;
-              }
+          indexOf = sourceReferences.indexOf( nextSource );
 
-              sourceReferences.push( nextSource );
-              targetReferences.push( descriptor.value );
+          if ( indexOf !== -1 )
+          {
+              // The source is already referenced, just assign reference
+              descriptor.value = targetReferences[ indexOf ];
+              Object.defineProperty( current.target, keys[ propertyIndex ], descriptor );
+              continue;
           }
+
+          sourceReferences.push( nextSource );
+          targetReferences.push( descriptor.value );
+
 
           Object.defineProperty( current.target, keys[ propertyIndex ], descriptor );
 
