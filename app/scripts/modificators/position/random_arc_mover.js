@@ -10,7 +10,7 @@ export default function(options){
   checkParameter(options, 'speed', true);
 
   var randomArcMover = {};
-  
+
   // private vars
   randomArcMover._currentArc = null;
   randomArcMover._currentStartPosition = { x: 0, y: 0};
