@@ -17,7 +17,7 @@ export default function(options){
       /* public methods */
       circle.draw = function(){
           this.view.graphics.clear();
-          this.view.graphics.beginFill(this.color).drawCircle(0, 0, this.circleShape.radius * this.scale);
+          this.view.graphics.beginFill(this.color).drawCircle(this.circleShape.radius * this.scale, this.circleShape.radius * this.scale, this.circleShape.radius * this.scale);
       };
 
       circle.getWidth = function(){

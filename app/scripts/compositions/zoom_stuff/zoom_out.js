@@ -5,7 +5,7 @@ import centralizer from '~/filters/mover/center/centralizer';
 export default function(options){
 
   checkParameter(options, 'child', true);
-  checkParameter(options, 'speed', true);
+  checkParameter(options, 'interval', true);
 
   options.numberOfIntervals = 1;
   options.limit = 0;
@@ -14,6 +14,8 @@ export default function(options){
   options.width = options.child.getWidth();
   options.height = options.child.getHeight();
   options.subject = options.child;
+  options.steepness = 1;
+  options.numberOfIntervals = 1;
 
   var zoomOut = {};
   zoomOut._centralizer = centralizer(options);

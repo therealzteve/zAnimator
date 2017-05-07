@@ -2,6 +2,7 @@ import toVector from '~/geometry/to_vector';
 import distance from '~/geometry/distance';
 import checkParameter from '~/internal/check_parameter';
 
+
 export default function lineConstructor(options){
 
 checkParameter(options, 'start', false, {x: 0, y: 0});

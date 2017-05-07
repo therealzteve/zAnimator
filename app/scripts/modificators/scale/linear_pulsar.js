@@ -1,37 +1,18 @@
-import { pulsarTransition, risingTransition } from '~/transitions/transition_loop';
+import abstractModificator from '~/modificators/abstract_modificator';
+import transitionModificator from '~/modificators/transition_modificator';
 import checkParameter from '~/internal/check_parameter';
 import setProp from '~/internal/set_prop';
 
 export default function(options){
 
-  checkParameter(options, 'subject', true);
-  checkParameter(options, 'speed', true);
   checkParameter(options, 'limit', true);
-  checkParameter(options, 'numberOfIntervals', false);
   checkParameter(options, 'rising', false, true);
-  checkParameter(options, 'centerIfPossible', false, true);
 
-
-  var linearPulsar = {};
-  linearPulsar.subject = options.subject;
-  linearPulsar.speed = options.speed;
+  var linearPulsar = transitionModificator(abstractModificator(options), options);
   linearPulsar.limit = options.limit;
-  if(!options.rising){
-    linearPulsar.pulsar = pulsarTransition(linearPulsar.speed, 0, options.numberOfIntervals);
-  }else{
-    linearPulsar.pulsar = risingTransition(linearPulsar.speed, 0, options.numberOfIntervals);
-  }
-
-  linearPulsar.start = function(){
-    this.pulsar.start(this.handle, this);
-  };
-
-  linearPulsar.stop = function(){
-    this.pulsar.stop();
-  };
 
   linearPulsar.reset = function(){
-    this.pulsar.stop();
+    this.transition.stop();
     this.handle(0);
   };
 
