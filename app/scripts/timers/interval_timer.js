@@ -26,6 +26,11 @@ export default function(interval){
     this.listeners.splice(this.listeners.indexOf(listener), 1);
   };
 
+  timer.destroy = function(){
+    this.stop();
+    this.listeners.length = 0;
+  };
+
   timer.start = function(){
     this._listener = loop.addAnimation(this.handle, this);
   };

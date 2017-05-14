@@ -38,7 +38,7 @@ export default function(options){
   randomInRectMover._lineMover = createLineMover({
       subject: randomInRectMover.subject,
       goalPoint: { x: 0, y: 0 },
-      onFinishedInterval: function(){ randomInRectMover.__onCurrentGoalReached(); },
+      onFinishedInterval: { cb: function(){ randomInRectMover.__onCurrentGoalReached(); }, scope: randomInRectMover },
       interval: randomInRectMover._interval,
       steepness: 1
     });

@@ -119,7 +119,7 @@ function transitionLoop(interval, steepness, current, numberOfIntervals, onFinis
 
   pulsar._handleIntervalFinished = function(tempCurrent){
     if(this.onFinishedInterval){
-        this.onFinishedInterval();
+        this.onFinishedInterval.cb.call(this.onFinishedInterval.scope);
     }
     if(this.numberOfIntervals > 0 && this.currentInterval === this.numberOfIntervals){
         this.stop();
