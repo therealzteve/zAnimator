@@ -17,14 +17,18 @@ export default function(options){
   for(var i = 0; i < incompleteCircles.rows; i++){
     var arc = path({
       path: arcPath({
-        start: { x: 0, y: incompleteCircles.radius - (((i + 1) / incompleteCircles.rows) * incompleteCircles.radius)},
-        degrees: 30,
+        start: { x: 0, y: -( ((i + 1) / incompleteCircles.rows) * incompleteCircles.radius)},
+        degrees: 180,
         radius: ((i + 1) / incompleteCircles.rows) * incompleteCircles.radius
       })
     });
-
     incompleteCircles.arcs.push(arc);
-    incompleteCircles.view.addChild(arc.view);
+    var positionContainer = container();
+    positionContainer.x = incompleteCircles.radius;
+    positionContainer.y = incompleteCircles.radius;
+    positionContainer.addChild(arc.view);
+    positionContainer.rotation = Math.random() * 360;
+    incompleteCircles.view.addChild(positionContainer);
   }
 
   return incompleteCircles;
