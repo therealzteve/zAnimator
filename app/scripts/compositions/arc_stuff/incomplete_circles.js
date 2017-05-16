@@ -7,18 +7,22 @@ export default function(options){
 
   checkParameter(options, 'rows', true);
   checkParameter(options, 'radius', true);
+  checkParameter(options, 'maxDegrees', true);
+  checkParameter(options, 'minDegrees', false, options.maxDegrees );
 
   var incompleteCircles = {};
   incompleteCircles.view = container();
   incompleteCircles.rows = options.rows;
   incompleteCircles.radius = options.radius;
+  incompleteCircles.maxDegrees = options.maxDegrees;
+  incompleteCircles.minDegrees = options.minDegrees;
   incompleteCircles.arcs = [];
 
   for(var i = 0; i < incompleteCircles.rows; i++){
     var arc = path({
       path: arcPath({
         start: { x: 0, y: -( ((i + 1) / incompleteCircles.rows) * incompleteCircles.radius)},
-        degrees: 180,
+        degrees: incompleteCircles.minDegrees + (incompleteCircles.maxDegrees - incompleteCircles.minDegrees) * Math.random(),
         radius: ((i + 1) / incompleteCircles.rows) * incompleteCircles.radius
       })
     });

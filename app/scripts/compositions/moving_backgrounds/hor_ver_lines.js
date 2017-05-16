@@ -34,7 +34,7 @@ export default function(options){
       var posY = Math.random() * horVerLines.height;
       _line = line({'linePath': linePath({
         'end': { 'x': horVerLines.length, 'y': 0},
-        'start': { 'x': 0, 'y': 0}
+        'start': { 'x': 0, 'y': 0 }
       }) });
 
 
@@ -57,8 +57,8 @@ export default function(options){
     }else{
       var posX = Math.random() * horVerLines.width;
       _line = line({'linePath': linePath({
-        'end': { 'x': 0, 'y':  horVerLines.length},
-        'start': { 'x': 0, 'y':  0}
+        'end': { 'x': 0, 'y': horVerLines.length},
+        'start': { 'x': 0, 'y': 0}
       }) });
 
 
