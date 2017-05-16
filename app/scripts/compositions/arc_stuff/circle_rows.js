@@ -21,7 +21,6 @@ export default function(options){
     positionContainer.x = circleRows.radius;
     positionContainer.y = circleRows.radius;
     positionContainer.addChild(rowContainer);
-    positionContainer.rotation = Math.random() * 360;
 
     circleRows.rows.push(positionContainer);
     circleRows.view.addChild(positionContainer);

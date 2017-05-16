@@ -2,13 +2,15 @@ import loop from '~/loop';
 
 export default function(modificator){
 
+    modificator._listener = null;
+
     /* Public functions */
     function start(){
-      loop.addAnimation(this.handle);
+      this._listener = loop.addAnimation(this.handle, this);
     }
 
     function stop(){
-      loop.removeAnimation(this.handle);
+      loop.removeAnimation(this._listener);
     }
 
     modificator.start = start;
