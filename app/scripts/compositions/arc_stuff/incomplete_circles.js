@@ -31,6 +31,9 @@ export default function(options){
     radius: incompleteCircles.radius,
     children: incompleteCircles.arcs
   });
+  for(var row of incompleteCircles.circleRows.rows){
+    row.rotation = Math.random() * 360;
+  }
 
   incompleteCircles.view = incompleteCircles.circleRows.view;
 
