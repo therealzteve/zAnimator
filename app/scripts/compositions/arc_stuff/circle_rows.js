@@ -11,20 +11,34 @@ export default function(options){
   circleRows.radius = options.radius;
   circleRows.children = options.children;
   circleRows.rows = [];
+  circleRows._childContainers = [];
 
-  for(var i = 0; i < circleRows.children.length; i++){
-    var rowContainer = container();
-    rowContainer.y = -( ((i + 1) / circleRows.children.length) * circleRows.radius);
-    rowContainer.addChild(circleRows.children[i].view);
+  circleRows.draw = function(){
+    for(var i = 0; i < this.children.length; i++){
+      var rowContainer = this._childContainers[i];
+      rowContainer.y = -( ((i + 1) / this.children.length) * this.radius);
 
-    var positionContainer = container();
-    positionContainer.x = circleRows.radius;
-    positionContainer.y = circleRows.radius;
-    positionContainer.addChild(rowContainer);
+      var positionContainer = this.rows[i];
+      positionContainer.x = this.radius;
+      positionContainer.y = this.radius;
+    }
+  };
 
-    circleRows.rows.push(positionContainer);
-    circleRows.view.addChild(positionContainer);
-  }
+  circleRows.init = function(){
+    for(var i = 0; i < this.children.length; i++){
+      var rowContainer = container();
+      rowContainer.addChild(this.children[i].view);
 
+      var positionContainer = container();
+      positionContainer.addChild(rowContainer);
+
+      this._childContainers.push(rowContainer);
+      this.rows.push(positionContainer);
+      this.view.addChild(positionContainer);
+    }
+  };
+
+  circleRows.init();
+  circleRows.draw();
   return circleRows;
 }
