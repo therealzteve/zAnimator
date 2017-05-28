@@ -1,6 +1,7 @@
 import checkParameter from '~/internal/check_parameter';
 import abstractFilter from '~/filters/abstract_filter';
 import singleChildFilter from '~/filters/single_child_filter';
+import loop from '~/loop';
 
 export default function(options){
 
@@ -15,8 +16,7 @@ export default function(options){
     centerFilter.width = options.width;
     centerFilter.height = options.height;
 
-    /* Callbacks */
-    centerFilter.onPropertyChange = function(){
+    centerFilter.draw = function(){
       if(this.getChild().getWidth){
         this.view.x = (this.width / 2) - (this.getChild().getWidth() / 2);
       }
@@ -24,8 +24,15 @@ export default function(options){
         this.view.y = (this.height / 2) - (this.getChild().getHeight() / 2);
       }
     };
+    
+    centerFilter.start = function(){
+      loop.addComponent(this);
+    };
 
-    centerFilter.onPropertyChange();
+    centerFilter.stop = function(){
+      loop.removeComponent(this);
+    };
+
     /* return */
     return centerFilter;
 }

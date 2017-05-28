@@ -21,5 +21,10 @@ export default function(modificator, options){
       this.transition.stop();
     };
 
+    modificator.destroy = function(){
+      this.stop();
+      this.subject = null;
+    };
+
     return modificator;
 }

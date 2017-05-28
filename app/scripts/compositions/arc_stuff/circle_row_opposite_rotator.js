@@ -1,35 +1,22 @@
 import checkParameter from '~/internal/check_parameter';
-import linearRotator from '~/modificators/rotation/linear_rotator';
+import animationModificator from '~/modificators/animation_modificator';
 
 export default function(options){
   checkParameter(options, 'circleRows', true);
   checkParameter(options, 'speed', true);
 
-  var circleRowOppositeRotator = {};
+  var circleRowOppositeRotator = animationModificator({});
   circleRowOppositeRotator.circleRows = options.circleRows;
   circleRowOppositeRotator.speed = options.speed;
-  circleRowOppositeRotator._rotators = [];
+  circleRowOppositeRotator._listener = null;
 
-  for(var i = 0; i < circleRowOppositeRotator.circleRows.rows.length; i++){
-    var speed = circleRowOppositeRotator.speed;
-    if(i % 2 === 0 ){
-      speed = -speed;
-    }
-
-    circleRowOppositeRotator._rotators.push(linearRotator({
-      subject: circleRowOppositeRotator.circleRows.rows[i],
-      speed: speed}));
-  }
-
-  circleRowOppositeRotator.start = function(){
-    for(var rotator of this._rotators){
-      rotator.start();
-    }
-  };
-
-  circleRowOppositeRotator.stop = function(){
-    for(var rotator of this._rotators){
-      rotator.stop();
+  circleRowOppositeRotator.handle = function(event){
+    for(var i = 0; i < this.circleRows.rows.length; i++){
+      var speed = this.speed;
+      if(i % 2 === 0 ){
+        speed = -speed;
+      }
+      this.circleRows.rows[i].rotation += speed * (event.delta / 1000);
     }
   };
 

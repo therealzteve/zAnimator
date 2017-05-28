@@ -1,5 +1,6 @@
 import checkParameter from '~/internal/check_parameter';
 import container from '~/factories/createjs/components/container';
+import loop from '~/loop';
 
 export default function(options){
 
@@ -25,6 +26,11 @@ export default function(options){
   };
 
   circleRows.init = function(){
+
+    this.view.removeAllChildren();
+    this.rows.length = 0;
+    this._childContainers.length = 0;
+
     for(var i = 0; i < this.children.length; i++){
       var rowContainer = container();
       rowContainer.addChild(this.children[i].view);
@@ -38,7 +44,14 @@ export default function(options){
     }
   };
 
-  circleRows.init();
-  circleRows.draw();
+  circleRows.start = function(){
+    this.init();
+    loop.addComponent(this);
+  };
+
+  circleRows.stop = function(){
+    loop.removeComponent(this);
+  };
+
   return circleRows;
 }

@@ -17,7 +17,7 @@ import modificators from './modificators/modificators';
 
 export function create(canvasId) {
     var mainContainer = factory.mainContainer(canvasId);
-    loop.addAnimation(mainContainer.stage);
+    loop.init(mainContainer.stage);
     return {
       version: '0.0.1',
       mainContainer: mainContainer,

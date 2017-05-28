@@ -13,6 +13,11 @@ export default function(modificator){
       loop.removeAnimation(this._listener);
     }
 
+    modificator.destroy = function(){
+      this.stop();
+      this.subject = null;
+    };
+
     modificator.start = start;
     modificator.stop = stop;
 
