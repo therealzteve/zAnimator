@@ -4,6 +4,7 @@ import zoomStuff from './zoom_stuff/zoom_stuff';
 import movingBackgrounds from './moving_backgrounds/moving_backgrounds';
 import web from './web/web';
 import arcStuff from './arc_stuff/arc_stuff';
+import squareStuff from './square_stuff/square_stuff';
 
 export default {
   pathMagic: pathMagic,
@@ -11,5 +12,6 @@ export default {
   zoomStuff: zoomStuff,
   movingBackgrounds: movingBackgrounds,
   web: web,
-  arcStuff: arcStuff
+  arcStuff: arcStuff,
+  squareStuff: squareStuff
 };
