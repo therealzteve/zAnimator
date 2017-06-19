@@ -7,21 +7,20 @@ export default function(options){
       checkParameter(options, 'color', false, '#000');
 
       var rect = abstractShape();
-      rect.width = options.rectangleShape.width;
-      rect.height = options.rectangleShape.height;
+      rect.rectangleShape = options.rectangleShape;
       rect.color = options.color;
 
       rect.draw = function(){
           this.view.graphics.clear();
-          this.view.graphics.beginFill(this.color).drawRect(0, 0, this.width * this.scale, this.height * this.scale);
+          this.view.graphics.beginFill(this.color).drawRect(0, 0, this.rectangleShape.width * this.scale, this.rectangleShape.height * this.scale);
       };
 
       rect.getWidth = function(){
-        return this.width * this.scale;
+        return this.rectanlgeShape.width * this.scale;
       };
 
       rect.getHeight = function(){
-        return this.height * this.scale;
+        return this.rectangleShape.height * this.scale;
       };
 
       rect.draw();

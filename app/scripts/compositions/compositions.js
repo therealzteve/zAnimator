@@ -5,6 +5,7 @@ import movingBackgrounds from './moving_backgrounds/moving_backgrounds';
 import web from './web/web';
 import arcStuff from './arc_stuff/arc_stuff';
 import squareStuff from './square_stuff/square_stuff';
+import soundBars from './sound_bars/sound_bars';
 
 export default {
   pathMagic: pathMagic,
@@ -13,5 +14,6 @@ export default {
   movingBackgrounds: movingBackgrounds,
   web: web,
   arcStuff: arcStuff,
-  squareStuff: squareStuff
+  squareStuff: squareStuff,
+  soundBars: soundBars
 };

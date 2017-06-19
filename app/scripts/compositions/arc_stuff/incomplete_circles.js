@@ -28,7 +28,7 @@ export default function(options){
     this.circleRows.radius = this.radius;
 
     for(var i = 0; i < this.rows; i++){
-      this.arcs[i].completePath.radius =  ((i + 1) / this.rows) * this.radius;
+      this.arcs[i].completePath.radius = ((i + 1) / this.rows) * this.radius;
       this.arcs[i].draw();
     }
 

@@ -5,7 +5,7 @@ import group from './filters/group/group';
 import mover from './filters/mover/mover';
 import linearRotator from './filters/rotator/linear_rotator';
 import randomColor from 'randomColor';
-import loop from './loop';
+import loop from '~/loop';
 import shapes from './geometry/shapes/shapes';
 import paths from './geometry/paths/paths';
 import compositions from './compositions/compositions';

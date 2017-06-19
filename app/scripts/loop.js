@@ -1,4 +1,4 @@
-var loop = {
+let loop = {
   _registeredComponents: [],
   _registeredCallbacks: [],
   addAnimation: function(handle, scope){
@@ -23,6 +23,7 @@ var loop = {
     }
   },
   init: function(stage){
+    console.log('init!');
     createjs.Ticker.setFPS(60);
     createjs.Ticker.on('tick', loop._handle, loop);
     createjs.Ticker.on('tick', stage);
@@ -36,5 +37,5 @@ var loop = {
     }
   }
 };
-
+console.log('whaaat');
 export default loop;
