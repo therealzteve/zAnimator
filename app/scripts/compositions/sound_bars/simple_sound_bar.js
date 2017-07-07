@@ -20,7 +20,6 @@ export default function(options){
     this.rect.rectangleShape.height = this.current * this.height;
     this.rect.view.y = this.height - this.rect.rectangleShape.height;
     this.rect.draw();
-    console.log(this.rect.rectangleShape.height);
   };
 
   return simpleSoundBar;

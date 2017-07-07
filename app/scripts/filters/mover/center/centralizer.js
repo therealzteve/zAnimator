@@ -24,7 +24,7 @@ export default function(options){
         this.view.y = (this.height / 2) - (this.getChild().getHeight() / 2);
       }
     };
-    
+
     centerFilter.start = function(){
       loop.addComponent(this);
     };

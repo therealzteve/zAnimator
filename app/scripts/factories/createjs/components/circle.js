@@ -6,6 +6,8 @@ export default function(options){
       /* Parameters */
       checkParameter(options, 'circleShape', true);
       checkParameter(options, 'color', false, '#000');
+      checkParameter(options, 'thickness', false, 0);
+      checkParameter(options, 'lineColor', false, '#000');
 
       /* Private vars */
       var circle = abstractShape();
@@ -13,11 +15,14 @@ export default function(options){
       /* public properties */
       circle.circleShape = options.circleShape;
       circle.color = options.color;
+      circle.lineColor = options.lineColor;
+      circle.thickness = options.thickness;
 
       /* public methods */
       circle.draw = function(){
+          console.log(this.circleShape.radius);
           this.view.graphics.clear();
-          this.view.graphics.beginFill(this.color).drawCircle(this.circleShape.radius * this.scale, this.circleShape.radius * this.scale, this.circleShape.radius * this.scale);
+          this.view.graphics.setStrokeStyle(this.thickness).beginStroke(this.lineColor).beginFill(this.color).drawCircle(this.circleShape.radius * this.scale, this.circleShape.radius * this.scale, this.circleShape.radius * this.scale);
       };
 
       circle.getWidth = function(){
