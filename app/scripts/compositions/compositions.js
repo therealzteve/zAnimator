@@ -6,6 +6,7 @@ import web from './web/web';
 import arcStuff from './arc_stuff/arc_stuff';
 import squareStuff from './square_stuff/square_stuff';
 import soundBars from './sound_bars/sound_bars';
+import electricity from './electricity/electricity';
 
 export default {
   pathMagic: pathMagic,
@@ -15,5 +16,6 @@ export default {
   web: web,
   arcStuff: arcStuff,
   squareStuff: squareStuff,
-  soundBars: soundBars
+  soundBars: soundBars,
+  electricity: electricity
 };
