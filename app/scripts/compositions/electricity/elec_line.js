@@ -14,17 +14,22 @@ export default function(options){
   elecLine.radius = options.radius;
   elecLine.amountPoints = options.amountPoints;
   elecLine.multiLines = multiLines({points: [] });
-  elecLine.pathView = pathView({path: elecLine.mutliLines});
+  elecLine.pathView = pathView({path: elecLine.multiLines.path});
   elecLine.view = elecLine.pathView.view;
 
   elecLine.draw = function(){
     this.multiLines.points.length = 0;
-    for(var i = 0; i < this.amountPoints; i++){
+    for(var i = 1; i < this.amountPoints - 1; i++){
       this.multiLines.points.push({
-        x: ((this.end.x - this.start.x) / this.amountPoints) * (i + 1) + (this.radius * Math.random()) - (0.5 * this.radius),
-        y: ((this.end.y - this.start.y) / this.amountPoints) * (i + 1) + (this.radius * Math.random()) - (0.5 * this.radius)
+        x: ((this.end.x - this.start.x) / this.amountPoints) * (i) + (this.radius * Math.random()) - (0.5 * this.radius),
+        y: ((this.end.y - this.start.y) / this.amountPoints) * (i) + (this.radius * Math.random()) - (0.5 * this.radius)
       });
     }
+    this.multiLines.points.push({
+      x: (this.end.x - this.start.x),
+      y: (this.end.y - this.start.y)
+    });
+    this.multiLines.refresh();
     this.pathView.draw();
   };
 

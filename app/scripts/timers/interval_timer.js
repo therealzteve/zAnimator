@@ -10,9 +10,9 @@ export default function(interval){
   timer.handle = function(event){
     this.currentTime += event.delta;
 
-    while(this.currentTime > this.interval){
+    while(this.currentTime > this.interval.getMs()){
        this._callListeners();
-       this.currentTime -= this.interval;
+       this.currentTime -= this.interval.getMs();
     }
   };
 

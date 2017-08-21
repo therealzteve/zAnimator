@@ -7,6 +7,7 @@ import arcStuff from './arc_stuff/arc_stuff';
 import squareStuff from './square_stuff/square_stuff';
 import soundBars from './sound_bars/sound_bars';
 import electricity from './electricity/electricity';
+import shots from './shots/shots';
 
 export default {
   pathMagic: pathMagic,
@@ -17,5 +18,6 @@ export default {
   arcStuff: arcStuff,
   squareStuff: squareStuff,
   soundBars: soundBars,
-  electricity: electricity
+  electricity: electricity,
+  shots: shots
 };

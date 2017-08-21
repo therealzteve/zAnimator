@@ -9,10 +9,23 @@ export default function(options) {
   proxy.currentElementIndex = 0;
 
   proxy.setProp = function(name, value) {
+    this._increment(function(){
+      this._setPropOfElement(this.group[this.currentElementIndex], name, value);
+    });
+  };
+
+  proxy.run = function(func){
+    this._increment(function(){
+      console.log('increment proxy run');
+      this._run(this.group[this.currentElementIndex], func);
+    });
+  };
+
+  proxy._increment = function(action){
     if(this.shuffle && this.currentElementIndex === 0){
       this.shuffleGroup();
     }
-    this._setPropOfElement(this.group[this.currentElementIndex], name, value);
+    action.call(this);
 
     this.currentElementIndex++;
     if (this.currentElementIndex >= this.group.length) {

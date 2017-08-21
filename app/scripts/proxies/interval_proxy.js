@@ -12,18 +12,32 @@ export default function(options){
   proxy.timer = intervalTimer(proxy.interval);
 
   proxy.setProp = function(name, value){
-      var p = incrementProxy({});
-      p.group = this.group;
-      var timer = this.timer;
-      var changePropCallback = function(){
-        p.setProp(name, value);
-        p.draw();
-        if(p.currentElementIndex === 0){
-          timer.removeListener(changePropCallback);
-          p.group = null;
-        }
-      };
-      this.timer.addListener(changePropCallback);
+    this._interval(function(p){
+      p.setProp(name, value);
+      p.draw();
+    });
+  };
+
+  proxy.run = function(func){
+
+    this._interval( function(p){
+      p.run(func);
+    });
+  };
+
+  proxy._interval = function(action){
+    var p = incrementProxy({});
+    p.group = this.group;
+    var timer = this.timer;
+    var changePropCallback = function(){
+
+      action(p);
+      if(p.currentElementIndex === 0){
+        timer.removeListener(changePropCallback);
+        p.group = null;
+      }
+    };
+    this.timer.addListener(changePropCallback);
   };
 
   proxy.timer.start();

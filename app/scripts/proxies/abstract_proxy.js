@@ -22,5 +22,13 @@ export default function(){
     setProp(element, property, value, false);
   };
 
+  proxy._run = function(element, func){
+    if(!element.isProxy){
+      func.call(element);
+    }else{
+      element.run(func);
+    }
+  };
+
   return proxy;
 }

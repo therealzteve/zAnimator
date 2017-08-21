@@ -10,12 +10,7 @@ export default function lineConstructor(options){
   var multiLines = {};
   multiLines.points = options.points;
   multiLines.path = path();
-
-  var currentPoint = {x: 0, y: 0};
-  for(var i = 0; i < multiLines.points.length; i++){
-      var _line = line({end: {x: multiLines.points[i].x - currentPoint.x, y: multiLines.points[i].y - currentPoint.y} });
-      multiLines.path.subPaths.push(_line);
-  }
+  multiLines._currentPoint = {x: 0, y: 0};
 
   multiLines.getEdgePoint = function(){
     return this.points[this.points.length - 1];
@@ -33,5 +28,16 @@ export default function lineConstructor(options){
     return this.path.getPartPath(progress);
   };
 
-  return line;
+  multiLines.refresh = function(){
+    this.path.subPaths.length = 0;
+    this._currentPoint = {x: 0, y: 0};
+    for(var i = 0; i < this.points.length; i++){
+        var _line = line({end: {x: this.points[i].x - this._currentPoint.x, y: this.points[i].y - this._currentPoint.y} });
+        this._currentPoint = {x: this.points[i].x, y: this.points[i].y};
+        this.path.subPaths.push(_line);
+    }
+  };
+
+  multiLines.refresh();
+  return multiLines;
 }

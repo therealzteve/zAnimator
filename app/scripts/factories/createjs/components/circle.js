@@ -20,7 +20,6 @@ export default function(options){
 
       /* public methods */
       circle.draw = function(){
-          console.log(this.circleShape.radius);
           this.view.graphics.clear();
           this.view.graphics.setStrokeStyle(this.thickness).beginStroke(this.lineColor).beginFill(this.color).drawCircle(this.circleShape.radius * this.scale, this.circleShape.radius * this.scale, this.circleShape.radius * this.scale);
       };
