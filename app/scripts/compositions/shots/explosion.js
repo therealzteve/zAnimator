@@ -15,18 +15,20 @@ export default function(options){
   var explosion = component();
   explosion.fadeTime = options.fadeTime;
   explosion.amount = options.amount;
-  explosion.speed= options.speed;
+  explosion.speed = options.speed;
   explosion.view = container();
 
 
   explosion.pulse = function(){
     for(var i = 0; i < this.amount; i++){
       var pointShot = fadeShot({'child': circle({'circleShape': circleShape({'radius': 1})}), 'interval': this.fadeTime});
-      var mover = linearMover({goalPoint: {x: ( this.fadeTime.getMs() / 1000 ) * this.speed, y: 0}, child: pointShot});
+      var mover = linearMover({goalPoint: {x: ( this.fadeTime.getMs() / 1000 ) * this.speed, y: 0}, child: pointShot, interval: this.fadeTime});
       mover.start();
-      mover.view.rotation = Math.random() * 360;
+      var rotationContainer = container();
+      rotationContainer.rotation = Math.random() * 360;;
+      rotationContainer.addChild(mover.view);
       pointShot.pulse(1);
-      this.view.addChild(mover.view);
+      this.view.addChild(rotationContainer);
     }
   };
 

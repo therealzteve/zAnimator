@@ -10,7 +10,7 @@ export default function(options){
   linearRotator.speed = options.speed;
 
   linearRotator.handle = function(event){
-      this.subject.rotation += this.speed * (event.delta/1000);
+      this.subject.rotation += this.speed * (event.delta / 1000);
       while(this.subject.rotation >= 360){
         this.subject.rotation -= 360;
       }
