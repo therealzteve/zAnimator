@@ -21,11 +21,12 @@ export default function(options){
 
   explosion.pulse = function(){
     for(var i = 0; i < this.amount; i++){
+      var speedFactor = Math.random();
       var pointShot = fadeShot({'child': circle({'circleShape': circleShape({'radius': 1})}), 'interval': this.fadeTime});
-      var mover = linearMover({goalPoint: {x: ( this.fadeTime.getMs() / 1000 ) * this.speed, y: 0}, child: pointShot, interval: this.fadeTime});
+      var mover = linearMover({goalPoint: {x: ( this.fadeTime.getMs() / 1000 ) * this.speed * speedFactor, y: 0}, child: pointShot, interval: this.fadeTime, steepness: 1});
       mover.start();
       var rotationContainer = container();
-      rotationContainer.rotation = Math.random() * 360;;
+      rotationContainer.rotation = Math.random() * 360;
       rotationContainer.addChild(mover.view);
       pointShot.pulse(1);
       this.view.addChild(rotationContainer);
