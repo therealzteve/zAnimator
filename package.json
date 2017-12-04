@@ -50,7 +50,6 @@
     "wiredep": "^2.2.2"
   },
   "eslintConfig": {
-    "fix": true,
     "env": {
       "es6": true,
       "node": true,
