@@ -14,4 +14,6 @@ export default function(options){
   rotationSwinger.handle = function(current){
     this.subject.rotation = current * this.range + this.offset;
   };
+
+  return rotationSwinger;
 }
