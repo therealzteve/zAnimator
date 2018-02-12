@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "outDir": "build"
+    "outDir": "build",
+    "target": "es5"
   },
   "include": [
     "app_ts/**/*"
   ],
   "exclude": [
-        "node_modules",
-        "**/*.spec.ts"
+        "node_modules"
   ]
 }
