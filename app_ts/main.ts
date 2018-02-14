@@ -6,7 +6,7 @@ export function create(canvasId) {
     //let stage = new createjs.Stage(canvasId);
     //loop.init(stage);
     var createjsTickerContainer = {
-      execute:function(func, scope){
+      addCallback:function(func, scope){
         createjs.Ticker.setFPS(60);
         createjs.Ticker.on('tick', func, scope);
       }

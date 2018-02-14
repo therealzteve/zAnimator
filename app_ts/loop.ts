@@ -45,12 +45,12 @@
 
 class loop {
 
-  private ticker: {execute: {(func, scope): void;} }
+  private ticker: {addCallback: {(func, scope): void;} }
   private _registeredComponents = [];
 
-  constructor(ticker:   {execute: {(func, scope): void;} } ){
+    constructor(ticker:   {addCallback: {(func, scope): void;} } ){
     this.ticker = ticker;
-    this.ticker.execute(this._handle, this);
+    this.ticker.addCallback(this._handle, this);
   }
 
   private _handle(){
