@@ -118,12 +118,10 @@
     "tree-kit": "^0.5.26"
   },
   "scripts": {
-    "test": "mochify",
-    "test3": "mocha-phantomjs -R dot test.html",
-    "test2": "mocha -r ts-node/register -r jsdom-global/register app_ts/**/*.spec.ts",
+    "test": "karma start karma.conf.js",
     "build": "npm run compile && npm run bundle",
     "compile": "tsc",
-    "compile_test": "tsc --outFile test/test.js --module system test_ts/main.spec.ts",
-    "bundle": "browserify build/main.js -o bundle.js"
+    "bundle": "browserify build/main.js --standalone zAnimator2 -o build/bundle.js",
+    "dev_deps": "npm install --dev"
   }
 }

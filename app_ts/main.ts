@@ -1,6 +1,8 @@
 /// <reference path="../node_modules/@types/easeljs/index.d.ts" />
 import loop from './loop';
-
+import components from './components/components';
+import { geometry } from './geometry/geometry';
+import { MainContainer } from './components/containers/main_container';
 
 export function create(canvasId) {
     //let stage = new createjs.Stage(canvasId);
@@ -16,6 +18,9 @@ export function create(canvasId) {
     let _loop = new loop(createjsTickerContainer);
     return {
       version: '0.0.1',
-      loop: loop
+      loop: loop,
+      components: components,
+      geometry: geometry,
+      mainContainer: new MainContainer(canvasId)
     };
   }
