@@ -1,4 +1,4 @@
-/// <reference path="../node_modules/@types/easeljs/index.d.ts" />
+/// <reference path="../../node_modules/@types/easeljs/index.d.ts" />
 
 class loop {
 
@@ -32,6 +32,10 @@ class loop {
        };
        this._registeredCallbacks.push(callback);
        return callback;
+  }
+
+  public removeAnimation(handle){
+    this._registeredCallbacks = this._registeredCallbacks.filter((callback) => callback.cb !== handle);
   }
 
 }

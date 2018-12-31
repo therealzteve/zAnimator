@@ -1,6 +1,11 @@
-export class PathView{
+import { Component } from "../component.abstract";
+
+export abstract class PathView extends Component{
   strokeColor: string = "#0000FF";
   thickness: number = 1;
   scale: number = 1;
-  view = new createjs.Shape();
+
+  constructor(){
+    super(new createjs.Shape());
+  }
 }

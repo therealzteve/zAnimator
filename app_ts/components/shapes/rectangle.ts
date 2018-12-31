@@ -2,7 +2,7 @@ import { ComponentInterface } from '../component.interface';
 import { RectangleFormat } from '../../geometry/formats/rectangle.format';
 import { Shape } from './shape.abstract';
 
-export class Rectangle extends Shape implements ComponentInterface {
+export class Rectangle extends Shape {
 
   public rectangleFormat: RectangleFormat;
 
@@ -11,10 +11,16 @@ export class Rectangle extends Shape implements ComponentInterface {
     this.rectangleFormat = rectangleFormat;
   }
 
-  public draw(){
-    this.view.graphics.clear();
-    this.view.graphics.beginFill(this.color).beginStroke(this.strokeColor).drawRect(0, 0, this.rectangleFormat.width * this.scale, this.rectangleFormat.height * this.scale);
+  public specificDraw(){
+    this.innerView.graphics.clear();
+    this.innerView.graphics.beginFill(this.color).beginStroke(this.strokeColor).drawRect(0, 0, this.rectangleFormat.width * this.scale, this.rectangleFormat.height * this.scale);
   };
 
+  getWidth(): number {
+    return this.rectangleFormat.width * this.scale;
+  }
+  getHeight(): number {
+    throw this.rectangleFormat.height * this.scale;
+  }
 
 }

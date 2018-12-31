@@ -1,4 +1,5 @@
 import { ContainerInterface } from '../container.interface';
+import { Component } from '../component.abstract';
 
 export class MainContainer implements ContainerInterface {
 
@@ -12,15 +13,28 @@ export class MainContainer implements ContainerInterface {
     this.view.update();
   };
 
-  public add(component:ContainerInterface): void{
+  public add(component:Component): void{
+    component.parent = this;
     this.view.addChild(component.view);
   };
 
-  public remove(component:ContainerInterface): void{
+  public remove(component:Component): void{
+    component.parent = undefined;
     this.view.removeChild(component.view);
   };
 
   public removeAll(): void{
     this.view.removeAllChildren();
+  }
+
+  getWidth(): number {
+    return this.view.getBounds().width;
+  }
+  getHeight(): number {
+    return this.view.getBounds().height;
+  }
+
+  addEventListener(eventName: String, callback: (T: any) => void) {
+    throw new Error("Method not implemented.");
   }
 }

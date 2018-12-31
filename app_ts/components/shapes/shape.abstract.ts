@@ -1,6 +1,15 @@
-export class Shape{
+import { Component } from '../component.abstract';
+
+export abstract class Shape extends Component{
+
   color: string = "#000000";
   strokeColor: string = "#0000FF";
+  strokeWidth: number = 1;
   scale: number = 1;
-  view = new createjs.Shape();
+
+  constructor(){
+    super(new createjs.Shape());
+  }
+
+
 }
