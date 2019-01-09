@@ -7,6 +7,8 @@ export class MainContainer implements ContainerInterface {
 
   constructor(stageId: String){
     this.view = new createjs.Stage(stageId);
+    let canvas:HTMLCanvasElement = <HTMLCanvasElement>this.view.canvas;
+    this.view.setBounds(0,0, canvas.width, canvas.height);
   }
 
   draw(): void {
