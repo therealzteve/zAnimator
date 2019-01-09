@@ -2,17 +2,17 @@ import { AlignX, AlignY } from './Alignments.enum';
 import { ContainerInterface } from './container.interface';
 import { ComponentInterface } from './component.interface';
 
-export abstract class Component implements ComponentInterface{
+export abstract class Component<T extends createjs.DisplayObject> implements ComponentInterface{
 
   public parent: ContainerInterface;
   public alignX: AlignX = AlignX.Right;
   public alignY: AlignY = AlignY.Top;
-  public x: Number = 0;
-  public y: Number = 0;
+  public x: number = 0;
+  public y: number = 0;
   public view: createjs.Container;
-  protected innerView: any;
+  protected innerView: T;
 
-  constructor(innerView: any){
+  constructor(innerView: T){
     this.view = new createjs.Container;
     this.view.addChild(innerView);
     this.innerView = innerView;

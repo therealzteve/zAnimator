@@ -4,7 +4,7 @@ import { Component } from './component.abstract';
 import { AlignX, AlignY } from './Alignments.enum';
 import { MainContainer } from './containers/main_container';
 
-class MockComponent extends Component {
+class MockComponent extends Component<createjs.Shape>{
 
   constructor(){
     super(new createjs.Shape());

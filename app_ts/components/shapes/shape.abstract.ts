@@ -1,6 +1,6 @@
 import { Component } from '../component.abstract';
 
-export abstract class Shape extends Component{
+export abstract class Shape extends Component<createjs.Shape>{
 
   color: string = "#000000";
   strokeColor: string = "#0000FF";

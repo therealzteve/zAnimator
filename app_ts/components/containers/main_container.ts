@@ -17,12 +17,12 @@ export class MainContainer implements ContainerInterface {
     this.view.update();
   };
 
-  public add(component:Component): void{
+  public add(component:Component<any>): void{
     component.parent = this;
     this.view.addChild(component.view);
   };
 
-  public remove(component:Component): void{
+  public remove(component:Component<any>): void{
     component.parent = undefined;
     this.view.removeChild(component.view);
   };
