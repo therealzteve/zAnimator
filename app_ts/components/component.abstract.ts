@@ -7,6 +7,8 @@ export abstract class Component implements ComponentInterface{
   public parent: ContainerInterface;
   public alignX: AlignX = AlignX.Right;
   public alignY: AlignY = AlignY.Top;
+  public x: Number = 0;
+  public y: Number = 0;
   public view: createjs.Container;
   protected innerView: any;
 
@@ -41,6 +43,9 @@ export abstract class Component implements ComponentInterface{
     if(this.alignY === AlignY.Bottom){
       this.view.y = this.parent.getHeight() - this.getHeight();
     }
+
+    this.innerView.x = this.x;
+    this.innerView.y = this.y;
 
     this.specificDraw();
   }

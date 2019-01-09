@@ -21,6 +21,14 @@ class MockComponent extends Component {
     return 5;
   }
 
+  checkX(){
+    expect(this.innerView.x).to.eq(this.x);
+  }
+
+  checkY(){
+    expect(this.innerView.y).to.eq(this.y);
+  }
+
 }
 
 describe('component test suite', () => {
@@ -65,4 +73,17 @@ describe('component test suite', () => {
     comp.draw();
     expect(comp.view.y).to.eq(5);
   });
+
+  it('should move child to correct X value', () => {
+    comp.x = 5;
+    comp.draw();
+    comp.checkX();
+  });
+
+  it('should move child to correct Y value', () => {
+    comp.y = 5;
+    comp.draw();
+    comp.checkY();
+  });
+
 });
