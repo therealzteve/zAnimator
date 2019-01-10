@@ -7,21 +7,24 @@ export default class implements Modificator {
 
     public min: number;
     public max: number;
+    public changeProbability:number = 1;
 
     public subjects: Array<Subject<any>> = [];
 
     public transitionLoop;
 
-    constructor(min: number, max: number, interval: Interval){
+    constructor(min: number, max: number, interval: Interval, transitionFunc?: (ms:number) => number){
       this.min = min;
       this.max = max;
-      this.transitionLoop = new TransitionLoop(interval);
+      this.transitionLoop = new TransitionLoop(interval, transitionFunc);
       this.transitionLoop.addCallback((progress:number) => { this.handle(progress) });
     }
 
     public handle( progress: number):void {
-      for(let subject of this.subjects){
-        subject.subject[subject.property] = <any>this.min + this.max * progress;
+      if(Math.random() < this.changeProbability){
+        for(let subject of this.subjects){
+          subject.subject[subject.property] = <any>this.min + this.max * progress;
+        }
       }
     }
 
