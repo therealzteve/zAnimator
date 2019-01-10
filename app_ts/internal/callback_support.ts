@@ -2,7 +2,7 @@ export default class<T>{
 
   private _callbacks: Array<(T) => void> = [];
 
-  public handle(param: T): void{
+  public handle(param?: T): void{
     for(let callback of this._callbacks){
       callback(param);
     }
