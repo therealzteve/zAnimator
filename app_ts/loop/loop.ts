@@ -25,6 +25,10 @@ class loop {
     this._registeredComponents.push(component);
   }
 
+  public removeComponent(component: { draw: { (): void;}}){
+    this._registeredComponents = this._registeredComponents.filter((comp) => comp !== component);
+  }
+
   public addAnimation(handle, scope){
        var callback = {
          cb: handle,
