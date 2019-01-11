@@ -20,6 +20,20 @@ export abstract class Component<T extends createjs.DisplayObject> implements Com
 
   public draw(){
 
+    this._updateAlignment();
+
+    this.innerView.x = this.x;
+    this.innerView.y = this.y;
+
+    this.specificDraw();
+  }
+
+  private _updateAlignment(){
+
+    if(!this.parent){
+      return;
+    }
+
     if(this.alignX === AlignX.Left){
       this.view.x = 0;
     }
@@ -43,11 +57,6 @@ export abstract class Component<T extends createjs.DisplayObject> implements Com
     if(this.alignY === AlignY.Bottom){
       this.view.y = this.parent.getHeight() - this.getHeight();
     }
-
-    this.innerView.x = this.x;
-    this.innerView.y = this.y;
-
-    this.specificDraw();
   }
 
   abstract specificDraw(): void;
