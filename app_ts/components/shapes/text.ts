@@ -3,9 +3,10 @@ import { Component } from "../component.abstract";
 export class Text extends Component<createjs.Text> {
 
   public text: string;
-  public fontSize: string;
+  public fontSize: number;
   public font: string;
   public color: string;
+  public textAlign: string = "left";
 
   constructor(){
     super(new createjs.Text());
@@ -15,6 +16,7 @@ export class Text extends Component<createjs.Text> {
     this.innerView.text = this.text;
     this.innerView.font = this.fontSize + "px " + this.font;
     this.innerView.color = this.color;
+    this.innerView.textAlign = this.textAlign;
   }
 
   getWidth(): number {

@@ -1,21 +1,33 @@
 import Modificator, { Subject } from './modificator.interface';
 import loopService from '../loop/loop.service';
 
+
+export type RandomValueSubject = Subject<any> & {
+  range?: { min: number, max: number},
+  valueList?: Array<any>
+}
+
 export default class implements Modificator {
 
     public changeProbability:number = 1;
     public valueList: Array<any>;
+    public range: { min: number, max: number};
 
-    public subjects: Array<Subject<any>> = [];
+    public subjects: Array<RandomValueSubject> = [];
 
-    constructor(valueList: Array<any>){
+    constructor(valueList?: Array<any>){
       this.valueList = valueList;
     }
 
-    public handle():void {
+    public handle(): void {
       if(Math.random() < this.changeProbability){
         for(let subject of this.subjects){
-          subject.subject[subject.property] = this.valueList[Math.floor(Math.random() * this.valueList.length)];
+          let randomValue = Math.random();
+          if(typeof subject.range !== "undefined" || typeof subject.valueList !== "undefined"){
+            setValueOfObject(subject, subject, randomValue);
+          }else {
+            setValueOfObject(subject, this, randomValue);
+          }
         }
       }
     }
@@ -27,4 +39,12 @@ export default class implements Modificator {
     public stop(){
       loopService.loop.removeAnimation(this.handle);
     }
+}
+
+function setValueOfObject(subject, functionParams, value) {
+  if(typeof functionParams.range !== "undefined"){
+    subject.subject[subject.property] = functionParams.range.min + value * (functionParams.range.max - functionParams.range.min);
+  } else {
+    subject.subject[subject.property] = functionParams.valueList[Math.floor(value * functionParams.valueList.length)];
+  }
 }

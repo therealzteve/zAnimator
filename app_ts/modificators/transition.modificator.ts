@@ -1,5 +1,5 @@
 import Modificator, { Subject } from './modificator.interface';
-import  {ComponentInterface} from '../components/component.interface';
+import {ComponentInterface} from '../components/component.interface';
 import TransitionLoop from '../transition/transition_loop';
 import {Interval} from '../timer/interval';
 
